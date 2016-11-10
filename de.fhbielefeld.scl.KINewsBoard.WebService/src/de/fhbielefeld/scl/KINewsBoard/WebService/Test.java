@@ -1,13 +1,12 @@
 package de.fhbielefeld.scl.KINewsBoard.WebService;
 
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.MeineKlasse;
-import de.fhbielefeld.scl.KINewsBoard.DataLayer.NewsEntry;
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
 import java.util.List;
 
 

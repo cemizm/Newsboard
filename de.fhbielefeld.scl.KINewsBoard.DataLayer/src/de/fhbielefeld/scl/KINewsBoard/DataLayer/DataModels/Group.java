@@ -1,4 +1,4 @@
-package de.fhbielefeld.scl.KINewsBoard.DataLayer;
+package de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -32,7 +32,7 @@ public class Group {
     }
 
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "groups")
     public Set<View> getViews() {
         return views;
     }

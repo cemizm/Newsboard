@@ -1,29 +1,22 @@
-package de.fhbielefeld.scl.KINewsBoard.DataLayer;
+package de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by cem on 03.11.16.
  */
 @Entity
-public class AnalyzerResult {
-    private int id;
+public class AnalyzerResult  implements Serializable{
     private Analyzer analyzer;
     private NewsEntry newsEntry;
     private Date date;
     private int value;
+    private Set<AnalyzerSentenceResult> analyzerSentenceResult;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     @ManyToOne
     public Analyzer getAnalyzer() {
         return analyzer;
@@ -33,6 +26,7 @@ public class AnalyzerResult {
         this.analyzer = analyzer;
     }
 
+    @Id
     @ManyToOne
     public NewsEntry getNewsEntry() {
         return newsEntry;
@@ -57,5 +51,14 @@ public class AnalyzerResult {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    @OneToMany
+    public Set<AnalyzerSentenceResult> getAnalyzerSentenceResult() {
+        return analyzerSentenceResult;
+    }
+
+    public void setAnalyzerSentenceResult(Set<AnalyzerSentenceResult> analyzerSentenceResult) {
+        this.analyzerSentenceResult = analyzerSentenceResult;
     }
 }

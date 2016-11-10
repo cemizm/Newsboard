@@ -1,19 +1,18 @@
 package de.fhbielefeld.scl.KINewsBoard.BusinessLayer;
 
-import de.fhbielefeld.scl.KINewsBoard.DataLayer.NewsBoardManager;
-import de.fhbielefeld.scl.KINewsBoard.DataLayer.NewsEntry;
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.NewsBoardDAO;
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by cem on 28.10.16.
  */
 public class MeineKlasse {
-    private NewsBoardManager mngr;
+    private NewsBoardDAO mngr;
 
     public MeineKlasse() {
-        mngr = new NewsBoardManager();
+        mngr = new NewsBoardDAO();
     }
 
     public List<NewsEntry> Machwas() {

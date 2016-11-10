@@ -1,4 +1,4 @@
-package de.fhbielefeld.scl.KINewsBoard.DataLayer;
+package de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -12,7 +12,6 @@ public class Crawler {
     private String token;
     private String name;
     private boolean disabled;
-    private Set<NewsEntry> entries;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,14 +46,5 @@ public class Crawler {
 
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;
-    }
-
-    @OneToMany
-    public Set<NewsEntry> getEntries() {
-        return entries;
-    }
-
-    public void setEntries(Set<NewsEntry> entries) {
-        this.entries = entries;
     }
 }
