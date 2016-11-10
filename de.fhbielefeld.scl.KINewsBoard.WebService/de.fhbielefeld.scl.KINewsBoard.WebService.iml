@@ -11,5 +11,7 @@
     <orderEntry type="library" scope="PROVIDED" name="GlassFish 4.1.1.163 - RESTful Web Service" level="application_server_libraries" />
     <orderEntry type="library" scope="PROVIDED" name="GlassFish 4.1.1.163 - JSON Processing (JSR 353)" level="application_server_libraries" />
     <orderEntry type="module" module-name="de.fhbielefeld.scl.KINewsBoard.BusinessLayer" />
+    <orderEntry type="library" name="Jersey-2.2" level="project" />
+    <orderEntry type="library" name="javax.json.processing-1.0" level="project" />
   </component>
 </module>
