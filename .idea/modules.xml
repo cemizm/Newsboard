@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/de.fhbielefeld.scl.KINewsBoard.BusinessLayer/de.fhbielefeld.scl.KINewsBoard.BusinessLayer.iml" filepath="$PROJECT_DIR$/de.fhbielefeld.scl.KINewsBoard.BusinessLayer/de.fhbielefeld.scl.KINewsBoard.BusinessLayer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/de.fhbielefeld.scl.KINewsBoard.DataLayer/de.fhbielefeld.scl.KINewsBoard.DataLayer.iml" filepath="$PROJECT_DIR$/de.fhbielefeld.scl.KINewsBoard.DataLayer/de.fhbielefeld.scl.KINewsBoard.DataLayer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/de.fhbielefeld.scl.KINewsBoard.Web/de.fhbielefeld.scl.KINewsBoard.Web.iml" filepath="$PROJECT_DIR$/de.fhbielefeld.scl.KINewsBoard.Web/de.fhbielefeld.scl.KINewsBoard.Web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/de.fhbielefeld.scl.KINewsBoard.WebService/de.fhbielefeld.scl.KINewsBoard.WebService.iml" filepath="$PROJECT_DIR$/de.fhbielefeld.scl.KINewsBoard.WebService/de.fhbielefeld.scl.KINewsBoard.WebService.iml" />
+    </modules>
+  </component>
+</project>

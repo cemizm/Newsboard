@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Web">
+    <output-path>$PROJECT_DIR$/out/artifacts/Web</output-path>
+    <root id="archive" name="Web.war">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="de.fhbielefeld.scl.KINewsBoard.Web" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="de.fhbielefeld.scl.KINewsBoard.Web/web/Web" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="WebService">
+    <output-path>$PROJECT_DIR$/out/artifacts/WebService</output-path>
+    <root id="archive" name="WebService.war">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="de.fhbielefeld.scl.KINewsBoard.WebService" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="artifact" artifact-name="BusinessLayer" />
+          <element id="artifact" artifact-name="DataLayer" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

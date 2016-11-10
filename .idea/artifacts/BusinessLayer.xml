@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="BusinessLayer">
+    <output-path>$PROJECT_DIR$/out/artifacts/BusinessLayer</output-path>
+    <root id="archive" name="BusinessLayer.jar">
+      <element id="module-output" name="de.fhbielefeld.scl.KINewsBoard.BusinessLayer" />
+    </root>
+  </artifact>
+</component>
