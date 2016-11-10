@@ -7,6 +7,7 @@ import java.util.Date;
  * Created by cem on 29.10.16.
  */
 @Entity
+@NamedQuery(name="NewsEntry.findAll", query = "select n from NewsEntry n")
 public class NewsEntry {
     private String id;
     private Crawler crawler;
