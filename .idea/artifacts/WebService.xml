@@ -5,10 +5,12 @@
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="de.fhbielefeld.scl.KINewsBoard.WebService" />
+          <element id="jpa-descriptors" facet="de.fhbielefeld.scl.KINewsBoard.DataLayer/jpa/JPA" />
+          <element id="module-output" name="de.fhbielefeld.scl.KINewsBoard.DataLayer" />
+          <element id="module-output" name="de.fhbielefeld.scl.KINewsBoard.BusinessLayer" />
         </element>
         <element id="directory" name="lib">
-          <element id="artifact" artifact-name="BusinessLayer" />
-          <element id="artifact" artifact-name="DataLayer" />
+          <element id="library" level="project" name="Hibernate 5.2.3-5.2.3" />
         </element>
       </element>
     </root>

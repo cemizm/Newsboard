@@ -8,13 +8,23 @@ import java.util.Date;
  */
 @Entity
 public class AnalyzerResult {
+    private int id;
     private Analyzer analyzer;
     private NewsEntry newsEntry;
     private Date date;
     private int value;
 
     @Id
-    @OneToMany
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @ManyToOne
     public Analyzer getAnalyzer() {
         return analyzer;
     }
@@ -23,8 +33,7 @@ public class AnalyzerResult {
         this.analyzer = analyzer;
     }
 
-    @Id
-    @OneToMany
+    @ManyToOne
     public NewsEntry getNewsEntry() {
         return newsEntry;
     }

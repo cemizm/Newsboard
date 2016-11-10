@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="DataLayer">
-    <output-path>$PROJECT_DIR$/out/artifacts/DataLayer</output-path>
-    <root id="archive" name="DataLayer.jar">
-      <element id="module-output" name="de.fhbielefeld.scl.KINewsBoard.DataLayer" />
-      <element id="library" level="project" name="Hibernate 5.2.3-5.2.3" />
-    </root>
-  </artifact>
-</component>
