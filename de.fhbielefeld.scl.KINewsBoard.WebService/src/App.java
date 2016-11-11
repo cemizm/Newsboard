@@ -1,4 +1,7 @@
-import de.fhbielefeld.scl.KINewsBoard.WebService.Test;
+import de.fhbielefeld.scl.KINewsBoard.WebService.AnalyzerService;
+import de.fhbielefeld.scl.KINewsBoard.WebService.BackendService;
+import de.fhbielefeld.scl.KINewsBoard.WebService.CrawlerService;
+import de.fhbielefeld.scl.KINewsBoard.WebService.FrontendService;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -14,7 +17,10 @@ public class App extends Application {
     public Set<Class<?>> getClasses() {
         Set<Class<?>> s = new HashSet<>();
 
-        s.add(Test.class);
+        s.add(AnalyzerService.class);
+        s.add(CrawlerService.class);
+        s.add(BackendService.class);
+        s.add(FrontendService.class);
 
         return s;
     }
