@@ -1,5 +1,7 @@
 package de.fhbielefeld.scl.KINewsBoard.DataLayer;
 
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import java.io.Closeable;
@@ -9,7 +11,7 @@ import java.util.List;
 /**
  * Created by cem on 10.11.16.
  */
-public class NewsBoardManager implements Closeable {
+public class NewsBoardDAO implements Closeable {
 
     private EntityManager entityManager;
 

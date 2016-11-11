@@ -1,7 +1,7 @@
 package de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models;
 
 
-import de.fhbielefeld.scl.KINewsBoard.DataLayer.NewsEntry;
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 
 import java.util.Date;
 

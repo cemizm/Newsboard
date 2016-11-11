@@ -1,4 +1,4 @@
-package de.fhbielefeld.scl.KINewsBoard.DataLayer;
+package de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels;
 
 import javax.persistence.*;
 import java.util.Set;

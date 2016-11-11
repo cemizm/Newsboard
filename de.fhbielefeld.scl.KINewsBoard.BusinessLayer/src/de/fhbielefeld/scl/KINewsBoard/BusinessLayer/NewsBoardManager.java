@@ -2,7 +2,9 @@ package de.fhbielefeld.scl.KINewsBoard.BusinessLayer;
 
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.AnalyzerResultModel;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.NewsModel;
-import de.fhbielefeld.scl.KINewsBoard.DataLayer.NewsEntry;
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.NewsBoardDAO;
+
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -13,10 +15,10 @@ import java.util.List;
  * Created by cem on 10.11.16.
  */
 public class NewsBoardManager implements Closeable {
-    private de.fhbielefeld.scl.KINewsBoard.DataLayer.NewsBoardManager mngr;
+    private NewsBoardDAO mngr;
 
     public NewsBoardManager() {
-        mngr = new de.fhbielefeld.scl.KINewsBoard.DataLayer.NewsBoardManager();
+        mngr = new de.fhbielefeld.scl.KINewsBoard.DataLayer.NewsBoardDAO();
     }
 
     public List<NewsModel> getPublicNewsEntries() {
