@@ -38,7 +38,7 @@ public class NewsBoardManager implements Closeable {
         return model;
     }
 
-    public List<NewsModel> getAnalyzerEntries(String token) {
+    public List<NewsModel> getAnalyzerNewsEntries(String token) {
         return getNewsModels(mngr.getNewsEntries());
     }
 

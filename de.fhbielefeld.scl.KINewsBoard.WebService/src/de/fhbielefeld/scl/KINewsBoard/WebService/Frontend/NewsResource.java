@@ -1,4 +1,4 @@
-package de.fhbielefeld.scl.KINewsBoard.WebService;
+package de.fhbielefeld.scl.KINewsBoard.WebService.Frontend;
 
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.NewsModel;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.NewsBoardManager;
@@ -15,11 +15,11 @@ import java.util.List;
  * Created by cem on 10.11.16.
  */
 
-@Path("/frontend")
-public class FrontendService {
+@Path("/news")
+public class NewsResource {
 
     @GET
-    @Path("/public")
+    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public List<NewsModel> getPublicNewsEntries() throws IOException {
         try (NewsBoardManager mngr = new NewsBoardManager()) {
@@ -28,20 +28,20 @@ public class FrontendService {
     }
 
     @GET
-    @Path("/view/{viewid}")
+    @Path("/{newsId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<NewsModel> getViewEntries(@PathParam("viewid") int viewId) throws IOException {
+    public NewsModel getNewsEntryDetails(@PathParam("newsId") int newsId) throws IOException {
         try (NewsBoardManager mngr = new NewsBoardManager()) {
-            return mngr.getViewNewsEntries(viewId);
+            return mngr.getNewsEntryDetails(newsId);
         }
     }
 
     @GET
-    @Path("/details/{viewid}")
+    @Path("/findByView/{viewId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public NewsModel getNewsEntryDetails(@PathParam("viewid") int viewId) throws IOException {
+    public List<NewsModel> getViewEntries(@PathParam("viewId") int viewId) throws IOException {
         try (NewsBoardManager mngr = new NewsBoardManager()) {
-            return mngr.getNewsEntryDetails(viewId);
+            return mngr.getViewNewsEntries(viewId);
         }
     }
 }

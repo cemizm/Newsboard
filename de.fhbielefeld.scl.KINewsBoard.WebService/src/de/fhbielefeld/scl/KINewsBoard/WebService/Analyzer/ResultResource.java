@@ -1,4 +1,4 @@
-package de.fhbielefeld.scl.KINewsBoard.WebService;
+package de.fhbielefeld.scl.KINewsBoard.WebService.Analyzer;
 
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.AnalyzerResultModel;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.NewsModel;
@@ -12,20 +12,12 @@ import java.util.List;
 /**
  * Created by cem on 10.11.16.
  */
-@Path("/analyzer")
-public class AnalyzerService {
 
-    @GET
-    @Path("/entries/{token}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<NewsModel> getEntries(@PathParam("token") String token) throws IOException {
-        try (NewsBoardManager mngr = new NewsBoardManager()) {
-            return mngr.getAnalyzerEntries(token);
-        }
-    }
+@Path("/results")
+public class ResultResource {
 
     @POST
-    @Path("/publish/{token}")
+    @Path("/{token}")
     @Produces(MediaType.APPLICATION_JSON)
     public AnalyzerResultModel publish(@PathParam("token") String token, AnalyzerResultModel model) throws IOException {
         try (NewsBoardManager mngr = new NewsBoardManager()) {
