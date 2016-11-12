@@ -1,0 +1,228 @@
+swagger: '2.0'
+info:
+  description: Backend Schnittstelle zum KI-NewsBoard.
+  version: 1.0.0
+  title: NewsBoard
+basePath: /backend
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /login:
+    post:
+      summary: Anmeldung am Backend
+      description: |
+        ** Anmeldung am Backend **
+
+        Die Authentifizierungs Informationen entsprechenden den Amelde-Informationen am Solar Computing Lab.
+      responses:
+        200:
+          description: Login erfolgreich
+        400:
+          description: Login ungültig
+  /logout:
+    post:
+      summary: Abmeldung vom Backend
+      responses:
+        200:
+          description: Logout erfolgreich
+  /crawler:
+    get:
+      summary: Liefert alle Crawler
+      responses:
+        200:
+          description: Liste der Crawler
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Crawler'
+    post:
+      summary: Erstellt einen neuen Crawler
+      parameters:
+        - name: crawler
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Crawler'
+      responses:
+        200:
+          description: Crawler erfolgreich erstellt
+    put:
+      summary: Aktualisiert einen bestehenden Crawler
+      parameters:
+        - name: crawler
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Crawler'
+      responses:
+        200:
+          description: Crawler erfolgreich aktualisiert
+  /crawler/{crawlerId}:
+    delete:
+      summary: Löscht einen Crawler
+      parameters:
+        - name: crawlerId
+          in: path
+          required: true
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: Crawler gelöscht.
+  /analyzer:
+    get:
+      summary: Liefert alle Analayzer
+      responses:
+        200:
+          description: Liste der Analyzer
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Analyzer'
+    post:
+      summary: Erstellt einen neuen Analyzer
+      parameters:
+        - name: analyzer
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Analyzer'
+      responses:
+        200:
+          description: Analyzer erfolgreich erstellt
+    put:
+      summary: Aktualisiert einen bestehenden Analyzer
+      parameters:
+        - name: analyzer
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Analyzer'
+      responses:
+        200:
+          description: Analyzer erfolgreich aktualisiert
+  /analyzer/{analyzerId}:
+    delete:
+      summary: Löscht einen Analyzer
+      parameters:
+        - name: analyzerId
+          in: path
+          required: true
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: Analyzer gelöscht.
+  /group:
+    get:
+      summary: Liefert alle Gruppen
+      responses:
+        200:
+          description: Liste der Gruppen
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Group'
+    post:
+      summary: Erstellt eine neue Gruppe
+      parameters:
+        - name: group
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Group'
+      responses:
+        200:
+          description: Gruppe erfolgreich erstellt
+    put:
+      summary: Aktualisiert eine bestehende Gruppe
+      parameters:
+        - name: group
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Group'
+      responses:
+        200:
+          description: Gruppe erfolgreich aktualisiert
+  /group/{groupId}:
+    delete:
+      summary: Löscht eine Gruppe
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: Gruppe gelöscht.
+  /view:
+    get:
+      summary: Liefert alle Views
+      responses:
+        200:
+          description: Liste der View
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/View'
+    post:
+      summary: Erstellt eine neue View
+      parameters:
+        - name: group
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/View'
+      responses:
+        200:
+          description: View erfolgreich erstellt
+    put:
+      summary: Aktualisiert eine bestehende View
+      parameters:
+        - name: view
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/View'
+      responses:
+        200:
+          description: View erfolgreich aktualisiert
+  /view/{viewId}:
+    delete:
+      summary: Löscht eine View
+      parameters:
+        - name: viewId
+          in: path
+          required: true
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: View gelöscht.
+definitions:
+  Crawler:
+    type: object
+    properties:
+      name:
+        type: string
+  Analyzer:
+    type: object
+    properties:
+      name:
+        type: string
+  Group:
+    type: object
+    properties:
+      name:
+        type: string
+  View:
+    type: object
+    properties:
+      name:
+        type: string

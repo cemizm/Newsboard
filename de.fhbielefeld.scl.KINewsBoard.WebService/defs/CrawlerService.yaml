@@ -1,0 +1,57 @@
+swagger: '2.0'
+info:
+  description: Crawler Schnittstelle zum KI-NewsBoard.
+  version: 1.0.0
+  title: NewsBoard
+basePath: /crawler
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /news:
+    post:
+      summary: Veröffentlich einen News Eintrag
+      description: |
+        **Veröffentlicht einen News Eintrag**
+
+
+        Für die Veröffentlichung von News Einträgen ist ein Authentifizierungs-Token notwendig.
+      parameters:
+        - name: news
+          in: body
+          description: Der News Eintrag der veröffentlicht werden soll
+          required: true
+          schema:
+            $ref: '#/definitions/News'
+      responses:
+        200:
+          description: News Eintrag erstellt.
+      security:
+        - api_token: []
+securityDefinitions:
+  api_token:
+    type: apiKey
+    name: api_token
+    in: header
+definitions:
+  News:
+    type: object
+    properties:
+      id:
+        type: string
+      title:
+        type: string
+      image:
+        type: string
+      content:
+        type: string
+      source:
+        type: string
+      url:
+        type: string
+      date:
+        type: string
+        format: dateTime
