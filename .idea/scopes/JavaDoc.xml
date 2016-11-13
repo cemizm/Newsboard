@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="JavaDoc" pattern="src[de.fhbielefeld.scl.KINewsBoard.BusinessLayer]:*..*||src[de.fhbielefeld.scl.KINewsBoard.DataLayer]:*..*||src[de.fhbielefeld.scl.KINewsBoard.WebService]:*..*" />
+</component>
