@@ -12,6 +12,7 @@ public class Crawler {
     private String token;
     private String name;
     private boolean disabled;
+    private boolean ignoreAnalyzer;
     private Set<NewsEntry> entries;
     private Set<View> views;
 
@@ -48,6 +49,14 @@ public class Crawler {
 
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;
+    }
+
+    public boolean isIgnoreAnalyzer() {
+        return ignoreAnalyzer;
+    }
+
+    public void setIgnoreAnalyzer(boolean ignoreAnalyzer) {
+        this.ignoreAnalyzer = ignoreAnalyzer;
     }
 
     @OneToMany(mappedBy = "crawler")

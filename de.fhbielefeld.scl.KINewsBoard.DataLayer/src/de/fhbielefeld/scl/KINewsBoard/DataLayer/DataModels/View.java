@@ -13,6 +13,7 @@ public class View {
     private int type;
     private int maxResults;
     private int lastDays;
+    private boolean publicView;
     private Set<GroupSet> groupSets;
     private Set<Crawler> crawlers;
 
@@ -56,6 +57,14 @@ public class View {
 
     public void setLastDays(int lastDays) {
         this.lastDays = lastDays;
+    }
+
+    public boolean isPublicView() {
+        return publicView;
+    }
+
+    public void setPublicView(boolean publicView) {
+        this.publicView = publicView;
     }
 
     @ManyToMany
