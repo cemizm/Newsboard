@@ -13,7 +13,7 @@ public class View {
     private int type;
     private int maxResults;
     private int lastDays;
-    private Set<Group> groups;
+    private Set<GroupSet> groupSets;
     private Set<Crawler> crawlers;
 
     @Id
@@ -59,12 +59,12 @@ public class View {
     }
 
     @ManyToMany
-    public Set<Group> getGroups() {
-        return groups;
+    public Set<GroupSet> getGroupSets() {
+        return groupSets;
     }
 
-    public void setGroups(Set<Group> groups) {
-        this.groups = groups;
+    public void setGroupSets(Set<GroupSet> groupSets) {
+        this.groupSets = groupSets;
     }
 
     @ManyToMany

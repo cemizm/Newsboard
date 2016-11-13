@@ -12,6 +12,8 @@ public class Crawler {
     private String token;
     private String name;
     private boolean disabled;
+    private Set<NewsEntry> entries;
+    private Set<View> views;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -46,5 +48,24 @@ public class Crawler {
 
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;
+    }
+
+    @OneToMany(mappedBy = "crawler")
+    public Set<NewsEntry> getEntries() {
+        return entries;
+    }
+
+    public void setEntries(Set<NewsEntry> entries) {
+        this.entries = entries;
+    }
+
+
+    @ManyToMany(mappedBy = "crawlers")
+    public Set<View> getViews() {
+        return views;
+    }
+
+    public void setViews(Set<View> views) {
+        this.views = views;
     }
 }

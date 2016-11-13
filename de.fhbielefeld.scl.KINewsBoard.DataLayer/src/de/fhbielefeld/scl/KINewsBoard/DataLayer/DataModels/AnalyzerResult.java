@@ -53,7 +53,7 @@ public class AnalyzerResult  implements Serializable{
         this.value = value;
     }
 
-    @OneToMany
+    @OneToMany(mappedBy = "analyzerResult")
     public Set<AnalyzerSentenceResult> getAnalyzerSentenceResult() {
         return analyzerSentenceResult;
     }

@@ -2,6 +2,7 @@ package de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by cem on 29.10.16.
@@ -17,6 +18,7 @@ public class NewsEntry {
     private String source;
     private String url;
     private Date date;
+    private Set<AnalyzerResult> analyzerResults;
 
     @Id
     public String getId() {
@@ -28,7 +30,7 @@ public class NewsEntry {
     }
 
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     public Crawler getCrawler() {
         return crawler;
     }
@@ -84,5 +86,15 @@ public class NewsEntry {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+
+    @OneToMany(mappedBy = "newsEntry")
+    public Set<AnalyzerResult> getAnalyzerResults() {
+        return analyzerResults;
+    }
+
+    public void setAnalyzerResults(Set<AnalyzerResult> analyzerResults) {
+        this.analyzerResults = analyzerResults;
     }
 }

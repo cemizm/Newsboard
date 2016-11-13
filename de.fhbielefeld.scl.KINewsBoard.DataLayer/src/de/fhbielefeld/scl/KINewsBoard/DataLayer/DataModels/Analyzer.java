@@ -12,7 +12,8 @@ public class Analyzer {
     private String token;
     private String name;
     private boolean disabled;
-    private Set<Group> groups;
+    private Set<GroupSet> groupSets;
+    private Set<AnalyzerResult> results;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,11 +51,20 @@ public class Analyzer {
     }
 
     @ManyToMany(mappedBy = "analyzers")
-    public Set<Group> getGroups() {
-        return groups;
+    public Set<GroupSet> getGroupSets() {
+        return groupSets;
     }
 
-    public void setGroups(Set<Group> groups) {
-        this.groups = groups;
+    public void setGroupSets(Set<GroupSet> groupSets) {
+        this.groupSets = groupSets;
+    }
+
+    @OneToMany(mappedBy = "analyzer")
+    public Set<AnalyzerResult> getResults() {
+        return results;
+    }
+
+    public void setResults(Set<AnalyzerResult> results) {
+        this.results = results;
     }
 }

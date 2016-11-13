@@ -11,8 +11,8 @@ import java.io.Serializable;
 @Entity
 public class AnalyzerSentenceResult implements Serializable{
     private AnalyzerResult analyzerResult;
-    private int start;
-    private int end;
+    private int charStart;
+    private int charEnd;
     private int value;
 
     @Id
@@ -26,20 +26,20 @@ public class AnalyzerSentenceResult implements Serializable{
     }
 
     @Id
-    public int getStart() {
-        return start;
+    public int getCharStart() {
+        return charStart;
     }
 
-    public void setStart(int start) {
-        this.start = start;
+    public void setCharStart(int charStart) {
+        this.charStart = charStart;
     }
 
-    public int getEnd() {
-        return end;
+    public int getCharEnd() {
+        return charEnd;
     }
 
-    public void setEnd(int end) {
-        this.end = end;
+    public void setCharEnd(int end) {
+        this.charEnd = end;
     }
 
     public int getValue() {

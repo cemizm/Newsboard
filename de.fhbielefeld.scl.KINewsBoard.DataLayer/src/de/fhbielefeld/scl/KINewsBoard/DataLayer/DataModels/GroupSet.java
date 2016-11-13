@@ -7,7 +7,7 @@ import java.util.Set;
  * Created by cem on 03.11.16.
  */
 @Entity
-public class Group {
+public class GroupSet {
     private int id;
     private String name;
     private Set<View> views;
@@ -32,7 +32,7 @@ public class Group {
     }
 
 
-    @ManyToMany(mappedBy = "groups")
+    @ManyToMany(mappedBy = "groupSets")
     public Set<View> getViews() {
         return views;
     }
