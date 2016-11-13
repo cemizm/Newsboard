@@ -1,11 +1,12 @@
 package de.fhbielefeld.scl.KINewsBoard.WebService.Analyzer;
 
+import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.AnalyzerResultModel;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.NewsModel;
-import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.NewsBoardManager;
+import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.NewsBoardService;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -15,12 +16,29 @@ import java.util.List;
 @Path("/news")
 public class NewsResource {
 
+    private NewsBoardService newsBoardService;
+
+    public NewsResource() {
+        newsBoardService = new NewsBoardService();
+    }
+
     @GET
-    @Path("/{token}")
+    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<NewsModel> getNewsEntries(@PathParam("token") String token) throws IOException {
-        try (NewsBoardManager mngr = new NewsBoardManager()) {
-            return mngr.getAnalyzerNewsEntries(token);
-        }
+    public List<NewsModel> getNewsEntries(
+            @HeaderParam("token") String token
+    ) throws Exception {
+        return newsBoardService.getAnalyzerNewsEntries(token);
+    }
+
+
+    @POST
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public AnalyzerResultModel publish(
+            @HeaderParam("token") String token,
+            AnalyzerResultModel model
+    ) throws Exception {
+        return newsBoardService.publishAnalyzerResult(token, model);
     }
 }
