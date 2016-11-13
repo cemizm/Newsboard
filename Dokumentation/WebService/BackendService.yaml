@@ -126,7 +126,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Group'
+              $ref: '#/definitions/GroupSet'
     post:
       summary: Erstellt eine neue Gruppe
       parameters:
@@ -134,7 +134,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/Group'
+            $ref: '#/definitions/GroupSet'
       responses:
         200:
           description: Gruppe erfolgreich erstellt
@@ -145,7 +145,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/Group'
+            $ref: '#/definitions/GroupSet'
       responses:
         200:
           description: Gruppe erfolgreich aktualisiert

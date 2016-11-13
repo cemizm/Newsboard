@@ -13,31 +13,28 @@ produces:
 paths:
   /news:
     get:
-      summary: Liefert News Einträge
-      description: |
-        **Liefert noch nicht analysierte News Einträge**
-
-
-        Für die Abfrage der News Einträge wird ein Analyzer Authentifizierungs-Token benötigt.
+      summary: Liefert noch nicht analysierte News Einträge
       responses:
-        '200':
+        200:
           description: Liste aller News Einträge
           schema:
             title: News Einträge
             type: array
             items:
               $ref: '#/definitions/News'
+        401:
+          description: Ungültiger Token
       security:
-        - api_token: []
-  /result:
+        - token: []
+  /news/{newsId}:
     post:
-      summary: Veröffentlich ein Analyse-Ergebnis
-      description: |
-        ** Veröffentlicht Analyse Ergebnisse **
-
-
-        Für das veröffentlichen von Analyse Ergebnissen wird ein Analyzer Authentifizierungs-Token benötigt.
+      summary: Veröffentlich ein Analyse-Ergebnis zu einem News Eintrag
       parameters:
+        - name: newsId
+          in: path
+          type: integer
+          format: int32
+          required: true
         - name: result
           in: body
           schema:
@@ -46,12 +43,23 @@ paths:
       responses:
         200:
           description: Analyse Ergebnis angelegt
+        400:
+          description: Fehlerhafte Anfrage
+        401:
+          description: Ungültiger Token
       security:
-        - api_token: []
+        - token: []
 securityDefinitions:
-  api_token:
+  token:
+    description: |
+      ** Token basierte Authentifizierung **
+
+
+      Der Zugriff auf die Schnittstelle ist mit einem Token geschützt. Dieser kann durch den Administrator generiert werden.
+
+      Der Token wird im Header der HTTP(S)-Anfrage übermitellt.
     type: apiKey
-    name: api_token
+    name: token
     in: header
 definitions:
   News:

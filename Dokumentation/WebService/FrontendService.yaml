@@ -13,7 +13,7 @@ produces:
 paths:
   /news:
     get:
-      summary: Liefert News Einträge
+      summary: Liefert alle News Einträge
       description: >
         **Liefert News Einträge**
         
@@ -45,7 +45,7 @@ paths:
               $ref: '#/definitions/News'
   '/news/findByViewId/{viewId}':
     get:
-      summary: Liefert alle öffentlichen News Einträge
+      summary: Liefert alle für eine View freigegeben News Einträge
       description: >
         ** Liefert alle News Einträge zu einer definierten View **
 
