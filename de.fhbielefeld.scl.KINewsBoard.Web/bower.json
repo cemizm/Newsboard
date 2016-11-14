@@ -7,6 +7,6 @@
   "private": true,
   "dependencies": {
     "angular-ui-router": "^0.3.2",
-    "angular-ui-bootstrap": "^2.2.0"
+    "angular-bootstrap": "^2.2.0"
   }
 }
