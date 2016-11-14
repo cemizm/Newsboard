@@ -12,7 +12,7 @@ public class AnalyzerDAO {
 
     private EntityManager entityManager;
 
-    public AnalyzerDAO(EntityManager entityManager) {
+    AnalyzerDAO(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

@@ -3,14 +3,17 @@ package de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models;
 
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by cem on 10.11.16.
  */
 public class NewsModel {
     private String id;
-    private int crawler_id;
+    private CrawlerModel crawler;
     private String title;
     private String image;
     private String content;
@@ -18,18 +21,34 @@ public class NewsModel {
     private String url;
     private Date date;
 
+    private List<AnalyzerResultModel> analyzerResultModels;
+
+    public NewsModel() {
+        analyzerResultModels = new ArrayList<>();
+    }
+
     public NewsModel(NewsEntry entry) {
+        this(entry, false);
+    }
+
+    public NewsModel(NewsEntry entry, boolean includeRelations) {
+        this();
+
         id = entry.getId();
-        crawler_id = entry.getCrawler().getId();
+        crawler = new CrawlerModel(entry.getCrawler());
         title = entry.getTitle();
         image = entry.getImage();
         content = entry.getContent();
         source = entry.getSource();
         url = entry.getUrl();
         date = entry.getDate();
-    }
 
-    public NewsModel() {
+        if (includeRelations) {
+            analyzerResultModels.addAll(entry.getAnalyzerResults()
+                    .stream()
+                    .map(AnalyzerResultModel::new)
+                    .collect(Collectors.toList()));
+        }
     }
 
     public String getId() {
@@ -40,12 +59,12 @@ public class NewsModel {
         this.id = id;
     }
 
-    public int getCrawler_id() {
-        return crawler_id;
+    public CrawlerModel getCrawler() {
+        return crawler;
     }
 
-    public void setCrawler_id(int crawler_id) {
-        this.crawler_id = crawler_id;
+    public void setCrawler(CrawlerModel crawler) {
+        this.crawler = crawler;
     }
 
     public String getTitle() {
@@ -96,4 +115,11 @@ public class NewsModel {
         this.date = date;
     }
 
+    public List<AnalyzerResultModel> getAnalyzerResultModels() {
+        return analyzerResultModels;
+    }
+
+    public void setAnalyzerResultModels(List<AnalyzerResultModel> analyzerResultModels) {
+        this.analyzerResultModels = analyzerResultModels;
+    }
 }

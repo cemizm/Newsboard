@@ -1,15 +1,13 @@
 package de.fhbielefeld.scl.KINewsBoard.WebService.Analyzer;
 
-import javax.ws.rs.*;
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by cem on 10.11.16.
  */
-
-
-import javax.ws.rs.core.Application;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by cem on 10.11.16.

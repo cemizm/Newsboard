@@ -9,7 +9,7 @@ import java.util.Set;
  * Created by cem on 03.11.16.
  */
 @Entity
-public class AnalyzerResult  implements Serializable{
+public class AnalyzerResult implements Serializable {
     private Analyzer analyzer;
     private NewsEntry newsEntry;
     private Date date;
