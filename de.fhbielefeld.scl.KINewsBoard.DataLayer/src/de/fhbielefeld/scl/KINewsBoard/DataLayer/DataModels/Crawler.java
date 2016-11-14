@@ -7,6 +7,11 @@ import java.util.Set;
  * Created by cem on 02.11.16.
  */
 @Entity
+@NamedQueries
+        ({
+                @NamedQuery(name = "Crawler.findAll", query = "select c from Crawler c"),
+                @NamedQuery(name = "Crawler.findByToken", query = "select c from Crawler c")
+        })
 public class Crawler {
     private int id;
     private String token;

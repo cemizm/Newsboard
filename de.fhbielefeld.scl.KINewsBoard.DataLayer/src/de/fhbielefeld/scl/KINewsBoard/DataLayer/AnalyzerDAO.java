@@ -16,10 +16,7 @@ public class AnalyzerDAO {
         this.entityManager = entityManager;
     }
 
-    public Analyzer get(String id) {
-        if (id == null || id.isEmpty())
-            throw new IllegalArgumentException("Paramter id darf nicht null oder leer sein");
-
+    public Analyzer get(int id) {
         return entityManager.find(Analyzer.class, id);
     }
 
@@ -52,12 +49,9 @@ public class AnalyzerDAO {
         return analyzer;
     }
 
-    public void delete(String id) {
-        if (id == null || id.isEmpty())
-            throw new IllegalArgumentException("Paramter id darf nicht null oder leer sein");
-
-        Analyzer entry = get(id);
-        delete(entry);
+    public void delete(int id) {
+        Analyzer analyzer = get(id);
+        delete(analyzer);
     }
 
     public void delete(Analyzer analyzer) {

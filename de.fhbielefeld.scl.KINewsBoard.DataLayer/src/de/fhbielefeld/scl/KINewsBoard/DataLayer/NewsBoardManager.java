@@ -1,5 +1,7 @@
 package de.fhbielefeld.scl.KINewsBoard.DataLayer;
 
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.Crawler;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
@@ -8,6 +10,7 @@ public class NewsBoardManager {
 
     private NewsEntryDAO newsEntryDAO;
     private AnalyzerDAO analyzerDAO;
+    private CrawlerDAO crawlerDAO;
 
     public NewsBoardManager(){
 
@@ -25,6 +28,13 @@ public class NewsBoardManager {
             analyzerDAO = new AnalyzerDAO(getEntityManager());
 
         return analyzerDAO;
+    }
+
+    public CrawlerDAO getCrawlerDAO() {
+        if(crawlerDAO == null)
+            crawlerDAO = new CrawlerDAO(getEntityManager());
+
+        return crawlerDAO;
     }
 
     private EntityManager getEntityManager() {
