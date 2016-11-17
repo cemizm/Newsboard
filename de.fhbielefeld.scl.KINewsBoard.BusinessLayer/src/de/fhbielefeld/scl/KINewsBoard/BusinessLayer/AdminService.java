@@ -1,10 +1,12 @@
 package de.fhbielefeld.scl.KINewsBoard.BusinessLayer;
 
+import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.CrawlerModel;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.*;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.NewsBoardManager;
 
 import javax.ejb.Stateless;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by azad- on 17.11.2016.
@@ -14,8 +16,8 @@ public class AdminService {
 
     private NewsBoardManager mngr;
 
-    public AdminService(NewsBoardManager newsBoardManager) {
-        this.mngr = newsBoardManager;
+    public AdminService() {
+        this.mngr = new NewsBoardManager();
     }
 
     public Analyzer getAnalyzer(int id) {
@@ -59,29 +61,29 @@ public class AdminService {
         mngr.getAnalyzerResultDAO().delete(analyzerResult);
     }
 
-    public Crawler getCrawler(int id) {
-        return mngr.getCrawlerDAO().get(id);
+
+    public CrawlerModel getCrawler(int id) {
+        return new CrawlerModel(mngr.getCrawlerDAO().get(id));
     }
 
-    public List<Crawler> getAllCrawler() {
-        return mngr.getCrawlerDAO().getAll();
+    public List<CrawlerModel> getAllCrawler() {
+        return mngr.getCrawlerDAO()
+                .getAll()
+                .stream()
+                .map(CrawlerModel::new)
+                .collect(Collectors.toList());
     }
 
-    public void createCrawler(Crawler crawler) {
-        mngr.getCrawlerDAO().create(crawler);
+    public void createCrawler(CrawlerModel model) {
+        mngr.getCrawlerDAO().create(model.getCrawler());
     }
 
-    public Crawler updateCrawler(Crawler crawler) {
-        return mngr.getCrawlerDAO().update(crawler);
+    public CrawlerModel updateCrawler(CrawlerModel model) {
+        return new CrawlerModel(mngr.getCrawlerDAO().update(model.getCrawler()));
     }
 
     public void deleteCrawler(int id) {
-        Crawler crawler = getCrawler(id);
-        deleteCrawler(crawler);
-    }
-
-    public void deleteCrawler(Crawler crawler) {
-        mngr.getCrawlerDAO().delete(crawler);
+        mngr.getCrawlerDAO().delete(id);
     }
 
     public View getView(int id) {

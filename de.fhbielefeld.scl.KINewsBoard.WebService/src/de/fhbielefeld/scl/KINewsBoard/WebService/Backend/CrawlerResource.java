@@ -22,13 +22,13 @@ public class CrawlerResource {
     @GET
     @Path("/")
     public List<CrawlerModel> get() {
-        return adminService.getCrawlers();
+        return adminService.getAllCrawler();
     }
 
     @POST
     @Path("/")
     public Response create(CrawlerModel model) {
-        adminService.addCrawler(model);
+        adminService.createCrawler(model);
         return Response.ok().build();
     }
 

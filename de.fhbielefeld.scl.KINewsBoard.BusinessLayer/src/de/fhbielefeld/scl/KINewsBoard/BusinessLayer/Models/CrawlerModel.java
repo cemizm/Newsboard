@@ -63,4 +63,14 @@ public class CrawlerModel {
     public void setIgnoreAnalyzer(boolean ignoreAnalyzer) {
         this.ignoreAnalyzer = ignoreAnalyzer;
     }
+
+    public Crawler getCrawler(){
+        Crawler c = new Crawler();
+        c.setId(getId());
+        c.setName(getName());
+        c.setToken(getToken());
+        c.setDisabled(isDisabled());
+        c.setIgnoreAnalyzer(isIgnoreAnalyzer());
+        return c;
+    }
 }
