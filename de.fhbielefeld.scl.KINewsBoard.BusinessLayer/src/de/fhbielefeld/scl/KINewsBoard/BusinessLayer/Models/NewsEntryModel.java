@@ -121,4 +121,16 @@ public class NewsEntryModel {
     public void setAnalyzerResultModels(List<AnalyzerResultModel> analyzerResultModels) {
         this.analyzerResultModels = analyzerResultModels;
     }
+
+    public NewsEntry getNewsEntry() {
+        NewsEntry newsEntry = new NewsEntry();
+        newsEntry.setId(getId());
+        newsEntry.setTitle(getTitle());
+        newsEntry.setImage(getImage());
+        newsEntry.setContent(getContent());
+        newsEntry.setSource(getSource());
+        newsEntry.setUrl(getUrl());
+        newsEntry.setDate(getDate());
+        return newsEntry;
+    }
 }
