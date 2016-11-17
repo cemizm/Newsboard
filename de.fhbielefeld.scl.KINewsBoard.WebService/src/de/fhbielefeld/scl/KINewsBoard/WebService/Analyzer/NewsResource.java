@@ -13,6 +13,7 @@ import java.util.List;
  */
 
 @Path("/news")
+@Produces(MediaType.APPLICATION_JSON)
 public class NewsResource {
 
     private NewsBoardService newsBoardService;
@@ -23,7 +24,6 @@ public class NewsResource {
 
     @GET
     @Path("/")
-    @Produces(MediaType.APPLICATION_JSON)
     public List<NewsModel> getNewsEntries(
             @HeaderParam("token") String token
     ) throws Exception {
@@ -33,7 +33,6 @@ public class NewsResource {
 
     @POST
     @Path("/")
-    @Produces(MediaType.APPLICATION_JSON)
     public AnalyzerResultModel publish(
             @HeaderParam("token") String token,
             AnalyzerResultModel model

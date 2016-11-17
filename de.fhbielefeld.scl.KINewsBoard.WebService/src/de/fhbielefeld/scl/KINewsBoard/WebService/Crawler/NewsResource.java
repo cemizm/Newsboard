@@ -16,6 +16,7 @@ import java.io.IOException;
  */
 
 @Path("/news")
+@Produces(MediaType.APPLICATION_JSON)
 public class NewsResource {
 
     @EJB
@@ -23,7 +24,6 @@ public class NewsResource {
 
     @POST
     @Path("/")
-    @Produces(MediaType.APPLICATION_JSON)
     public NewsModel publish(
             @HeaderParam("token") String token,
             NewsModel model

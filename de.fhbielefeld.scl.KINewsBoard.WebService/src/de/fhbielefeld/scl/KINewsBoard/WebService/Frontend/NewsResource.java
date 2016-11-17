@@ -14,6 +14,7 @@ import java.util.List;
  */
 
 @Path("/news")
+@Produces(MediaType.APPLICATION_JSON)
 public class NewsResource {
 
     @EJB
@@ -21,7 +22,6 @@ public class NewsResource {
 
     @GET
     @Path("/")
-    @Produces(MediaType.APPLICATION_JSON)
     public List<NewsModel> getPublicNewsEntries(
             @DefaultValue("1") @QueryParam("page") int page,
             @QueryParam("keyword") String keyword
@@ -31,7 +31,6 @@ public class NewsResource {
 
     @GET
     @Path("/{newsId}")
-    @Produces(MediaType.APPLICATION_JSON)
     public NewsModel getNewsEntryDetails(
             @NotNull @PathParam("newsId") String newsId
     ) throws Exception {
@@ -40,7 +39,6 @@ public class NewsResource {
 
     @GET
     @Path("/findByView/{viewId}")
-    @Produces(MediaType.APPLICATION_JSON)
     public List<NewsModel> getViewEntries(
             @PathParam("viewId") int viewId,
             @DefaultValue("1") @QueryParam("page") int page
