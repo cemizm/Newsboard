@@ -12,7 +12,9 @@ angular.module('nwbadmin.crawler', ['ui.router'])
 
     }])
     .controller('CrawlerViewController',
-        ['$scope', '$location',
-            function ($scope, $location) {
-
+        ['$scope', '$location', 'CrawlerService',
+            function ($scope, $location, CrawlerSerivce) {
+                CrawlerService.get().then(function (data) {
+                    $scope.crawlers = data;
+                });
             }]);
