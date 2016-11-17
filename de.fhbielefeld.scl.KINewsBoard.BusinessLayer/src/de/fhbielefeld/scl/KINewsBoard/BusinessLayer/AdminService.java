@@ -1,7 +1,6 @@
 package de.fhbielefeld.scl.KINewsBoard.BusinessLayer;
 
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.*;
-import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.Analyzer;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.AnalyzerResult;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.NewsBoardManager;
 
@@ -37,8 +36,8 @@ public class AdminService {
         mngr.getAnalyzerDAO().create(analyzerModel.getAnalyzer());
     }
 
-    public AnalyzerModel updateAnalyzer(Analyzer analyzer) {
-        return new AnalyzerModel(mngr.getAnalyzerDAO().update(analyzer));
+    public AnalyzerModel updateAnalyzer(AnalyzerModel analyzerModel) {
+        return new AnalyzerModel(mngr.getAnalyzerDAO().update(analyzerModel.getAnalyzer()));
     }
 
     public void deleteAnalyzer(int id) {
