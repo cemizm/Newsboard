@@ -14,5 +14,12 @@ angular.module('nwb.public', ['ui.router'])
     .controller('PublicViewController',
         ['$scope', '$location', 'FrontendService',
             function ($scope, $location, FrontendService) {
+                FrontendService.getNewsEntries(1, "").then(function(entries) {
+                    $scope.entries = entries;
+                });
+
+                $scope.myInterval = 2000;
+                $scope.noWrapSlides = false;
+                $scope.active = 0;
 
             }]);
