@@ -8,6 +8,7 @@ import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.Crawler;
 public class CrawlerModel {
     private int id;
     private String name;
+    private String token;
     private boolean disabled;
     private boolean ignoreAnalyzer;
 
@@ -18,6 +19,7 @@ public class CrawlerModel {
     public CrawlerModel(Crawler crawler) {
         id = crawler.getId();
         name = crawler.getName();
+        token = crawler
         disabled = crawler.isDisabled();
         ignoreAnalyzer = crawler.isIgnoreAnalyzer();
     }

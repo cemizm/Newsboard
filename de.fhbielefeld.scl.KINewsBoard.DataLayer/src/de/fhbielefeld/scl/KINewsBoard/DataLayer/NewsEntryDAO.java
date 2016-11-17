@@ -19,7 +19,6 @@ public class NewsEntryDAO {
     public NewsEntry get(String id) {
         if (id == null || id.isEmpty())
             throw new IllegalArgumentException("Parameter id darf nicht null oder leer sein");
-
         return entityManager.find(NewsEntry.class, id);
     }
 

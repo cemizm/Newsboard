@@ -29,7 +29,6 @@ public class NewsEntry {
         this.id = id;
     }
 
-
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     public Crawler getCrawler() {
         return crawler;
@@ -87,7 +86,6 @@ public class NewsEntry {
     public void setDate(Date date) {
         this.date = date;
     }
-
 
     @OneToMany(mappedBy = "newsEntry")
     public Set<AnalyzerResult> getAnalyzerResults() {

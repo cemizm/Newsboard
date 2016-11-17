@@ -16,10 +16,7 @@ public class GroupSetDAO {
         this.entityManager = entityManager;
     }
 
-    public GroupSet get(String id) {
-        if (id == null || id.isEmpty())
-            throw new IllegalArgumentException("Parameter id darf nicht null oder leer sein");
-
+    public GroupSet get(int id) {
         return entityManager.find(GroupSet.class, id);
     }
 
@@ -48,7 +45,7 @@ public class GroupSetDAO {
         entityManager.remove(groupSet);
     }
 
-    public void delete(String id) {
+    public void delete(int id) {
         GroupSet groupSet = get(id);
         delete(groupSet);
     }
