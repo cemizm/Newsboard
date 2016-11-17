@@ -32,7 +32,6 @@ public class GroupSet {
         this.name = name;
     }
 
-
     @ManyToMany(mappedBy = "groupSets")
     public Set<View> getViews() {
         return views;

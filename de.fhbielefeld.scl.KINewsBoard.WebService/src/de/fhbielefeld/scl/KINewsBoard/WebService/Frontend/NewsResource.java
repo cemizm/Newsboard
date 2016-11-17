@@ -1,7 +1,7 @@
 package de.fhbielefeld.scl.KINewsBoard.WebService.Frontend;
 
 import com.sun.istack.internal.NotNull;
-import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.NewsModel;
+import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.NewsEntryModel;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.NewsBoardService;
 
 import javax.ejb.EJB;
@@ -22,7 +22,7 @@ public class NewsResource {
 
     @GET
     @Path("/")
-    public List<NewsModel> getPublicNewsEntries(
+    public List<NewsEntryModel> getPublicNewsEntries(
             @DefaultValue("1") @QueryParam("page") int page,
             @QueryParam("keyword") String keyword
     ) throws Exception {
@@ -31,7 +31,7 @@ public class NewsResource {
 
     @GET
     @Path("/{newsId}")
-    public NewsModel getNewsEntryDetails(
+    public NewsEntryModel getNewsEntryDetails(
             @NotNull @PathParam("newsId") String newsId
     ) throws Exception {
         return newsBoardService.getNewsEntryDetails(newsId);
@@ -39,7 +39,7 @@ public class NewsResource {
 
     @GET
     @Path("/findByView/{viewId}")
-    public List<NewsModel> getViewEntries(
+    public List<NewsEntryModel> getViewEntries(
             @PathParam("viewId") int viewId,
             @DefaultValue("1") @QueryParam("page") int page
     ) throws Exception {

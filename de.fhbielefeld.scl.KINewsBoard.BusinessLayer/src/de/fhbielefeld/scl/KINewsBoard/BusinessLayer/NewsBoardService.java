@@ -1,7 +1,7 @@
 package de.fhbielefeld.scl.KINewsBoard.BusinessLayer;
 
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.AnalyzerResultModel;
-import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.NewsModel;
+import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.NewsEntryModel;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.Crawler;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.NewsBoardManager;
@@ -29,7 +29,7 @@ public class NewsBoardService {
      * @param keyword Das Keyword nach dem die News Einträge gefilter werden sollen.
      * @return Liste der News Einträge die in der Web/Mobile Ansicht angezeigt werden.
      */
-    public List<NewsModel> getPublicNewsEntries(int start, String keyword) {
+    public List<NewsEntryModel> getPublicNewsEntries(int start, String keyword) {
         return getNewsModels(mngr.getNewsEntryDAO().getAll());
     }
 
@@ -41,7 +41,7 @@ public class NewsBoardService {
      * @return Liste der News Einträge die der View zugeordnet sind.
      * @throws IllegalArgumentException wenn View mit <code>viewId</code> nicht existiert.
      */
-    public List<NewsModel> getViewNewsEntries(int viewId, int start) {
+    public List<NewsEntryModel> getViewNewsEntries(int viewId, int start) {
         return getNewsModels(mngr.getNewsEntryDAO().getAll());
     }
 
@@ -51,8 +51,8 @@ public class NewsBoardService {
      * @param newsId Die Id der News dessen Details geladen werden sollen.
      * @return Die Detail Ansicht zu der News.
      */
-    public NewsModel getNewsEntryDetails(String newsId) {
-        return new NewsModel(mngr.getNewsEntryDAO().get(newsId), true);
+    public NewsEntryModel getNewsEntryDetails(String newsId) {
+        return new NewsEntryModel(mngr.getNewsEntryDAO().get(newsId), true);
     }
 
     /**
@@ -62,7 +62,7 @@ public class NewsBoardService {
      * @param model Der News Eintrag der veröffentlicht werden soll.
      * @return Der veröffentlichte News Eintrag
      */
-    public NewsModel publishNewsEntry(String token, NewsModel model) {
+    public NewsEntryModel publishNewsEntry(String token, NewsEntryModel model) {
 
         Crawler crawler = mngr.getCrawlerDAO().getByToken(token);
 
@@ -90,7 +90,7 @@ public class NewsBoardService {
      * @param token der Auth-Token für einen AnalyzerModel.
      * @return Liste der News Einträge.
      */
-    public List<NewsModel> getAnalyzerNewsEntries(String token) {
+    public List<NewsEntryModel> getAnalyzerNewsEntries(String token) {
         return getNewsModels(mngr.getNewsEntryDAO().getAll());
     }
 
@@ -105,9 +105,8 @@ public class NewsBoardService {
         return model;
     }
 
-
-    private List<NewsModel> getNewsModels(List<NewsEntry> entries) {
-        return entries.stream().map(NewsModel::new).collect(Collectors.toList());
+    private List<NewsEntryModel> getNewsModels(List<NewsEntry> entries) {
+        return entries.stream().map(NewsEntryModel::new).collect(Collectors.toList());
     }
 
     public void Close() {

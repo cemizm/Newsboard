@@ -1,7 +1,7 @@
 package de.fhbielefeld.scl.KINewsBoard.WebService.Analyzer;
 
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.AnalyzerResultModel;
-import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.NewsModel;
+import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.NewsEntryModel;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.NewsBoardService;
 
 import javax.ejb.EJB;
@@ -22,7 +22,7 @@ public class NewsResource {
 
     @GET
     @Path("/")
-    public List<NewsModel> getNewsEntries(
+    public List<NewsEntryModel> getNewsEntries(
             @HeaderParam("token") String token
     ) throws Exception {
         return newsBoardService.getAnalyzerNewsEntries(token);

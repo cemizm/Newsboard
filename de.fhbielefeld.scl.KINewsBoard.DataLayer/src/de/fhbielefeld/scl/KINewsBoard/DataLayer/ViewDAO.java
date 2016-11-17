@@ -15,10 +15,7 @@ public class ViewDAO {
         this.entityManager = entityManager;
     }
 
-    public View get(String id) {
-        if (id == null || id.isEmpty())
-            throw new IllegalArgumentException("Parameter id darf nicht null oder leer sein");
-
+    public View get(int id) {
         return entityManager.find(View.class, id);
     }
 
@@ -40,12 +37,12 @@ public class ViewDAO {
         return entityManager.merge(view);
     }
 
-    public void delete(String id) {
+    public void delete(int id) {
         View view = get(id);
         delete(view);
     }
 
-    private void delete(View view) {
+    public void delete(View view) {
         if (view == null)
             throw new IllegalArgumentException("Parameter view darf nicht null oder leer sein");
 

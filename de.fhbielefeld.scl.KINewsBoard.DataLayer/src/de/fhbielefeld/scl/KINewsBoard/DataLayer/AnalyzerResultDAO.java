@@ -15,12 +15,6 @@ public class AnalyzerResultDAO {
         this.entityManager = entityManager;
     }
 
-    public AnalyzerResult get(String id) {
-        if (id == null || id.isEmpty())
-            throw new IllegalArgumentException("Parameter id darf nicht null oder leer sein");
-
-        return entityManager.find(AnalyzerResult.class, id);
-    }
 
     public List<AnalyzerResult> getAll() {
 
@@ -28,7 +22,7 @@ public class AnalyzerResultDAO {
     }
 
     public AnalyzerResult update(AnalyzerResult analyzerResult) {
-        if(analyzerResult == null)
+        if (analyzerResult == null)
             throw new IllegalArgumentException("Parameter analyzerResult darf nicht null oder leer sein");
 
         return entityManager.merge(analyzerResult);
@@ -46,11 +40,6 @@ public class AnalyzerResultDAO {
             throw new IllegalArgumentException("Parameter analyzerResult darf nicht null oder leer sein");
 
         entityManager.remove(analyzerResult);
-    }
-
-    public void delete(String id) {
-        AnalyzerResult analyzerResult = get(id);
-        delete(analyzerResult);
     }
 
 }

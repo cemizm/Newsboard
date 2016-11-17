@@ -73,7 +73,6 @@ public class Crawler {
         this.entries = entries;
     }
 
-
     @ManyToMany(mappedBy = "crawlers")
     public Set<View> getViews() {
         return views;
