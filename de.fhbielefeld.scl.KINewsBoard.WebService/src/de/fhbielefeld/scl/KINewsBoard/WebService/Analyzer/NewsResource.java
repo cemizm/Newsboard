@@ -4,6 +4,7 @@ import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.AnalyzerResultModel;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.NewsModel;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.NewsBoardService;
 
+import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -16,11 +17,8 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class NewsResource {
 
+    @EJB
     private NewsBoardService newsBoardService;
-
-    public NewsResource() {
-        newsBoardService = new NewsBoardService();
-    }
 
     @GET
     @Path("/")
