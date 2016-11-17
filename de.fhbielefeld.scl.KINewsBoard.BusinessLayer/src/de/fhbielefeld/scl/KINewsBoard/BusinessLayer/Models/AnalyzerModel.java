@@ -79,4 +79,13 @@ public class AnalyzerModel {
     public void setGroupSets(List<GroupSetModel> groupSets) {
         this.groupSets = groupSets;
     }
+
+    public Analyzer getAnalyzer() {
+        Analyzer analyzer = new Analyzer();
+        analyzer.setId(getId());
+        analyzer.setToken(getToken());
+        analyzer.setName(getName());
+        analyzer.setDisabled(isDisabled());
+        return analyzer;
+    }
 }

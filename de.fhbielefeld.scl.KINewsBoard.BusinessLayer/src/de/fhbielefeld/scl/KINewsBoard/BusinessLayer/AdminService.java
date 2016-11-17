@@ -1,7 +1,7 @@
 package de.fhbielefeld.scl.KINewsBoard.BusinessLayer;
 
-import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.CrawlerModel;
-import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.*;
+import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.*;
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.AnalyzerResult;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.NewsBoardManager;
 
 import javax.ejb.Stateless;
@@ -20,47 +20,51 @@ public class AdminService {
         this.mngr = new NewsBoardManager();
     }
 
-    public Analyzer getAnalyzer(int id) {
-        return mngr.getAnalyzerDAO().get(id);
+    public AnalyzerModel getAnalyzer(int id) {
+        return new AnalyzerModel(mngr.getAnalyzerDAO().get(id));
     }
 
-    public List<Analyzer> getAllAnalyzers() {
-        return mngr.getAnalyzerDAO().getAll();
+    public List<AnalyzerModel> getAllAnalyzers() {
+        return mngr.getAnalyzerDAO()
+                .getAll()
+                .stream()
+                .map(AnalyzerModel::new)
+                .collect(Collectors.toList());
     }
 
-    public void createAnalyzer(Analyzer analyzer) {
-        mngr.getAnalyzerDAO().create(analyzer);
+    public void createAnalyzer(AnalyzerModel analyzerModel) {
+        mngr.getAnalyzerDAO().create(analyzerModel.getAnalyzer());
     }
 
-    public Analyzer updateAnalyzer(Analyzer analyzer) {
-        return mngr.getAnalyzerDAO().update(analyzer);
+    public AnalyzerModel updateAnalyzer(AnalyzerModel analyzerModel) {
+        return new AnalyzerModel(mngr.getAnalyzerDAO().update(analyzerModel.getAnalyzer()));
     }
 
     public void deleteAnalyzer(int id) {
-        Analyzer analyzer = getAnalyzer(id);
-        deleteAnalyzer(analyzer);
+        mngr.getAnalyzerDAO().delete(id);
     }
 
-    public void deleteAnalyzer(Analyzer analyzer) {
-        mngr.getAnalyzerDAO().delete(analyzer);
+    public List<AnalyzerResultModel> getAllAnalyzerResults() {
+        return mngr.getAnalyzerResultDAO()
+                .getAll()
+                .stream()
+                .map(AnalyzerResultModel::new)
+                .collect(Collectors.toList());
     }
 
-    public List<AnalyzerResult> getAllAnalyzerResults() {
-        return mngr.getAnalyzerResultDAO().getAll();
+    public void create(AnalyzerResultModel analyzerResultModel) {
+        mngr.getAnalyzerResultDAO()
+                .create(analyzerResultModel.getAnalyzerResult());
     }
 
-    public void create(AnalyzerResult analyzerResult) {
-        mngr.getAnalyzerResultDAO().create(analyzerResult);
-    }
-
-    public AnalyzerResult updateAnalyzerResult(AnalyzerResult analyzerResult) {
-        return mngr.getAnalyzerResultDAO().update(analyzerResult);
+    public AnalyzerResultModel updateAnalyzerResult(AnalyzerResultModel analyzerResultModel) {
+        return new AnalyzerResultModel(mngr.getAnalyzerResultDAO()
+                .update(analyzerResultModel.getAnalyzerResult()));
     }
 
     public void deleteAnalyzerResult(AnalyzerResult analyzerResult) {
         mngr.getAnalyzerResultDAO().delete(analyzerResult);
     }
-
 
     public CrawlerModel getCrawler(int id) {
         return new CrawlerModel(mngr.getCrawlerDAO().get(id));
@@ -79,87 +83,86 @@ public class AdminService {
     }
 
     public CrawlerModel updateCrawler(CrawlerModel model) {
-        return new CrawlerModel(mngr.getCrawlerDAO().update(model.getCrawler()));
+        return new CrawlerModel(mngr.getCrawlerDAO()
+                .update(model.getCrawler()));
     }
 
     public void deleteCrawler(int id) {
         mngr.getCrawlerDAO().delete(id);
     }
 
-    public View getView(int id) {
-        return mngr.getViewDAO().get(id);
+    public ViewModel getView(int id) {
+        return new ViewModel(mngr.getViewDAO().get(id));
     }
 
-    public List<View> getAllViews() {
-        return mngr.getViewDAO().getAll();
+    public List<ViewModel> getAllViews() {
+        return mngr.getViewDAO()
+                .getAll()
+                .stream()
+                .map(ViewModel::new)
+                .collect(Collectors.toList());
     }
 
-    public void createView(View view) {
-        mngr.getViewDAO().create(view);
+    public void createView(ViewModel viewModel) {
+        mngr.getViewDAO().create(viewModel.getView());
     }
 
-    public View updateView(View view) {
-        return mngr.getViewDAO().update(view);
+    public ViewModel updateView(ViewModel viewModel) {
+        return new ViewModel(mngr.getViewDAO()
+                .update(viewModel.getView()));
     }
 
     public void deleteView(int id) {
-        View view = getView(id);
-        deleteView(view);
+        mngr.getViewDAO().delete(id);
     }
 
-    public void deleteView(View view) {
-        mngr.getViewDAO().delete(view);
+    public GroupSetModel getGroupSet(int id) {
+        return new GroupSetModel(mngr.getGroupSetDAO().get(id));
     }
 
-    public GroupSet getGroupSet(int id) {
-        return mngr.getGroupSetDAO().get(id);
+    public List<GroupSetModel> getAllGroupSets() {
+        return mngr.getGroupSetDAO()
+                .getAll()
+                .stream()
+                .map(GroupSetModel::new)
+                .collect(Collectors.toList());
     }
 
-    public List<GroupSet> getAllGroupSets() {
-        return mngr.getGroupSetDAO().getAll();
+    public void createGroupSet(GroupSetModel groupSetModel) {
+        mngr.getGroupSetDAO().create(groupSetModel.getGroupSet());
     }
 
-    public void createGroupSet(GroupSet groupSet) {
-        mngr.getGroupSetDAO().create(groupSet);
-    }
-
-    public GroupSet updateGroupSet(GroupSet groupSet) {
-        return mngr.getGroupSetDAO().update(groupSet);
+    public GroupSetModel updateGroupSet(GroupSetModel groupSetModel) {
+        return new GroupSetModel(mngr.getGroupSetDAO()
+                .update(groupSetModel.getGroupSet()));
     }
 
     public void deleteGroupSet(int id) {
-        GroupSet groupSet = getGroupSet(id);
-        deleteGroupSet(groupSet);
+        mngr.getGroupSetDAO().delete(id);
     }
 
-    public void deleteGroupSet(GroupSet groupSet) {
-        mngr.getGroupSetDAO().delete(groupSet);
+    public NewsEntryModel getNewsEntry(String id) {
+        return new NewsEntryModel(mngr.getNewsEntryDAO().get(id));
     }
 
-    public NewsEntry getNewsEntry(String id) {
-        return mngr.getNewsEntryDAO().get(id);
+    public List<NewsEntryModel> getAllNewsEntries() {
+        return mngr.getNewsEntryDAO()
+                .getAll()
+                .stream()
+                .map(NewsEntryModel::new)
+                .collect(Collectors.toList());
     }
 
-    public List<NewsEntry> getAllNewsEntries() {
-        return mngr.getNewsEntryDAO().getAll();
+    public void createNewsEntry(NewsEntryModel newsEntryModel) {
+        mngr.getNewsEntryDAO().create(newsEntryModel.getNewsEntry());
     }
 
-    public void createNewsEntry(NewsEntry newsEntry) {
-        mngr.getNewsEntryDAO().create(newsEntry);
-    }
-
-    public NewsEntry updateNewsEntry(NewsEntry newsEntry) {
-        return mngr.getNewsEntryDAO().update(newsEntry);
+    public NewsEntryModel updateNewsEntry(NewsEntryModel newsEntryModel) {
+        return new NewsEntryModel(mngr.getNewsEntryDAO().update(newsEntryModel.getNewsEntry()));
     }
 
     public void deleteNewsEntry(String id) {
-        NewsEntry newsEntry = getNewsEntry(id);
-        deleteNewsEntry(newsEntry);
-
-    }
-
-    public void deleteNewsEntry(NewsEntry newsEntry) {
-        mngr.getNewsEntryDAO().delete(newsEntry);
+        mngr.getNewsEntryDAO().delete(id);
     }
 
 }

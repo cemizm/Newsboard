@@ -116,4 +116,16 @@ public class ViewModel {
     public void setCrawlerModels(List<CrawlerModel> crawlerModels) {
         this.crawlerModels = crawlerModels;
     }
+
+    public View getView() {
+        View view = new View();
+        view.setId(getId());
+        view.setName(getName());
+        view.setType(getType());
+        view.setMaxResults(getMaxResults());
+        view.setLastDays(getLastDays());
+        view.setPublicView(isPublicView());
+
+        return view;
+    }
 }

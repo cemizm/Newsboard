@@ -33,4 +33,11 @@ public class GroupSetModel {
     public void setName(String name) {
         this.name = name;
     }
+
+    public GroupSet getGroupSet() {
+        GroupSet groupSet = new GroupSet();
+        groupSet.setName(getName());
+        groupSet.setId(getId());
+        return groupSet;
+    }
 }

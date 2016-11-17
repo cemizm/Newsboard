@@ -65,12 +65,12 @@ public class CrawlerModel {
     }
 
     public Crawler getCrawler(){
-        Crawler c = new Crawler();
-        c.setId(getId());
-        c.setName(getName());
-        c.setToken(getToken());
-        c.setDisabled(isDisabled());
-        c.setIgnoreAnalyzer(isIgnoreAnalyzer());
-        return c;
+        Crawler crawler = new Crawler();
+        crawler.setId(getId());
+        crawler.setToken(getToken());
+        crawler.setName(getName());
+        crawler.setDisabled(isDisabled());
+        crawler.setIgnoreAnalyzer(isIgnoreAnalyzer());
+        return crawler;
     }
 }
