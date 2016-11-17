@@ -31,35 +31,21 @@ public class AnalyzerResultDAO {
         if(analyzerResult == null)
             throw new IllegalArgumentException("Parameter analyzerResult darf nicht null oder leer sein");
 
-        entityManager.getTransaction().begin();
-
-        analyzerResult = entityManager.merge(analyzerResult);
-
-        entityManager.getTransaction().commit();
-
-        return analyzerResult;
+        return entityManager.merge(analyzerResult);
     }
 
     public void create(AnalyzerResult analyzerResult) {
         if (analyzerResult == null)
             throw new IllegalArgumentException("Parameter analyzerResult darf nicht null oder leer sein");
 
-        entityManager.getTransaction().begin();
-
         entityManager.persist(analyzerResult);
-
-        entityManager.getTransaction().commit();
     }
 
     public void delete(AnalyzerResult analyzerResult) {
         if (analyzerResult == null)
             throw new IllegalArgumentException("Parameter analyzerResult darf nicht null oder leer sein");
 
-        entityManager.getTransaction().begin();
-
         entityManager.remove(analyzerResult);
-
-        entityManager.getTransaction().commit();
     }
 
     public void delete(String id) {

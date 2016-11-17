@@ -1,5 +1,7 @@
 package de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels;
 
+import com.sun.tracing.dtrace.ModuleName;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -9,6 +11,7 @@ import java.util.Set;
  * Created by cem on 03.11.16.
  */
 @Entity
+@NamedQuery(name="AnalyzerResult.findAll", query = "select n from AnalyzerResult n")
 public class AnalyzerResult implements Serializable {
     private Analyzer analyzer;
     private NewsEntry newsEntry;

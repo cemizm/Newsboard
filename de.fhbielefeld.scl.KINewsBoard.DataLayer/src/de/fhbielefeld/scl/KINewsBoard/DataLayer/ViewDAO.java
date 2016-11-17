@@ -30,39 +30,25 @@ public class ViewDAO {
         if (view == null)
             throw new IllegalArgumentException("Parameter view darf nicht null oder leer sein");
 
-        entityManager.getTransaction().begin();
-
         entityManager.persist(view);
-
-        entityManager.getTransaction().commit();
     }
 
     public View update(View view) {
         if (view == null)
             throw new IllegalArgumentException("Parameter view darf nicht null oder leer sein");
 
-        entityManager.getTransaction().begin();
-
-        view = entityManager.merge(view);
-
-        entityManager.getTransaction().commit();
-
-        return view;
+        return entityManager.merge(view);
     }
 
-    public void delete(String id){
+    public void delete(String id) {
         View view = get(id);
         delete(view);
     }
 
     private void delete(View view) {
-        if(view == null)
+        if (view == null)
             throw new IllegalArgumentException("Parameter view darf nicht null oder leer sein");
 
-        entityManager.getTransaction().begin();
-
         entityManager.remove(view);
-
-        entityManager.getTransaction().commit();
     }
 }

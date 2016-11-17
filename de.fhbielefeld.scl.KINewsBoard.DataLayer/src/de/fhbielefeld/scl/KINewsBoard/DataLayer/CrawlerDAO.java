@@ -34,24 +34,13 @@ public class CrawlerDAO {
         if (crawler == null)
             throw new IllegalArgumentException("Paramter crawler darf nicht null sein");
 
-        entityManager.getTransaction().begin();
-
         entityManager.persist(crawler);
-
-        entityManager.getTransaction().commit();
     }
 
     public Crawler update(Crawler crawler) {
         if (crawler == null)
             throw new IllegalArgumentException("Paramter crawler darf nicht null sein");
-
-        entityManager.getTransaction().begin();
-
-        crawler = entityManager.merge(crawler);
-
-        entityManager.getTransaction().commit();
-
-        return crawler;
+        return entityManager.merge(crawler);
     }
 
     public void delete(int id) {
@@ -63,11 +52,6 @@ public class CrawlerDAO {
         if (crawler == null)
             throw new IllegalArgumentException("Paramter crawler darf nicht null sein");
 
-        entityManager.getTransaction().begin();
-
         entityManager.remove(crawler);
-
-        entityManager.getTransaction().commit();
-
     }
 }

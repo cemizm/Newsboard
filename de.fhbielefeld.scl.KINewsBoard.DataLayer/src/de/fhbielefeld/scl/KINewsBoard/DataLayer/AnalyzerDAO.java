@@ -27,26 +27,16 @@ public class AnalyzerDAO {
 
     public void create(Analyzer analyzer) {
         if (analyzer == null)
-            throw new IllegalArgumentException("Paramter analyzer darf nicht null sein");
-
-        entityManager.getTransaction().begin();
+            throw new IllegalArgumentException("Parameter analyzer darf nicht null sein");
 
         entityManager.persist(analyzer);
-
-        entityManager.getTransaction().commit();
     }
 
     public Analyzer update(Analyzer analyzer) {
         if (analyzer == null)
-            throw new IllegalArgumentException("Paramter analyzer darf nicht null sein");
+            throw new IllegalArgumentException("Parameter analyzer darf nicht null sein");
 
-        entityManager.getTransaction().begin();
-
-        analyzer = entityManager.merge(analyzer);
-
-        entityManager.getTransaction().commit();
-
-        return analyzer;
+        return entityManager.merge(analyzer);
     }
 
     public void delete(int id) {
@@ -56,13 +46,8 @@ public class AnalyzerDAO {
 
     public void delete(Analyzer analyzer) {
         if (analyzer == null)
-            throw new IllegalArgumentException("Paramter analyzer darf nicht null sein");
-
-        entityManager.getTransaction().begin();
+            throw new IllegalArgumentException("Parameter analyzer darf nicht null sein");
 
         entityManager.remove(analyzer);
-
-        entityManager.getTransaction().commit();
-
     }
 }
