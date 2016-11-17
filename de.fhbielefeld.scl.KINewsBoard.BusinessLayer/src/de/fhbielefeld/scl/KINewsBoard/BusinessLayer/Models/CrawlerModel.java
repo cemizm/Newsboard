@@ -19,7 +19,7 @@ public class CrawlerModel {
     public CrawlerModel(Crawler crawler) {
         id = crawler.getId();
         name = crawler.getName();
-        token = crawler
+        token = crawler.getToken();
         disabled = crawler.isDisabled();
         ignoreAnalyzer = crawler.isIgnoreAnalyzer();
     }
@@ -38,6 +38,14 @@ public class CrawlerModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public boolean isDisabled() {
