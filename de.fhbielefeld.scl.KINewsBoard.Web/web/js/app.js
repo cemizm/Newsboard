@@ -4,6 +4,7 @@ var app = angular.module('nwb', [
     'ngAnimate',
     'ngMaterial',
     'ngMessages',
+    'slickCarousel',
     'nwb.frontend',
     'nwb.public'
 ]).config(function ($urlRouterProvider) {
