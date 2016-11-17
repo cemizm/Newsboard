@@ -10,7 +10,7 @@ import java.util.Set;
 @NamedQueries
         ({
                 @NamedQuery(name = "Crawler.findAll", query = "select c from Crawler c"),
-                @NamedQuery(name = "Crawler.findByToken", query = "select c from Crawler c")
+                @NamedQuery(name = "Crawler.findByToken", query = "select c from Crawler c where c.token=:token")
         })
 public class Crawler {
     private int id;

@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Created by azad- on 10.11.2016.
  */
 @Entity
-public class AnalyzerSentenceResult implements Serializable{
+public class AnalyzerSentenceResult implements Serializable {
     private AnalyzerResult analyzerResult;
     private int charStart;
     private int charEnd;

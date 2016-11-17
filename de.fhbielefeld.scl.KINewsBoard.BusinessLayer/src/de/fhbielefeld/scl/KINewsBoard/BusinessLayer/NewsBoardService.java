@@ -2,21 +2,24 @@ package de.fhbielefeld.scl.KINewsBoard.BusinessLayer;
 
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.AnalyzerResultModel;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.NewsModel;
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.Crawler;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.NewsBoardManager;
 
-import javax.annotation.Resource;
+import javax.ejb.Stateless;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * Klasse für den Zugriff auf die Daten in der News Board Datenbank.
  */
+@Stateless
 public class NewsBoardService {
+
     private NewsBoardManager mngr;
 
     public NewsBoardService() {
-        mngr = new NewsBoardManager();
+        this.mngr = new NewsBoardManager();
     }
 
     /**
@@ -49,7 +52,7 @@ public class NewsBoardService {
      * @return Die Detail Ansicht zu der News.
      */
     public NewsModel getNewsEntryDetails(String newsId) {
-        return new NewsModel(mngr.getNewsEntryDAO().get(newsId));
+        return new NewsModel(mngr.getNewsEntryDAO().get(newsId), true);
     }
 
     /**
@@ -60,13 +63,31 @@ public class NewsBoardService {
      * @return Der veröffentlichte News Eintrag
      */
     public NewsModel publishNewsEntry(String token, NewsModel model) {
+
+        Crawler crawler = mngr.getCrawlerDAO().getByToken(token);
+
+        if (crawler == null)
+            throw new IllegalArgumentException("Token nicht gültig");
+
+        NewsEntry entry = new NewsEntry();
+        entry.setId(model.getId());
+        entry.setCrawler(crawler);
+        entry.setTitle(model.getTitle());
+        entry.setImage(model.getImage());
+        entry.setContent(model.getContent());
+        entry.setSource(model.getSource());
+        entry.setUrl(model.getUrl());
+        entry.setDate(model.getDate());
+
+        mngr.getNewsEntryDAO().create(entry);
+
         return model;
     }
 
     /**
      * Liefert alle noch nicht analysierten News Einträge für einen Ananlyzer.
      *
-     * @param token der Auth-Token für einen Analyzer.
+     * @param token der Auth-Token für einen AnalyzerModel.
      * @return Liste der News Einträge.
      */
     public List<NewsModel> getAnalyzerNewsEntries(String token) {
@@ -76,7 +97,7 @@ public class NewsBoardService {
     /**
      * Veröffentlicht ein Analyse Ergebnis zu einem News Eintrag.
      *
-     * @param token der Auth-Token für einen Analyzer.
+     * @param token der Auth-Token für einen AnalyzerModel.
      * @param model das Analyse Ergebnis.
      * @return Das veröffentlichte Analyse Ergebnis.
      */
@@ -89,7 +110,7 @@ public class NewsBoardService {
         return entries.stream().map(NewsModel::new).collect(Collectors.toList());
     }
 
-    public void Close(){
+    public void Close() {
         mngr.Close();
     }
 }

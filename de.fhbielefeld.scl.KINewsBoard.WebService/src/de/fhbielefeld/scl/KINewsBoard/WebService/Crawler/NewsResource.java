@@ -3,8 +3,11 @@ package de.fhbielefeld.scl.KINewsBoard.WebService.Crawler;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.NewsModel;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.NewsBoardService;
 
-import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.ejb.EJB;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 
@@ -13,20 +16,19 @@ import java.io.IOException;
  */
 
 @Path("/news")
+@Produces(MediaType.APPLICATION_JSON)
 public class NewsResource {
-    private NewsBoardService newsBoardService;
 
-    public NewsResource() {
-        newsBoardService = new NewsBoardService();
-    }
+    @EJB
+    private NewsBoardService newsBoardService;
 
     @POST
     @Path("/")
-    @Produces(MediaType.APPLICATION_JSON)
     public NewsModel publish(
             @HeaderParam("token") String token,
             NewsModel model
     ) throws IOException {
-        return newsBoardService.publishNewsEntry(token, model);
+        model = newsBoardService.publishNewsEntry(token, model);
+        return model;
     }
 }

@@ -4,7 +4,6 @@ import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.AnalyzerResultModel;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.NewsModel;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.NewsBoardService;
 
-import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -14,6 +13,7 @@ import java.util.List;
  */
 
 @Path("/news")
+@Produces(MediaType.APPLICATION_JSON)
 public class NewsResource {
 
     private NewsBoardService newsBoardService;
@@ -24,7 +24,6 @@ public class NewsResource {
 
     @GET
     @Path("/")
-    @Produces(MediaType.APPLICATION_JSON)
     public List<NewsModel> getNewsEntries(
             @HeaderParam("token") String token
     ) throws Exception {
@@ -34,7 +33,6 @@ public class NewsResource {
 
     @POST
     @Path("/")
-    @Produces(MediaType.APPLICATION_JSON)
     public AnalyzerResultModel publish(
             @HeaderParam("token") String token,
             AnalyzerResultModel model

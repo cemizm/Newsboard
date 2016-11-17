@@ -1,17 +1,23 @@
 <html>
 <head>
+    <title>KI - News Board</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/app.css">
 
-    <link rel="css/app.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 </head>
 
-<body ng-app="nwb.frontend">
-<a ui-sref="hello" ui-sref-active="active">Hello</a>
-<a ui-sref="about" ui-sref-active="active">About</a>
+<body ng-app="nwb">
+<div class="container">
+    <ui-view></ui-view>
+</div>
 
-<ui-view></ui-view>
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="js/app.js"></script>
+<script src="js/controller.public.js"></script>
+<script src="js/controller.frontend.js"></script>
+<script src="js/service.frontend.js"></script>
 </body>
 </html>

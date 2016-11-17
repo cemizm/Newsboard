@@ -3,8 +3,6 @@ package de.fhbielefeld.scl.KINewsBoard.DataLayer;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import java.util.List;
 
 /**
@@ -34,24 +32,14 @@ public class NewsEntryDAO {
         if (newsEntry == null)
             throw new IllegalArgumentException("Paramter newsEntry darf nicht null sein");
 
-        entityManager.getTransaction().begin();
-
         entityManager.persist(newsEntry);
-
-        entityManager.getTransaction().commit();
     }
 
     public NewsEntry update(NewsEntry newsEntry) {
         if (newsEntry == null)
             throw new IllegalArgumentException("Paramter newsEntry darf nicht null sein");
 
-        entityManager.getTransaction().begin();
-
-        newsEntry = entityManager.merge(newsEntry);
-
-        entityManager.getTransaction().commit();
-
-        return newsEntry;
+        return entityManager.merge(newsEntry);
     }
 
     public void delete(String id) {
@@ -66,11 +54,6 @@ public class NewsEntryDAO {
         if (newsEntry == null)
             throw new IllegalArgumentException("Paramter newsEntry darf nicht null sein");
 
-        entityManager.getTransaction().begin();
-
         entityManager.remove(newsEntry);
-
-        entityManager.getTransaction().commit();
-
     }
 }

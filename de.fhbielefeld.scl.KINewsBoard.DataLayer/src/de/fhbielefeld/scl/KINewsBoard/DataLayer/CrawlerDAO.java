@@ -21,7 +21,9 @@ public class CrawlerDAO {
     }
 
     public Crawler getByToken(String token) {
-        return entityManager.createNamedQuery("Crawler.findAll", Crawler.class).getSingleResult();
+        return entityManager.createNamedQuery("Crawler.findByToken", Crawler.class)
+                .setParameter("token", token)
+                .getSingleResult();
     }
 
     public List<Crawler> getAll() {
