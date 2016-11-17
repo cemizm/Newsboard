@@ -72,11 +72,11 @@ public class AnalyzerModel {
         this.disabled = disabled;
     }
 
-    public List<GroupSetModel> getGroupSets() {
+    public List<GroupSetModel> getGroupSetModels() {
         return groupSets;
     }
 
-    public void setGroupSets(List<GroupSetModel> groupSets) {
+    public void setGroupSetModels(List<GroupSetModel> groupSets) {
         this.groupSets = groupSets;
     }
 
@@ -86,6 +86,7 @@ public class AnalyzerModel {
         analyzer.setToken(getToken());
         analyzer.setName(getName());
         analyzer.setDisabled(isDisabled());
+
         return analyzer;
     }
 }

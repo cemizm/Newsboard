@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * Created by cem on 10.11.16.
  */
 public class AnalyzerResultModel {
-    private AnalyzerModel analyzer;
+    private AnalyzerModel analyzerModel;
     private Date date;
     private int value;
     private List<SentenceResultModel> sentenceResults;
@@ -24,7 +24,7 @@ public class AnalyzerResultModel {
     public AnalyzerResultModel(AnalyzerResult result) {
         this();
 
-        analyzer = new AnalyzerModel(result.getAnalyzer());
+        analyzerModel = new AnalyzerModel(result.getAnalyzer());
         date = result.getDate();
         value = result.getValue();
 
@@ -34,12 +34,12 @@ public class AnalyzerResultModel {
                 .collect(Collectors.toList()));
     }
 
-    public AnalyzerModel getAnalyzer() {
-        return analyzer;
+    public AnalyzerModel getAnalyzerModel() {
+        return analyzerModel;
     }
 
-    public void setAnalyzer(AnalyzerModel analyzer) {
-        this.analyzer = analyzer;
+    public void setAnalyzerModel(AnalyzerModel analyzerModel) {
+        this.analyzerModel = analyzerModel;
     }
 
     public Date getDate() {

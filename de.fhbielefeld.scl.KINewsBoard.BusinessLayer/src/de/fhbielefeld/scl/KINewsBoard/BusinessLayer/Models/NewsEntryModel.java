@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  */
 public class NewsEntryModel {
     private String id;
-    private CrawlerModel crawler;
+    private CrawlerModel crawlerModel;
     private String title;
     private String image;
     private String content;
@@ -34,7 +34,7 @@ public class NewsEntryModel {
         this();
 
         id = entry.getId();
-        crawler = new CrawlerModel(entry.getCrawler());
+        crawlerModel = new CrawlerModel(entry.getCrawler());
         title = entry.getTitle();
         image = entry.getImage();
         content = entry.getContent();
@@ -58,12 +58,12 @@ public class NewsEntryModel {
         this.id = id;
     }
 
-    public CrawlerModel getCrawler() {
-        return crawler;
+    public CrawlerModel getCrawlerModel() {
+        return crawlerModel;
     }
 
-    public void setCrawler(CrawlerModel crawler) {
-        this.crawler = crawler;
+    public void setCrawlerModel(CrawlerModel crawlerModel) {
+        this.crawlerModel = crawlerModel;
     }
 
     public String getTitle() {
@@ -131,6 +131,7 @@ public class NewsEntryModel {
         newsEntry.setSource(getSource());
         newsEntry.setUrl(getUrl());
         newsEntry.setDate(getDate());
+
         return newsEntry;
     }
 }
