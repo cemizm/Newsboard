@@ -3,25 +3,31 @@ angular.module('nwbadmin')
         var api = "/WebService/backend/"
         var service = {};
 
-        service.get = function () {
+        service.getAll = function () {
             return $http.get(api + "crawler").then(function (response) {
                 return response.data;
             });
         };
 
-        service.create = function(crawler) {
-            return $http.post(api + "crawler", crawler).then(function(response){
+        service.get = function (id) {
+            return $http.get(api + "crawler/" + id).then(function (response) {
+                return response.data;
+            });
+        };
+
+        service.create = function (crawler) {
+            return $http.post(api + "crawler", crawler).then(function (response) {
                 return true;
             });
         }
 
-        service.update = function(crawler) {
-            return $http.put(api + "crawler", crawler).then(function(response){
+        service.update = function (crawler) {
+            return $http.put(api + "crawler", crawler).then(function (response) {
                 return true;
             });
         }
 
-        service.delete = function(crawlerId) {
+        service.delete = function (crawlerId) {
             return $http.delete(api + "crawler/" + crawlerId).then(function (response) {
                 return true;
             });
