@@ -6,3 +6,46 @@
         </h1>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-8">
+        <button type="button" class="btn btn-success" ng-click="create()" ng-disabled="!active.id">Neuer Crawler</button>
+        <table class="table table-hover">
+            <thead>
+            <th>#</th>
+            <th>Bezeichnung</th>
+            <th>Status</th>
+            <th>Analyzer</th>
+            </thead>
+            <tr ng-repeat="crawler in crawlers" ng-click="select(crawler)">
+                <td>{{crawler.id}}</td>
+                <td>{{crawler.name}}</td>
+                <td>{{crawler.disabled ? 'Inaktiv' : 'Aktiv'}}</td>
+                <td>{{crawler.ignoreAnalyzer ? 'ByPass' : ''}}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="name">Bezeichnung</label>
+                <input type="text" id="name" class="form-control" placeholder="Bezeichnung" ng-model="active.name">
+            </div>
+            <div class="form-group">
+                <label for="token">Token</label>
+                <input type="text" id="token" class="form-control" placeholder="Token" ng-model="active.token">
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <input id="status" type="checkbox" ng-model="active.disabled"> Inaktiv
+            </div>
+            <div class="form-group">
+                <label for="ignoreAnalyzer">Analyzer</label>
+                <input id="ignoreAnalyzer" type="checkbox" ng-model="active.ignoreAnalyzer"> ByPass
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-danger" ng-click="delete()" ng-disabled="!active.id">Löschen</button>
+                <button type="button" class="btn btn-primary" ng-click="save()">Speichern</button>
+            </div>
+        </form>
+    </div>
+</div>

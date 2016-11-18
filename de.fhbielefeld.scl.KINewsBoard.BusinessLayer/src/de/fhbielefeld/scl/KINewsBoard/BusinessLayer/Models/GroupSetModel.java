@@ -17,4 +17,27 @@ public class GroupSetModel {
         id = groupSet.getId();
         name = groupSet.getName();
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public GroupSet getGroupSet() {
+        GroupSet groupSet = new GroupSet();
+        groupSet.setName(getName());
+        groupSet.setId(getId());
+        return groupSet;
+    }
 }

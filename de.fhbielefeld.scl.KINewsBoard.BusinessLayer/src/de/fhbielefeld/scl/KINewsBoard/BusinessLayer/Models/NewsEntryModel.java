@@ -1,6 +1,5 @@
 package de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models;
 
-
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ import java.util.stream.Collectors;
 /**
  * Created by cem on 10.11.16.
  */
-public class NewsModel {
+public class NewsEntryModel {
     private String id;
     private CrawlerModel crawler;
     private String title;
@@ -23,15 +22,15 @@ public class NewsModel {
 
     private List<AnalyzerResultModel> analyzerResultModels;
 
-    public NewsModel() {
+    public NewsEntryModel() {
         analyzerResultModels = new ArrayList<>();
     }
 
-    public NewsModel(NewsEntry entry) {
+    public NewsEntryModel(NewsEntry entry) {
         this(entry, false);
     }
 
-    public NewsModel(NewsEntry entry, boolean includeRelations) {
+    public NewsEntryModel(NewsEntry entry, boolean includeRelations) {
         this();
 
         id = entry.getId();
@@ -121,5 +120,17 @@ public class NewsModel {
 
     public void setAnalyzerResultModels(List<AnalyzerResultModel> analyzerResultModels) {
         this.analyzerResultModels = analyzerResultModels;
+    }
+
+    public NewsEntry getNewsEntry() {
+        NewsEntry newsEntry = new NewsEntry();
+        newsEntry.setId(getId());
+        newsEntry.setTitle(getTitle());
+        newsEntry.setImage(getImage());
+        newsEntry.setContent(getContent());
+        newsEntry.setSource(getSource());
+        newsEntry.setUrl(getUrl());
+        newsEntry.setDate(getDate());
+        return newsEntry;
     }
 }

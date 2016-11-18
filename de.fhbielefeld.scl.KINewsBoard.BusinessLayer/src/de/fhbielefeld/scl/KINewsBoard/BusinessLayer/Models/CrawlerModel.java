@@ -8,6 +8,7 @@ import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.Crawler;
 public class CrawlerModel {
     private int id;
     private String name;
+    private String token;
     private boolean disabled;
     private boolean ignoreAnalyzer;
 
@@ -18,6 +19,7 @@ public class CrawlerModel {
     public CrawlerModel(Crawler crawler) {
         id = crawler.getId();
         name = crawler.getName();
+        token = crawler.getToken();
         disabled = crawler.isDisabled();
         ignoreAnalyzer = crawler.isIgnoreAnalyzer();
     }
@@ -38,6 +40,14 @@ public class CrawlerModel {
         this.name = name;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public boolean isDisabled() {
         return disabled;
     }
@@ -52,5 +62,15 @@ public class CrawlerModel {
 
     public void setIgnoreAnalyzer(boolean ignoreAnalyzer) {
         this.ignoreAnalyzer = ignoreAnalyzer;
+    }
+
+    public Crawler getCrawler(){
+        Crawler crawler = new Crawler();
+        crawler.setId(getId());
+        crawler.setToken(getToken());
+        crawler.setName(getName());
+        crawler.setDisabled(isDisabled());
+        crawler.setIgnoreAnalyzer(isIgnoreAnalyzer());
+        return crawler;
     }
 }

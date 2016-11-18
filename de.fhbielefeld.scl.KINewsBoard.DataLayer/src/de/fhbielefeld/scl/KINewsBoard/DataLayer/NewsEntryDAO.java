@@ -18,8 +18,7 @@ public class NewsEntryDAO {
 
     public NewsEntry get(String id) {
         if (id == null || id.isEmpty())
-            throw new IllegalArgumentException("Paramter id darf nicht null oder leer sein");
-
+            throw new IllegalArgumentException("Parameter id darf nicht null oder leer sein");
         return entityManager.find(NewsEntry.class, id);
     }
 
@@ -30,21 +29,21 @@ public class NewsEntryDAO {
 
     public void create(NewsEntry newsEntry) {
         if (newsEntry == null)
-            throw new IllegalArgumentException("Paramter newsEntry darf nicht null sein");
+            throw new IllegalArgumentException("Parameter newsEntry darf nicht null sein");
 
         entityManager.persist(newsEntry);
     }
 
     public NewsEntry update(NewsEntry newsEntry) {
         if (newsEntry == null)
-            throw new IllegalArgumentException("Paramter newsEntry darf nicht null sein");
+            throw new IllegalArgumentException("Parameter newsEntry darf nicht null sein");
 
         return entityManager.merge(newsEntry);
     }
 
     public void delete(String id) {
         if (id == null || id.isEmpty())
-            throw new IllegalArgumentException("Paramter id darf nicht null oder leer sein");
+            throw new IllegalArgumentException("Parameter id darf nicht null oder leer sein");
 
         NewsEntry entry = get(id);
         delete(entry);
@@ -52,7 +51,7 @@ public class NewsEntryDAO {
 
     public void delete(NewsEntry newsEntry) {
         if (newsEntry == null)
-            throw new IllegalArgumentException("Paramter newsEntry darf nicht null sein");
+            throw new IllegalArgumentException("Parameter newsEntry darf nicht null sein");
 
         entityManager.remove(newsEntry);
     }

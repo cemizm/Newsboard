@@ -12,57 +12,40 @@ public class GroupSetDAO {
 
     private EntityManager entityManager;
 
-    GroupSetDAO(EntityManager entityManager){
+    GroupSetDAO(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
-    public GroupSet get(String id){
-        if(id == null || id.isEmpty())
-            throw new IllegalArgumentException("Parameter id darf nicht null oder leer sein");
-
+    public GroupSet get(int id) {
         return entityManager.find(GroupSet.class, id);
     }
 
-    public List<GroupSet> getAll(){
+    public List<GroupSet> getAll() {
         return entityManager.createNamedQuery("GroupSet.findAll", GroupSet.class).getResultList();
     }
 
-    public void create(GroupSet groupSet){
-        if(groupSet == null)
+    public void create(GroupSet groupSet) {
+        if (groupSet == null)
             throw new IllegalArgumentException("Parameter groupSet darf nicht null oder leer sein");
-
-        entityManager.getTransaction().begin();
 
         entityManager.persist(groupSet);
-
-        entityManager.getTransaction().commit();
     }
 
-    public GroupSet update(GroupSet groupSet){
-        if(groupSet == null)
+    public GroupSet update(GroupSet groupSet) {
+        if (groupSet == null)
             throw new IllegalArgumentException("Parameter groupSet darf nicht null oder leer sein");
 
-        entityManager.getTransaction().begin();
-
-        groupSet = entityManager.merge(groupSet);
-
-        entityManager.getTransaction().commit();
-
-        return groupSet;
+        return entityManager.merge(groupSet);
     }
 
-    public void delete(GroupSet groupSet){
-        if(groupSet == null)
+    public void delete(GroupSet groupSet) {
+        if (groupSet == null)
             throw new IllegalArgumentException("Parameter groupSet darf nicht null oder leer sein");
-
-        entityManager.getTransaction().begin();
 
         entityManager.remove(groupSet);
-
-        entityManager.getTransaction().commit();
     }
 
-    public void delete(String id){
+    public void delete(int id) {
         GroupSet groupSet = get(id);
         delete(groupSet);
     }

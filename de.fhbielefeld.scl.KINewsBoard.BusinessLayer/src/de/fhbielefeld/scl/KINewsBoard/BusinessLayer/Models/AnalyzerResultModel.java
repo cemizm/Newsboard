@@ -58,6 +58,14 @@ public class AnalyzerResultModel {
         this.value = value;
     }
 
+    public AnalyzerResult getAnalyzerResult() {
+        AnalyzerResult analyzerResult = new AnalyzerResult();
+        analyzerResult.setDate(getDate());
+        analyzerResult.setValue(getValue());
+
+        return analyzerResult;
+    }
+
     static class SentenceResultModel {
         private int charStart;
         private int charEnd;
@@ -96,5 +104,15 @@ public class AnalyzerResultModel {
         public void setValue(int value) {
             this.value = value;
         }
+
+        public AnalyzerSentenceResult getAnalyzerSentenceResult() {
+            AnalyzerSentenceResult analyzerSentenceResult = new AnalyzerSentenceResult();
+            analyzerSentenceResult.setCharStart(getCharStart());
+            analyzerSentenceResult.setCharEnd(getCharEnd());
+            analyzerSentenceResult.setValue(getValue());
+
+            return analyzerSentenceResult;
+        }
     }
+
 }
