@@ -18,8 +18,30 @@ angular.module('nwb.public', ['ui.router'])
                     $scope.entries = entries;
                 });
 
-                $scope.myInterval = 2000;
-                $scope.noWrapSlides = false;
-                $scope.active = 0;
+                $scope.currentIndex = 0;
+                $scope.slickConfig = {
+                    enabled: true,
+                    autoplay: true,
+                    vertical: true,
+                    slidesToShow: 4,
+                    draggable: false,
+                    infinite: true,
+                    centerMode: true,
+                    autoplaySpeed: 3000,
+                    method: {},
+                    event: {
+
+                        beforeChange: function (event, slick, previousSlide, currentSlide, nextSlide) {
+                            $(slick.$slides.get(currentSlide)).css("border-color", "red");
+                            $(slick.$slides.get(previousSlide)).css("border-color", "");
+                        },
+                        afterChange: function (event, slick, currentSlide, nextSlide) {
+                            $scope.currentIndex = currentSlide; // save current index each time
+                        },
+                        init: function (event, slick) {
+                            slick.slickGoTo($scope.currentIndex); // slide to correct index when init
+                        }
+                    }
+                };
 
             }]);

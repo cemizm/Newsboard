@@ -10,54 +10,32 @@
 <div class="container-fluid">
 
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-6">
 
-
-            <div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
-                <div uib-slide ng-repeat="entry in entries track by entry.id" index="entry.id">
+            <slick class="slider" settings="slickConfig">
+                <div ng-repeat="entry in entries track by entry.id" index="entry.id">
                     <div class="card">
-                        <img src="{{entry.image}}" alt="Avatar" style="width:20%;align:float">
-                        <div class="container">
-                            <h4><b>{{entry.title}}</b></h4>
-                            <p>{{entry.source}}</p>
-                        </div>
-                    </div>
-
-                </div>
-
-
-
-            </div>
-
-            <div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
-            <div ng-repeat="entry in entries">
-                <div ng-if="$index % 3 === 0"
-                     ng-init="group = entries.slice($index, $index + 3)">
-                    <div class="products-row">
-                        <div class="card" ng-repeat="grItem in group">
-                            <img src="{{grItem.image}}" alt="Avatar" style="width:20%;align:float">
-                            <div class="container">
-                                <h4><b>{{grItem.title}}</b></h4>
-                                <p>{{grItem.source}}</p>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="{{entry.image}}" alt="Avatar">
+                            </div>
+                            <div class="col-md-9">
+                                <h4><b>{{entry.title}}</b></h4>
+                                <p>Quelle: {{entry.source}}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-                </div>
-
-
+            </slick>
 
         </div>
 
 
-        <div class="col-md-5">
+        <div class="col-md-6">
             <div class="card" class="col-md-12">
-                <img src="{{getActive.image}}" alt="Avatar">
-                <div class="container">
-                    <h4><b>{{getActive.title}}</b></h4>
-                    <p>{{getActive.source}}</p>
-                </div>
+                <img src="{{entries[currentIndex].image}}" alt="Avatar">
+                <h4><b>{{entries[currentIndex].title}}</b></h4>
+                <p>{{entries[currentIndex].content}}</p>
             </div>
         </div>
     </div>
