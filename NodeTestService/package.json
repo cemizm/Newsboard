@@ -1,0 +1,14 @@
+{
+  "name": "nodetestservice",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "feedparser": "^1.1.5",
+    "md5": "^2.2.1",
+    "node-rest-client": "^2.0.1",
+    "request": "^2.79.0"
+  }
+}
