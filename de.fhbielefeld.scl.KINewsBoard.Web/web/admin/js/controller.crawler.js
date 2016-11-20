@@ -16,12 +16,11 @@ angular.module('nwbadmin.crawler', ['ui.router'])
         ['$scope', '$location', 'CrawlerService', 'TokenService',
             function ($scope, $location, CrawlerService, TokenService) {
 
-                $scope.active = null;
 
                 $scope.update = function () {
                     CrawlerService.getAll().then(function (data) {
                         $scope.crawlers = data;
-                        $scope.active = $scope.crawlers[0];
+                        $scope.active = null;
                     });
                 };
 
@@ -54,8 +53,6 @@ angular.module('nwbadmin.crawler', ['ui.router'])
                 };
 
                 $scope.create = function () {
-                    if (!$scope.active.id) return;
-
                     $scope.active = {
                         disabled: false,
                         ignoreAnalyzer: false,
