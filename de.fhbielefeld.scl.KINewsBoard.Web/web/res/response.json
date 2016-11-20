@@ -11,7 +11,7 @@
       "name":"Test Crawler 1"
     },
     "id":0,
-    "image":"https://www.fh-bielefeld.de/multimedia/Pressestelle/Bilder/Fachbereiche/FB+3/Ausstellungen+und+Messen/ZuliefermesseFMB_2016-height-95-width-150-p-106770.jpg",
+    "image":"http://1.f.ix.de/scale/geometry/695/q75/imgs/18/2/0/3/7/7/2/4/internetofshit-9342043b9f8cb96f.jpeg",
     "source":"fb",
     "title":"Industrie 4.0 am Modell begreifbar machen",
     "url":"http://localhost:63342/NewsBoard/de.fhbielefeld.scl.KINewsBoard.Web/web/index.html"
@@ -28,6 +28,40 @@
       "name":"Test Crawler 1"
     },
     "id":1,
+    "image":"https://www.fh-bielefeld.de/multimedia/Pressestelle/Bilder/Fachbereiche/FB+3/Forschung/Barrera_+Patel+und+Jakobs_Sch%C3%B6nwandt-height-100-width-150-p-106768.jpg",
+    "source":"fb",
+    "title":"Internationale Kooperation hat begonnen",
+    "url":"http://localhost:63342/NewsBoard/de.fhbielefeld.scl.KINewsBoard.Web/web/index.html"
+  },
+  {
+    "analyzerResultModels":[
+
+    ],
+    "content":"Im Mittelpunkt stand die Vorstellung der neuen digitalen, vernetzten Industrieanlage, der INProSys (Intelligentes, netzwerkgesteuertes Produktionssystem), die momentan in der Experimentierhalle der FH Bielefeld aufgebaut und in den nächsten Monaten in Betrieb genommen wird. Vertreter aus Industrie, Wissenschaft und Verbänden „zeigten sich von der Anlage begeistert“, so Sausers Messeeindrücke.",
+    "crawler":{
+      "disabled":false,
+      "id":1,
+      "ignoreAnalyzer":false,
+      "name":"Test Crawler 1"
+    },
+    "id":16,
+    "image":"https://www.fh-bielefeld.de/multimedia/Pressestelle/Bilder/Fachbereiche/FB+3/Forschung/Barrera_+Patel+und+Jakobs_Sch%C3%B6nwandt-height-100-width-150-p-106768.jpg",
+    "source":"fb",
+    "title":"Internationale Kooperation hat begonnen",
+    "url":"http://localhost:63342/NewsBoard/de.fhbielefeld.scl.KINewsBoard.Web/web/index.html"
+  },
+  {
+    "analyzerResultModels":[
+
+    ],
+    "content":"Im Mittelpunkt stand die Vorstellung der neuen digitalen, vernetzten Industrieanlage, der INProSys (Intelligentes, netzwerkgesteuertes Produktionssystem), die momentan in der Experimentierhalle der FH Bielefeld aufgebaut und in den nächsten Monaten in Betrieb genommen wird. Vertreter aus Industrie, Wissenschaft und Verbänden „zeigten sich von der Anlage begeistert“, so Sausers Messeeindrücke.",
+    "crawler":{
+      "disabled":false,
+      "id":1,
+      "ignoreAnalyzer":false,
+      "name":"Test Crawler 1"
+    },
+    "id":12,
     "image":"https://www.fh-bielefeld.de/multimedia/Pressestelle/Bilder/Fachbereiche/FB+3/Forschung/Barrera_+Patel+und+Jakobs_Sch%C3%B6nwandt-height-100-width-150-p-106768.jpg",
     "source":"fb",
     "title":"Internationale Kooperation hat begonnen",
