@@ -25,7 +25,7 @@ public class NewsResource {
     public List<NewsEntryModel> getPublicNewsEntries(
             @DefaultValue("1") @QueryParam("page") int page,
             @QueryParam("keyword") String keyword
-    ) throws Exception {
+    ) {
         return newsBoardService.getPublicNewsEntries(page, keyword);
     }
 
@@ -33,16 +33,15 @@ public class NewsResource {
     @Path("/{newsId}")
     public NewsEntryModel getNewsEntryDetails(
             @NotNull @PathParam("newsId") String newsId
-    ) throws Exception {
+    ) {
         return newsBoardService.getNewsEntryDetails(newsId);
     }
 
     @GET
     @Path("/findByView/{viewId}")
     public List<NewsEntryModel> getViewEntries(
-            @PathParam("viewId") int viewId,
-            @DefaultValue("1") @QueryParam("page") int page
-    ) throws Exception {
-        return newsBoardService.getViewNewsEntries(viewId, page);
+            @PathParam("viewId") int viewId
+    ) {
+        return newsBoardService.getViewNewsEntries(viewId);
     }
 }
