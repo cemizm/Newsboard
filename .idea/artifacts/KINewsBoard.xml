@@ -4,11 +4,6 @@
     <root id="archive" name="KINewsBoard.ear">
       <element id="artifact" artifact-name="WebService" />
       <element id="artifact" artifact-name="Web" />
-      <element id="directory" name="lib">
-        <element id="library" level="project" name="JPA 2.1-JPA 2.1" />
-        <element id="library" level="project" name="javax.json.processing-1.0" />
-        <element id="library" level="project" name="Jersey-2.2" />
-      </element>
     </root>
   </artifact>
 </component>
