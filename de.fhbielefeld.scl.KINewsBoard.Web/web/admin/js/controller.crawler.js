@@ -25,7 +25,7 @@ angular.module('nwbadmin.crawler', ['ui.router'])
                 };
 
                 $scope.select = function (crawler) {
-                    $scope.active = crawler;
+                    $scope.active = angular.copy(crawler);
                 };
 
                 $scope.delete = function () {
