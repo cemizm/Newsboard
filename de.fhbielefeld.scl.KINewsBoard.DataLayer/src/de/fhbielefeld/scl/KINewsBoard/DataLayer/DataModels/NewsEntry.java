@@ -38,6 +38,7 @@ public class NewsEntry {
         this.crawler = crawler;
     }
 
+    @Column(length = 1024)
     public String getTitle() {
         return title;
     }
@@ -46,6 +47,7 @@ public class NewsEntry {
         this.title = title;
     }
 
+    @Column(length = 512)
     public String getImage() {
         return image;
     }
@@ -54,6 +56,7 @@ public class NewsEntry {
         this.image = image;
     }
 
+    @Column(length=10485760)
     public String getContent() {
         return content;
     }
@@ -70,6 +73,7 @@ public class NewsEntry {
         this.source = source;
     }
 
+    @Column(length = 512)
     public String getUrl() {
         return url;
     }

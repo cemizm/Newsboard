@@ -37,11 +37,10 @@ public class NewsBoardService {
      * Ermitellt ab Seite <code>start</code>, die in der mit <code>viewId</code> angegeben View definierte Anzahl von News Einträge.
      *
      * @param viewId die Id der View zu dem die News Einträge ermitellt werden sollen.
-     * @param start  die Seite ab der Die News Einträge ermitellt werden sollen.
      * @return Liste der News Einträge die der View zugeordnet sind.
      * @throws IllegalArgumentException wenn View mit <code>viewId</code> nicht existiert.
      */
-    public List<NewsEntryModel> getViewNewsEntries(int viewId, int start) {
+    public List<NewsEntryModel> getViewNewsEntries(int viewId) {
         return getNewsModels(mngr.getNewsEntryDAO().getAll());
     }
 
@@ -52,7 +51,7 @@ public class NewsBoardService {
      * @return Die Detail Ansicht zu der News.
      */
     public NewsEntryModel getNewsEntryDetails(String newsId) {
-        return new NewsEntryModel(mngr.getNewsEntryDAO().get(newsId), true);
+        return new NewsEntryModel(mngr.getNewsEntryDAO().get(newsId));
     }
 
     /**

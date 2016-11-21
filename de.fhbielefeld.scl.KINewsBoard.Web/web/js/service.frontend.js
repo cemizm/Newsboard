@@ -4,6 +4,12 @@ angular.module('nwb')
         var service = {};
 
         service.getNewsEntries = function (page, keyword) {
+            // return test JSON for dev without DB
+            return $http.get("res/response.json")
+                .then(function (response) {
+                    return response.data;
+                });
+
             return $http.get(api + "news", {
                 params: {
                     page: page,
@@ -14,12 +20,8 @@ angular.module('nwb')
             });
         };
 
-        service.getNewsEntriesByViewId = function (viewId, page) {
-            return $http.get(api + "news/findByViewId/" + viewId, {
-                params: {
-                    page: page
-                }
-            }).then(function (response) {
+        service.getNewsEntriesByViewId = function (viewId) {
+            return $http.get(api + "news/findByView/" + viewId).then(function (response) {
                 return response.data;
             });
         };

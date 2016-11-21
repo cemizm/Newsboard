@@ -1,0 +1,36 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">KI - News Board</a>
+        </div>
+
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <slick class="slider" settings="slickConfig">
+                <div class="slide" ng-repeat="entry in entries" >
+                    <div class="col-md-3 image">
+                        <img ng-src="{{entry.image}}">
+                    </div>
+                    <div class="col-md-9 content">
+                        <h4>{{entry.title}}</h4>
+                        <p>{{entry.content}}</p>
+                    </div>
+                </div>
+            </slick>
+        </div>
+
+        <div class="col-md-6">
+            <div class="pane" class="col-md-12">
+                <div class="image">
+                    <img ng-src="{{entries[currentIndex].image}}">
+                </div>
+                <h4>{{entries[currentIndex].title}}</h4>
+                <p>{{entries[currentIndex].content}}</p>
+            </div>
+        </div>
+    </div>
+</div>
