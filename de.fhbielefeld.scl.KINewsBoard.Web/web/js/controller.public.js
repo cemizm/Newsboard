@@ -12,11 +12,15 @@ angular.module('nwb.public', ['ui.router'])
 
     }])
     .controller('PublicViewController',
-        ['$scope', '$location', '$stateParams', 'FrontendService',
-            function ($scope, $location, $stateParams, FrontendService) {
+        ['$scope', '$location', '$stateParams', 'FrontendService', '$interval',
+            function ($scope, $location, $stateParams, FrontendService, $interval) {
+
+                var counter = 10000;
+                var stop;
 
                 FrontendService.getNewsEntriesByViewId($stateParams.viewId, 0).then(function (view) {
                     $scope.view = view;
+
 
                     $scope.slickConfig = {
                         autoplay: true,
@@ -25,25 +29,61 @@ angular.module('nwb.public', ['ui.router'])
                         draggable: false,
                         infinite: true,
                         centerMode: true,
-                        autoplaySpeed: 3000,
+                        autoplaySpeed: counter,
                         method: {},
                         event: {
                             beforeChange: function (event, slick, previousSlide, currentSlide, nextSlide) {
                                 $(slick.$slides.get(previousSlide)).removeClass("selected");
+                                $scope.resetTimer();
                             },
                             afterChange: function (event, slick, slide, nextSlide) {
-                                $scope.currentIndex = slide;
                                 $(slick.$slides.get(slide)).addClass("selected");
+                                $scope.currentIndex = slide;
+                                $scope.startTimer();
                             },
                             init: function (event, slick) {
                                 slick.slickGoTo($scope.currentIndex);
                             }
                         }
                     };
+                });
 
-                    $scope.currentIndex = 0;
+                $scope.getAnalyzerResult = function () {
+                    var tmp = $scope.view.newsEntries[$scope.currentIndex].analyzerResult;
+
+                    if (tmp < 0)
+                        tmp = tmp * -1;
+
+                    return tmp;
+                }
+
+                $scope.getAnalyzerResultType = function() {
+                    return $scope.getAnalyzerResult() < 0 ? "danger" : "success"
+                }
+
+                $scope.startTimer = function () {
+                    if (angular.isDefined(stop)) return;
+
+                    stop = $interval(function () {
+                        $scope.remaining = $scope.remaining - 1;
+                    }, counter / 100);
+                };
+
+                $scope.stopTimer = function () {
+                    if (angular.isDefined(stop)) {
+                        $interval.cancel(stop);
+                        stop = undefined;
+                    }
+                };
+
+                $scope.resetTimer = function () {
+                    $scope.remaining = 100;
+                };
+
+                $scope.$on('$destroy', function () {
+                    $scope.stopTimer();
                 });
 
                 $scope.currentIndex = 0;
-
+                $scope.resetTimer();
             }]);
