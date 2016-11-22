@@ -2,7 +2,10 @@ package de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models;
 
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by cem on 10.11.16.
@@ -16,9 +19,10 @@ public class NewsEntryModel {
     private String source;
     private String url;
     private Date date;
+    private List<AnalyzerResultModel> analyzerResultModels;
 
     public NewsEntryModel() {
-
+        analyzerResultModels = new ArrayList<>();
     }
 
     public NewsEntryModel(NewsEntry entry) {
@@ -31,6 +35,8 @@ public class NewsEntryModel {
         source = entry.getSource();
         url = entry.getUrl();
         date = entry.getDate();
+
+        analyzerResultModels = entry.getAnalyzerResults().stream().map(AnalyzerResultModel::new).collect(Collectors.toList());
     }
 
     public String getId() {
@@ -95,6 +101,14 @@ public class NewsEntryModel {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public List<AnalyzerResultModel> getAnalyzerResultModels() {
+        return analyzerResultModels;
+    }
+
+    public void setAnalyzerResultModels(List<AnalyzerResultModel> analyzerResultModels) {
+        this.analyzerResultModels = analyzerResultModels;
     }
 
     public NewsEntry getNewsEntry() {

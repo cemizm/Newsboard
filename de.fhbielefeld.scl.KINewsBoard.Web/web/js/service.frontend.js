@@ -4,12 +4,6 @@ angular.module('nwb')
         var service = {};
 
         service.getNewsEntries = function (page, keyword) {
-            // return test JSON for dev without DB
-            return $http.get("res/response.json")
-                .then(function (response) {
-                    return response.data;
-                });
-
             return $http.get(api + "news", {
                 params: {
                     page: page,

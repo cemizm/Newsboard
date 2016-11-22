@@ -36,8 +36,8 @@ public class GroupSetModel {
 
     public GroupSet getGroupSet() {
         GroupSet groupSet = new GroupSet();
-        groupSet.setName(getName());
         groupSet.setId(getId());
+        groupSet.setName(getName());
         return groupSet;
     }
 }

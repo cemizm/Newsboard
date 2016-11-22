@@ -82,7 +82,7 @@ public class NewsEntry {
         this.url = url;
     }
 
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getDate() {
         return date;
     }

@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-md-6">
             <slick class="slider" settings="slickConfig">
-                <div class="slide" ng-repeat="entry in entries" >
+                <div class="slide" ng-repeat="entry in view.newsEntries" >
                     <div class="col-md-3 image">
                         <img ng-src="{{entry.image}}">
                     </div>
@@ -26,10 +26,10 @@
         <div class="col-md-6">
             <div class="pane" class="col-md-12">
                 <div class="image">
-                    <img ng-src="{{entries[currentIndex].image}}">
+                    <img ng-src="{{view.newsEntries[currentIndex].image}}">
                 </div>
-                <h4>{{entries[currentIndex].title}}</h4>
-                <p>{{entries[currentIndex].content}}</p>
+                <h4>{{view.newsEntries[currentIndex].title}}</h4>
+                <p>{{view.newsEntries[currentIndex].content}}</p>
             </div>
         </div>
     </div>

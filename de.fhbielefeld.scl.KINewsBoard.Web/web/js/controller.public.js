@@ -15,8 +15,8 @@ angular.module('nwb.public', ['ui.router'])
         ['$scope', '$location', '$stateParams', 'FrontendService',
             function ($scope, $location, $stateParams, FrontendService) {
 
-                FrontendService.getNewsEntriesByViewId($stateParams.viewId, 0).then(function (entries) {
-                    $scope.entries = entries;
+                FrontendService.getNewsEntriesByViewId($stateParams.viewId, 0).then(function (view) {
+                    $scope.view = view;
 
                     $scope.slickConfig = {
                         autoplay: true,
