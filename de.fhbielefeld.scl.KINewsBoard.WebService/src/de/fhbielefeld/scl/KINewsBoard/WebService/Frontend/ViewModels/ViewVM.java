@@ -11,6 +11,7 @@ public class ViewVM {
 
     private int id;
     private String name;
+    private String description;
     private List<NewsEntryVM> newsEntries;
 
     public ViewVM() {
@@ -20,6 +21,7 @@ public class ViewVM {
     public ViewVM(ViewModel viewModel, List<NewsEntryVM> newsEntries) {
         this.id = viewModel.getId();
         this.name = viewModel.getName();
+        this.description = viewModel.getDescription();
         this.newsEntries = newsEntries;
     }
 
@@ -37,6 +39,14 @@ public class ViewVM {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<NewsEntryVM> getNewsEntries() {
