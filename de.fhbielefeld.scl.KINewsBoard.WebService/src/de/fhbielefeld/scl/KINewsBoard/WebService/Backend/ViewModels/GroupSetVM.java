@@ -1,19 +1,19 @@
-package de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models;
+package de.fhbielefeld.scl.KINewsBoard.WebService.Backend.ViewModels;
 
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.GroupSet;
 
 /**
  * Created by cem on 14.11.16.
  */
-public class GroupSetModel {
+public class GroupSetVM {
     private int id;
     private String name;
 
-    public GroupSetModel() {
+    public GroupSetVM() {
 
     }
 
-    public GroupSetModel(GroupSet groupSet) {
+    public GroupSetVM(GroupSet groupSet) {
         id = groupSet.getId();
         name = groupSet.getName();
     }

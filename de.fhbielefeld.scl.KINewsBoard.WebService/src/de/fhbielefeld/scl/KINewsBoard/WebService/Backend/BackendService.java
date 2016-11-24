@@ -16,6 +16,9 @@ public class BackendService extends Application {
         Set<Class<?>> s = new HashSet<>();
 
         s.add(CrawlerResource.class);
+        s.add(AnalyzerResource.class);
+        s.add(GroupResource.class);
+        s.add(ViewResource.class);
 
         return s;
     }

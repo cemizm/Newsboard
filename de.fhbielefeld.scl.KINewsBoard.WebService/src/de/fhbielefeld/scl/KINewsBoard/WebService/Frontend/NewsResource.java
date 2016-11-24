@@ -1,9 +1,9 @@
 package de.fhbielefeld.scl.KINewsBoard.WebService.Frontend;
 
 import com.sun.istack.internal.NotNull;
-import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.NewsEntryModel;
-import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.ViewModel;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.NewsBoardService;
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.View;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Frontend.ViewModels.NewsEntryDetailVM;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Frontend.ViewModels.NewsEntryVM;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Frontend.ViewModels.ViewVM;
@@ -31,10 +31,12 @@ public class NewsResource {
             @DefaultValue("1") @QueryParam("page") int page,
             @QueryParam("keyword") String keyword
     ) {
-        return newsBoardService.getPublicNewsEntries(page, keyword)
+        List<NewsEntryVM> res = newsBoardService.getPublicNewsEntries(page, keyword)
                 .stream()
                 .map(NewsEntryVM::new)
                 .collect(Collectors.toList());
+
+        return res;
     }
 
     @GET
@@ -42,8 +44,10 @@ public class NewsResource {
     public NewsEntryDetailVM getNewsEntryDetails(
             @NotNull @PathParam("newsId") String newsId
     ) {
-        NewsEntryModel model = newsBoardService.getNewsEntryDetails(newsId);
-        return new NewsEntryDetailVM(model);
+        NewsEntry newsEntry = newsBoardService.getNewsEntryDetails(newsId);
+        NewsEntryDetailVM detail = new NewsEntryDetailVM(newsEntry);
+
+        return detail;
     }
 
     @GET
@@ -51,9 +55,9 @@ public class NewsResource {
     public ViewVM getViewEntries(
             @PathParam("viewId") int viewId
     ) {
-        ViewModel model = newsBoardService.getView(viewId);
+        View view = newsBoardService.getView(viewId);
 
-        if (model == null)
+        if (view == null)
             return null;
 
         List<NewsEntryVM> entries = newsBoardService.getViewNewsEntries(viewId)
@@ -61,6 +65,8 @@ public class NewsResource {
                 .map(NewsEntryVM::new)
                 .collect(Collectors.toList());
 
-        return new ViewVM(model, entries);
+        ViewVM res = new ViewVM(view, entries);
+
+        return res;
     }
 }

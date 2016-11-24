@@ -1,7 +1,7 @@
 package de.fhbielefeld.scl.KINewsBoard.WebService.Crawler;
 
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.NewsBoardService;
-import de.fhbielefeld.scl.KINewsBoard.WebService.Crawler.ViewModels.NewsEntryVM;
+import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.NewsEntryBaseModel;
 
 import javax.ejb.EJB;
 import javax.ws.rs.HeaderParam;
@@ -27,7 +27,7 @@ public class NewsResource {
     @Path("/")
     public Response publish(
             @HeaderParam("token") String token,
-            NewsEntryVM model
+            NewsEntryBaseModel model
     ) throws IOException {
         newsBoardService.publishNewsEntry(token, model.getNewsEntryModel());
 

@@ -7,7 +7,11 @@ import java.util.Set;
  * Created by cem on 03.11.16.
  */
 @Entity
-@NamedQuery(name = "View.findAll", query = "select n from View n")
+@NamedQueries
+        ({
+                @NamedQuery(name = "View.findAll", query = "select n from View n"),
+                @NamedQuery(name = "View.getNewsEntries", query = "select n from View n where n.crawlers=:crawler")
+        })
 public class View {
     private int id;
     private String name;

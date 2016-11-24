@@ -1,42 +1,33 @@
-package de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models;
+package de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels;
 
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
- * Created by cem on 10.11.16.
+ * Created by cem on 21.11.16.
  */
-public class NewsEntryModel {
+public class NewsEntryBaseModel {
     private String id;
-    private CrawlerModel crawler;
     private String title;
     private String image;
     private String content;
     private String source;
     private String url;
     private Date date;
-    private List<AnalyzerResultModel> analyzerResultModels;
 
-    public NewsEntryModel() {
-        analyzerResultModels = new ArrayList<>();
+    public NewsEntryBaseModel() {
+
     }
 
-    public NewsEntryModel(NewsEntry entry) {
-
+    public NewsEntryBaseModel(NewsEntry entry) {
         id = entry.getId();
-        crawler = new CrawlerModel(entry.getCrawler());
         title = entry.getTitle();
         image = entry.getImage();
         content = entry.getContent();
         source = entry.getSource();
         url = entry.getUrl();
         date = entry.getDate();
-
-        analyzerResultModels = entry.getAnalyzerResults().stream().map(AnalyzerResultModel::new).collect(Collectors.toList());
     }
 
     public String getId() {
@@ -45,14 +36,6 @@ public class NewsEntryModel {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public CrawlerModel getCrawler() {
-        return crawler;
-    }
-
-    public void setCrawler(CrawlerModel crawler) {
-        this.crawler = crawler;
     }
 
     public String getTitle() {
@@ -102,24 +85,15 @@ public class NewsEntryModel {
     public void setDate(Date date) {
         this.date = date;
     }
-
-    public List<AnalyzerResultModel> getAnalyzerResultModels() {
-        return analyzerResultModels;
-    }
-
-    public void setAnalyzerResultModels(List<AnalyzerResultModel> analyzerResultModels) {
-        this.analyzerResultModels = analyzerResultModels;
-    }
-
-    public NewsEntry getNewsEntry() {
-        NewsEntry newsEntry = new NewsEntry();
-        newsEntry.setId(getId());
-        newsEntry.setTitle(getTitle());
-        newsEntry.setImage(getImage());
-        newsEntry.setContent(getContent());
-        newsEntry.setSource(getSource());
-        newsEntry.setUrl(getUrl());
-        newsEntry.setDate(getDate());
-        return newsEntry;
+    public NewsEntry getNewsEntryModel() {
+        NewsEntry entry = new NewsEntry();
+        entry.setId(getId());
+        entry.setTitle(getTitle());
+        entry.setImage(getImage());
+        entry.setContent(getContent());
+        entry.setSource(getSource());
+        entry.setUrl(getUrl());
+        entry.setDate(getDate());
+        return entry;
     }
 }

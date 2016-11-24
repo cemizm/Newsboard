@@ -1,43 +1,25 @@
-package de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models;
+package de.fhbielefeld.scl.KINewsBoard.WebService.Backend.ViewModels;
 
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.Crawler;
+import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.CrawlerBaseModel;
 
 /**
  * Created by cem on 14.11.16.
  */
-public class CrawlerModel {
-    private int id;
-    private String name;
+public class CrawlerVM extends CrawlerBaseModel {
     private String token;
     private boolean disabled;
     private boolean ignoreAnalyzer;
 
-    public CrawlerModel() {
+    public CrawlerVM() {
 
     }
 
-    public CrawlerModel(Crawler crawler) {
-        id = crawler.getId();
-        name = crawler.getName();
+    public CrawlerVM(Crawler crawler) {
+        super(crawler);
         token = crawler.getToken();
         disabled = crawler.isDisabled();
         ignoreAnalyzer = crawler.isIgnoreAnalyzer();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getToken() {

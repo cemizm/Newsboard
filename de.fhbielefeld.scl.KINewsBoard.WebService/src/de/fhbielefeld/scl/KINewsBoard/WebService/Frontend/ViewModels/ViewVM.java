@@ -1,52 +1,24 @@
 package de.fhbielefeld.scl.KINewsBoard.WebService.Frontend.ViewModels;
 
-import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.ViewModel;
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.View;
+import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.ViewBaseModel;
 
 import java.util.List;
 
 /**
  * Created by cem on 21.11.16.
  */
-public class ViewVM {
+public class ViewVM extends ViewBaseModel{
 
-    private int id;
-    private String name;
-    private String description;
     private List<NewsEntryVM> newsEntries;
 
     public ViewVM() {
 
     }
 
-    public ViewVM(ViewModel viewModel, List<NewsEntryVM> newsEntries) {
-        this.id = viewModel.getId();
-        this.name = viewModel.getName();
-        this.description = viewModel.getDescription();
+    public ViewVM(View view, List<NewsEntryVM> newsEntries) {
+        super(view);
         this.newsEntries = newsEntries;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public List<NewsEntryVM> getNewsEntries() {

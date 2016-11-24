@@ -7,7 +7,11 @@ import java.util.Set;
  * Created by cem on 03.11.16.
  */
 @Entity
-@NamedQuery(name = "Analyzer.findAll", query = "select n from Analyzer n")
+@NamedQueries
+        ({
+                @NamedQuery(name = "Analyzer.findAll", query = "select n from Analyzer n"),
+                @NamedQuery(name = "Analyzer.findByToken", query = "select n from Analyzer n where n.token=:token")
+        })
 public class Analyzer {
     private int id;
     private String token;
