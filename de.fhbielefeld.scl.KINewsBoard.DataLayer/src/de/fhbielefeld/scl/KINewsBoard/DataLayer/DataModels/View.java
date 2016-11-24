@@ -10,7 +10,7 @@ import java.util.Set;
 @NamedQueries
         ({
                 @NamedQuery(name = "View.findAll", query = "select n from View n"),
-                @NamedQuery(name = "View.getNewsEntries", query = "select n from View n where n.crawlers:=crawler")
+                @NamedQuery(name = "View.getNewsEntries", query = "select n from View n where n.crawlers=:crawler")
         })
 public class View {
     private int id;
