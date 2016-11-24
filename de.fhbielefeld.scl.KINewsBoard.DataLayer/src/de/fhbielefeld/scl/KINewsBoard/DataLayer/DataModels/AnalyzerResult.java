@@ -37,7 +37,7 @@ public class AnalyzerResult implements Serializable {
         this.newsEntry = newsEntry;
     }
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getDate() {
         return date;
     }
@@ -54,7 +54,7 @@ public class AnalyzerResult implements Serializable {
         this.value = value;
     }
 
-    @OneToMany(mappedBy = "analyzerResult")
+    @OneToMany(mappedBy = "analyzerResult", fetch = FetchType.EAGER)
     public Set<AnalyzerSentenceResult> getAnalyzerSentenceResult() {
         return analyzerSentenceResult;
     }

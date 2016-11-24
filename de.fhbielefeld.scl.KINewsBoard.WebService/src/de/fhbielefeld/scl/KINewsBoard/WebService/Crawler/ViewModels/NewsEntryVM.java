@@ -1,26 +1,27 @@
-package de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels;
+package de.fhbielefeld.scl.KINewsBoard.WebService.Crawler.ViewModels;
 
-import javax.persistence.*;
+import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.AnalyzerResultModel;
+import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.NewsEntryModel;
+import de.fhbielefeld.scl.KINewsBoard.WebService.Frontend.ViewModels.CrawlerVM;
+
 import java.util.Date;
-import java.util.Set;
 
 /**
- * Created by cem on 29.10.16.
+ * Created by cem on 21.11.16.
  */
-@Entity
-@NamedQuery(name = "NewsEntry.findAll", query = "select n from NewsEntry n")
-public class NewsEntry {
+public class NewsEntryVM {
     private String id;
-    private Crawler crawler;
     private String title;
     private String image;
     private String content;
     private String source;
     private String url;
     private Date date;
-    private Set<AnalyzerResult> analyzerResults;
 
-    @Id
+    public NewsEntryVM() {
+
+    }
+
     public String getId() {
         return id;
     }
@@ -29,16 +30,6 @@ public class NewsEntry {
         this.id = id;
     }
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    public Crawler getCrawler() {
-        return crawler;
-    }
-
-    public void setCrawler(Crawler crawler) {
-        this.crawler = crawler;
-    }
-
-    @Column(length = 1024)
     public String getTitle() {
         return title;
     }
@@ -47,7 +38,6 @@ public class NewsEntry {
         this.title = title;
     }
 
-    @Column(length = 512)
     public String getImage() {
         return image;
     }
@@ -56,7 +46,6 @@ public class NewsEntry {
         this.image = image;
     }
 
-    @Column(length=10485760)
     public String getContent() {
         return content;
     }
@@ -73,7 +62,6 @@ public class NewsEntry {
         this.source = source;
     }
 
-    @Column(length = 512)
     public String getUrl() {
         return url;
     }
@@ -82,7 +70,6 @@ public class NewsEntry {
         this.url = url;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getDate() {
         return date;
     }
@@ -91,12 +78,16 @@ public class NewsEntry {
         this.date = date;
     }
 
-    @OneToMany(mappedBy = "newsEntry")
-    public Set<AnalyzerResult> getAnalyzerResults() {
-        return analyzerResults;
-    }
 
-    public void setAnalyzerResults(Set<AnalyzerResult> analyzerResults) {
-        this.analyzerResults = analyzerResults;
+    public NewsEntryModel getNewsEntryModel() {
+        NewsEntryModel model = new NewsEntryModel();
+        model.setId(getId());
+        model.setTitle(getTitle());
+        model.setImage(getImage());
+        model.setContent(getContent());
+        model.setSource(getSource());
+        model.setUrl(getUrl());
+        model.setDate(getDate());
+        return model;
     }
 }

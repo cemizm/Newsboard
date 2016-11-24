@@ -11,6 +11,7 @@ import java.util.Set;
 public class View {
     private int id;
     private String name;
+    private String description;
     private int type;
     private int maxResults;
     private int lastDays;
@@ -34,6 +35,14 @@ public class View {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getType() {

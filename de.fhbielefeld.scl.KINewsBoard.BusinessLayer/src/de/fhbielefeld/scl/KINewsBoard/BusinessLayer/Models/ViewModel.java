@@ -13,6 +13,7 @@ public class ViewModel {
 
     private int id;
     private String name;
+    private String description;
     private int type;
     private int maxResults;
     private int lastDays;
@@ -35,6 +36,7 @@ public class ViewModel {
 
         id = view.getId();
         name = view.getName();
+        description = view.getDescription();
         type = view.getType();
         maxResults = view.getMaxResults();
         lastDays = view.getLastDays();
@@ -67,6 +69,14 @@ public class ViewModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getType() {
@@ -121,6 +131,7 @@ public class ViewModel {
         View view = new View();
         view.setId(getId());
         view.setName(getName());
+        view.setDescription(getDescription());
         view.setType(getType());
         view.setMaxResults(getMaxResults());
         view.setLastDays(getLastDays());

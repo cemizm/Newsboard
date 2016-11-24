@@ -2,8 +2,10 @@ package de.fhbielefeld.scl.KINewsBoard.BusinessLayer;
 
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.AnalyzerResultModel;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.NewsEntryModel;
+import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.ViewModel;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.Crawler;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.View;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.NewsBoardManager;
 
 import javax.ejb.Stateless;
@@ -83,6 +85,15 @@ public class NewsBoardService {
         return model;
     }
 
+    public ViewModel getView(int viewId) {
+        View v = mngr.getViewDAO().get(viewId);
+
+        if (v == null)
+            throw new IllegalArgumentException("View nicht gefunden.");
+
+        return new ViewModel(v);
+    }
+
     /**
      * Liefert alle noch nicht analysierten News Einträge für einen Ananlyzer.
      *
@@ -111,4 +122,5 @@ public class NewsBoardService {
     public void Close() {
         mngr.Close();
     }
+
 }

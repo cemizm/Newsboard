@@ -58,6 +58,14 @@ public class AnalyzerResultModel {
         this.value = value;
     }
 
+    public List<SentenceResultModel> getSentenceResults() {
+        return sentenceResults;
+    }
+
+    public void setSentenceResults(List<SentenceResultModel> sentenceResults) {
+        this.sentenceResults = sentenceResults;
+    }
+
     public AnalyzerResult getAnalyzerResult() {
         AnalyzerResult analyzerResult = new AnalyzerResult();
         analyzerResult.setDate(getDate());
@@ -66,7 +74,7 @@ public class AnalyzerResultModel {
         return analyzerResult;
     }
 
-    static class SentenceResultModel {
+    public static class SentenceResultModel {
         private int charStart;
         private int charEnd;
         private int value;
