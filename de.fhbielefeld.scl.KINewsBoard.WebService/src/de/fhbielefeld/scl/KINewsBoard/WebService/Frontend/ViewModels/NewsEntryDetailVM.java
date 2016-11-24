@@ -1,6 +1,6 @@
 package de.fhbielefeld.scl.KINewsBoard.WebService.Frontend.ViewModels;
 
-import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.NewsEntryModel;
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +17,10 @@ public class NewsEntryDetailVM extends NewsEntryVM {
         analyzerResults = new ArrayList<>();
     }
 
-    public NewsEntryDetailVM(NewsEntryModel newsEntry) {
+    public NewsEntryDetailVM(NewsEntry newsEntry) {
         super(newsEntry);
 
-        analyzerResults = newsEntry.getAnalyzerResultModels().stream().map(AnalyzerResultVM::new).collect(Collectors.toList());
+        analyzerResults = newsEntry.getAnalyzerResults().stream().map(AnalyzerResultVM::new).collect(Collectors.toList());
     }
 
     public List<AnalyzerResultVM> getAnalyzerResults() {

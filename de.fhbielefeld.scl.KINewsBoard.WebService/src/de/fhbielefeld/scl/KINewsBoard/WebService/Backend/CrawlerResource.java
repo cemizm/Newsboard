@@ -1,13 +1,14 @@
 package de.fhbielefeld.scl.KINewsBoard.WebService.Backend;
 
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.AdminService;
-import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.CrawlerModel;
+import de.fhbielefeld.scl.KINewsBoard.WebService.Backend.ViewModels.CrawlerVM;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by cem on 12.11.16.
@@ -21,21 +22,21 @@ public class CrawlerResource {
 
     @GET
     @Path("/")
-    public List<CrawlerModel> get() {
-        return adminService.getAllCrawler();
+    public List<CrawlerVM> get() {
+        return adminService.getAllCrawler().stream().map(CrawlerVM::new).collect(Collectors.toList());
     }
 
     @POST
     @Path("/")
-    public Response create(CrawlerModel model) {
-        adminService.createCrawler(model);
+    public Response create(CrawlerVM model) {
+        adminService.createCrawler(model.getCrawler());
         return Response.ok().build();
     }
 
     @PUT
     @Path("/")
-    public Response update(CrawlerModel model) {
-        adminService.updateCrawler(model);
+    public Response update(CrawlerVM model) {
+        adminService.updateCrawler(model.getCrawler());
         return Response.ok().build();
     }
 

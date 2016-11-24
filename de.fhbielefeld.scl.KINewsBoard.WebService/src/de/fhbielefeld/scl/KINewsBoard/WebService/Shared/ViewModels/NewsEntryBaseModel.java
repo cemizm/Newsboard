@@ -1,15 +1,13 @@
-package de.fhbielefeld.scl.KINewsBoard.WebService.Crawler.ViewModels;
+package de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels;
 
-import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.AnalyzerResultModel;
-import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.NewsEntryModel;
-import de.fhbielefeld.scl.KINewsBoard.WebService.Frontend.ViewModels.CrawlerVM;
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 
 import java.util.Date;
 
 /**
  * Created by cem on 21.11.16.
  */
-public class NewsEntryVM {
+public class NewsEntryBaseModel {
     private String id;
     private String title;
     private String image;
@@ -18,8 +16,18 @@ public class NewsEntryVM {
     private String url;
     private Date date;
 
-    public NewsEntryVM() {
+    public NewsEntryBaseModel() {
 
+    }
+
+    public NewsEntryBaseModel(NewsEntry entry) {
+        id = entry.getId();
+        title = entry.getTitle();
+        image = entry.getImage();
+        content = entry.getContent();
+        source = entry.getSource();
+        url = entry.getUrl();
+        date = entry.getDate();
     }
 
     public String getId() {
@@ -77,17 +85,15 @@ public class NewsEntryVM {
     public void setDate(Date date) {
         this.date = date;
     }
-
-
-    public NewsEntryModel getNewsEntryModel() {
-        NewsEntryModel model = new NewsEntryModel();
-        model.setId(getId());
-        model.setTitle(getTitle());
-        model.setImage(getImage());
-        model.setContent(getContent());
-        model.setSource(getSource());
-        model.setUrl(getUrl());
-        model.setDate(getDate());
-        return model;
+    public NewsEntry getNewsEntryModel() {
+        NewsEntry entry = new NewsEntry();
+        entry.setId(getId());
+        entry.setTitle(getTitle());
+        entry.setImage(getImage());
+        entry.setContent(getContent());
+        entry.setSource(getSource());
+        entry.setUrl(getUrl());
+        entry.setDate(getDate());
+        return entry;
     }
 }

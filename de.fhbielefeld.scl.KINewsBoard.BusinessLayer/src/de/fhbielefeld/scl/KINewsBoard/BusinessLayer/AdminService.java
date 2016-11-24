@@ -16,7 +16,8 @@ public class AdminService {
     private EntityManager entityManager;
 
     public AdminService() {
-        DBUtils.getEntityManager();
+
+        entityManager = DBUtils.getEntityManager();
     }
 
     public Analyzer getAnalyzer(int id) {

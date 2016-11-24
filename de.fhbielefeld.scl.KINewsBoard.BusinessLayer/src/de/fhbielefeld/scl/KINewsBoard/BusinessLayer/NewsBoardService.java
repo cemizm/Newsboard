@@ -16,7 +16,7 @@ public class NewsBoardService {
     private EntityManager entityManager;
 
     public NewsBoardService() {
-        DBUtils.getEntityManager();
+        entityManager = DBUtils.getEntityManager();
     }
 
     /**
@@ -100,7 +100,7 @@ public class NewsBoardService {
      * @param analyzerResult das Analyse Ergebnis.
      * @return Das veröffentlichte Analyse Ergebnis.
      */
-    public AnalyzerResult publishAnalyzerResult(String token, AnalyzerResult analyzerResult) {
+    public AnalyzerResult publishAnalyzerResult(String token, String newsId, AnalyzerResult analyzerResult) {
         Analyzer analyzer = entityManager.createNamedQuery("Analyzer.findByToken", Analyzer.class)
                 .setParameter("token", token)
                 .getSingleResult();

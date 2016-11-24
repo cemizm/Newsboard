@@ -1,21 +1,21 @@
-package de.fhbielefeld.scl.KINewsBoard.WebService.Frontend.ViewModels;
+package de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels;
 
-import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.AnalyzerModel;
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.Crawler;
 
 /**
  * Created by cem on 21.11.16.
  */
-public class AnalyzerVM {
+public class CrawlerBaseModel {
     private int id;
     private String name;
 
-    public AnalyzerVM() {
+    public CrawlerBaseModel() {
 
     }
 
-    public AnalyzerVM(AnalyzerModel analyzer) {
-        id = analyzer.getId();
-        name = analyzer.getName();
+    public CrawlerBaseModel(Crawler crawler) {
+        id = crawler.getId();
+        name = crawler.getName();
     }
 
     public int getId() {
