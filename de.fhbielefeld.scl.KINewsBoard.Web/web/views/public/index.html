@@ -20,8 +20,7 @@
                 <uib-progressbar class="progress-striped active" value="remaining" type="info"></uib-progressbar>
             </div>
             <div class="col-md-3" style="padding: 0px;">
-                <img ng-src="https://upload.wikimedia.org/wikipedia/commons/1/1e/QR-Code_Willkommen_bei_Wikipedia.png"
-                     class="img-responsive pull-right">
+                <qrcode version="4" error-correction-level="M" size="160" class="pull-right" data="http://localhost:8080/Web/#/public/1"></qrcode>
             </div>
         </div>
         <div class="pane shadow" class="col-md-12">

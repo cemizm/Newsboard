@@ -4,6 +4,7 @@ var app = angular.module('nwb', [
     'ngAnimate',
     'slickCarousel',
     'ngPopover',
+    'monospaced.qrcode',
     'nwb.frontend',
     'nwb.public'
 ]).config(function ($urlRouterProvider) {

@@ -17,12 +17,6 @@ angular.module('nwb.frontend', ['ui.router'])
 
                 $scope.page = 1;
                 $scope.keyword = "";
-                $scope.searchboxHtml ="searchbox.html";
-                $scope.dynamicPopover = {
-                    content: 'Hello, World!',
-                    templateUrl: 'searchbox.html',
-                    title: 'Title'
-                };
 
                 $scope.updateView = function () {
                     FrontendService.getNewsEntries($scope.page,  $scope.keyword).then(function(entries) {
