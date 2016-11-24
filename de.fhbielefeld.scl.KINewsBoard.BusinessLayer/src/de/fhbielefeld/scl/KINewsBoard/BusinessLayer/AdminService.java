@@ -1,12 +1,11 @@
 package de.fhbielefeld.scl.KINewsBoard.BusinessLayer;
 
-import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.*;
-import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.AnalyzerResult;
-import de.fhbielefeld.scl.KINewsBoard.DataLayer.NewsBoardManager;
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.DBUtils;
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.*;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by azad- on 17.11.2016.
@@ -14,155 +13,222 @@ import java.util.stream.Collectors;
 @Stateless
 public class AdminService {
 
-    private NewsBoardManager mngr;
+    private EntityManager entityManager;
 
     public AdminService() {
-        this.mngr = new NewsBoardManager();
+        DBUtils.getEntityManager();
     }
 
-    public AnalyzerModel getAnalyzer(int id) {
-        return new AnalyzerModel(mngr.getAnalyzerDAO().get(id));
+    public Analyzer getAnalyzer(int id) {
+        return entityManager.find(Analyzer.class, id);
     }
 
-    public List<AnalyzerModel> getAllAnalyzers() {
-        return mngr.getAnalyzerDAO()
-                .getAll()
-                .stream()
-                .map(AnalyzerModel::new)
-                .collect(Collectors.toList());
+    public Analyzer getAnalyzerByToken(String token) {
+        return entityManager.createNamedQuery("Analyzer.findByToken", Analyzer.class)
+                .setParameter("token", token)
+                .getSingleResult();
     }
 
-    public void createAnalyzer(AnalyzerModel analyzerModel) {
-        mngr.getAnalyzerDAO().create(analyzerModel.getAnalyzer());
+    public List<Analyzer> getAllAnalyzer() {
+        return entityManager.createNamedQuery("Analyzer.findAll", Analyzer.class).getResultList();
     }
 
-    public AnalyzerModel updateAnalyzer(AnalyzerModel analyzerModel) {
-        return new AnalyzerModel(mngr.getAnalyzerDAO().update(analyzerModel.getAnalyzer()));
+    public void createAnalyzer(Analyzer analyzer) {
+        if (analyzer == null)
+            throw new IllegalArgumentException("Parameter analyzer darf nicht null sein");
+
+        entityManager.persist(analyzer);
+    }
+
+    public Analyzer updateAnalyzer(Analyzer analyzer) {
+        if (analyzer == null)
+            throw new IllegalArgumentException("Parameter analyzer darf nicht null sein");
+
+        return entityManager.merge(analyzer);
     }
 
     public void deleteAnalyzer(int id) {
-        mngr.getAnalyzerDAO().delete(id);
+        Analyzer analyzer = getAnalyzer(id);
+        deleteAnalyzer(analyzer);
     }
 
-    public List<AnalyzerResultModel> getAllAnalyzerResults() {
-        return mngr.getAnalyzerResultDAO()
-                .getAll()
-                .stream()
-                .map(AnalyzerResultModel::new)
-                .collect(Collectors.toList());
+    public void deleteAnalyzer(Analyzer analyzer) {
+        if (analyzer == null)
+            throw new IllegalArgumentException("Parameter analyzer darf nicht null sein");
+
+        entityManager.remove(analyzer);
     }
 
-    public void create(AnalyzerResultModel analyzerResultModel) {
-        mngr.getAnalyzerResultDAO()
-                .create(analyzerResultModel.getAnalyzerResult());
+    public List<AnalyzerResult> getAllAnalyzerResult() {
+        return entityManager.createNamedQuery("AnalyzerResult.findAll", AnalyzerResult.class).getResultList();
     }
 
-    public AnalyzerResultModel updateAnalyzerResult(AnalyzerResultModel analyzerResultModel) {
-        return new AnalyzerResultModel(mngr.getAnalyzerResultDAO()
-                .update(analyzerResultModel.getAnalyzerResult()));
+    public AnalyzerResult updateAnalyzerResult(AnalyzerResult analyzerResult) {
+        if (analyzerResult == null)
+            throw new IllegalArgumentException("Parameter analyzerResult darf nicht null sein");
+
+        return entityManager.merge(analyzerResult);
+    }
+
+    public void createAnalyzerResult(AnalyzerResult analyzerResult) {
+        if (analyzerResult == null)
+            throw new IllegalArgumentException("Parameter analyzerResult darf nicht null sein");
+
+        entityManager.persist(analyzerResult);
     }
 
     public void deleteAnalyzerResult(AnalyzerResult analyzerResult) {
-        mngr.getAnalyzerResultDAO().delete(analyzerResult);
+        if (analyzerResult == null)
+            throw new IllegalArgumentException("Parameter analyzerResult darf nicht null sein");
+
+        entityManager.remove(analyzerResult);
     }
 
-    public CrawlerModel getCrawler(int id) {
-        return new CrawlerModel(mngr.getCrawlerDAO().get(id));
+    public Crawler getCrawler(int id) {
+        return entityManager.find(Crawler.class, id);
     }
 
-    public List<CrawlerModel> getAllCrawler() {
-        return mngr.getCrawlerDAO()
-                .getAll()
-                .stream()
-                .map(CrawlerModel::new)
-                .collect(Collectors.toList());
+    public Crawler getCrawlerByToken(String token) {
+        return entityManager.createNamedQuery("Crawler.findByToken", Crawler.class)
+                .setParameter("token", token)
+                .getSingleResult();
     }
 
-    public void createCrawler(CrawlerModel model) {
-        mngr.getCrawlerDAO().create(model.getCrawler());
+    public List<Crawler> getAllCrawler() {
+        return entityManager.createNamedQuery("Crawler.findAll", Crawler.class).getResultList();
     }
 
-    public CrawlerModel updateCrawler(CrawlerModel model) {
-        return new CrawlerModel(mngr.getCrawlerDAO()
-                .update(model.getCrawler()));
+    public void createCrawler(Crawler crawler) {
+        if (crawler == null)
+            throw new IllegalArgumentException("Parameter crawler darf nicht null sein");
+
+        entityManager.persist(crawler);
+    }
+
+    public Crawler updateCrawler(Crawler crawler) {
+        if (crawler == null)
+            throw new IllegalArgumentException("Parameter crawler darf nicht null sein");
+        return entityManager.merge(crawler);
     }
 
     public void deleteCrawler(int id) {
-        mngr.getCrawlerDAO().delete(id);
+        Crawler crawler = getCrawler(id);
+        deleteCrawler(crawler);
     }
 
-    public ViewModel getView(int id) {
-        return new ViewModel(mngr.getViewDAO().get(id));
+    public void deleteCrawler(Crawler crawler) {
+        if (crawler == null)
+            throw new IllegalArgumentException("Parameter crawler darf nicht null sein");
+
+        entityManager.remove(crawler);
     }
 
-    public List<ViewModel> getAllViews() {
-        return mngr.getViewDAO()
-                .getAll()
-                .stream()
-                .map(ViewModel::new)
-                .collect(Collectors.toList());
+    public View getView(int id) {
+        return entityManager.find(View.class, id);
     }
 
-    public void createView(ViewModel viewModel) {
-        mngr.getViewDAO().create(viewModel.getView());
+    public List<View> getAllView() {
+        return entityManager.createNamedQuery("View.findAll", View.class).getResultList();
     }
 
-    public ViewModel updateView(ViewModel viewModel) {
-        return new ViewModel(mngr.getViewDAO()
-                .update(viewModel.getView()));
+    public void createView(View view) {
+        if (view == null)
+            throw new IllegalArgumentException("Parameter view darf nicht null sein");
+
+        entityManager.persist(view);
+    }
+
+    public View updateView(View view) {
+        if (view == null)
+            throw new IllegalArgumentException("Parameter view darf nicht null sein");
+
+        return entityManager.merge(view);
     }
 
     public void deleteView(int id) {
-        mngr.getViewDAO().delete(id);
+        View view = getView(id);
+        deleteView(view);
     }
 
-    public GroupSetModel getGroupSet(int id) {
-        return new GroupSetModel(mngr.getGroupSetDAO().get(id));
+    public void deleteView(View view) {
+        if (view == null)
+            throw new IllegalArgumentException("Parameter view darf nicht null sein");
+
+        entityManager.remove(view);
     }
 
-    public List<GroupSetModel> getAllGroupSets() {
-        return mngr.getGroupSetDAO()
-                .getAll()
-                .stream()
-                .map(GroupSetModel::new)
-                .collect(Collectors.toList());
+    public GroupSet getGroupSet(int id) {
+        return entityManager.find(GroupSet.class, id);
     }
 
-    public void createGroupSet(GroupSetModel groupSetModel) {
-        mngr.getGroupSetDAO().create(groupSetModel.getGroupSet());
+    public List<GroupSet> getAll() {
+        return entityManager.createNamedQuery("GroupSet.findAll", GroupSet.class).getResultList();
     }
 
-    public GroupSetModel updateGroupSet(GroupSetModel groupSetModel) {
-        return new GroupSetModel(mngr.getGroupSetDAO()
-                .update(groupSetModel.getGroupSet()));
+    public void createGroupSet(GroupSet groupSet) {
+        if (groupSet == null)
+            throw new IllegalArgumentException("Parameter groupSet darf nicht null sein");
+
+        entityManager.persist(groupSet);
+    }
+
+    public GroupSet updateGroupSet(GroupSet groupSet) {
+        if (groupSet == null)
+            throw new IllegalArgumentException("Parameter groupSet darf nicht null sein");
+
+        return entityManager.merge(groupSet);
     }
 
     public void deleteGroupSet(int id) {
-        mngr.getGroupSetDAO().delete(id);
+        GroupSet groupSet = getGroupSet(id);
+        deleteGroupSet(groupSet);
     }
 
-    public NewsEntryModel getNewsEntry(String id) {
-        return new NewsEntryModel(mngr.getNewsEntryDAO().get(id));
+    public void deleteGroupSet(GroupSet groupSet) {
+        if (groupSet == null)
+            throw new IllegalArgumentException("Parameter groupSet darf nicht null sein");
+
+        entityManager.remove(groupSet);
     }
 
-    public List<NewsEntryModel> getAllNewsEntries() {
-        return mngr.getNewsEntryDAO()
-                .getAll()
-                .stream()
-                .map(NewsEntryModel::new)
-                .collect(Collectors.toList());
+    public NewsEntry getNewsEntry(String id) {
+        if (id == null || id.isEmpty())
+            throw new IllegalArgumentException("Parameter id darf nicht null oder leer sein");
+
+        return entityManager.find(NewsEntry.class, id);
     }
 
-    public void createNewsEntry(NewsEntryModel newsEntryModel) {
-        mngr.getNewsEntryDAO().create(newsEntryModel.getNewsEntry());
+    public List<NewsEntry> getAllNewsEntry() {
+        return entityManager.createNamedQuery("NewsEntry.findAll", NewsEntry.class).getResultList();
     }
 
-    public NewsEntryModel updateNewsEntry(NewsEntryModel newsEntryModel) {
-        return new NewsEntryModel(mngr.getNewsEntryDAO().update(newsEntryModel.getNewsEntry()));
+    public void createNewsEntry(NewsEntry newsEntry) {
+        if (newsEntry == null)
+            throw new IllegalArgumentException("Parameter newsEntry darf nicht null sein");
+
+        entityManager.persist(newsEntry);
+    }
+
+    public NewsEntry updateNewsEntry(NewsEntry newsEntry) {
+        if (newsEntry == null)
+            throw new IllegalArgumentException("Parameter newsEntry darf nicht null sein");
+
+        return entityManager.merge(newsEntry);
     }
 
     public void deleteNewsEntry(String id) {
-        mngr.getNewsEntryDAO().delete(id);
+        if (id == null || id.isEmpty())
+            throw new IllegalArgumentException("Parameter id darf nicht null oder leer sein");
+
+        NewsEntry entry = getNewsEntry(id);
+        deleteNewsEntry(entry);
+    }
+
+    public void deleteNewsEntry(NewsEntry newsEntry) {
+        if (newsEntry == null)
+            throw new IllegalArgumentException("Parameter newsEntry darf nicht null sein");
+
+        entityManager.remove(newsEntry);
     }
 
 }

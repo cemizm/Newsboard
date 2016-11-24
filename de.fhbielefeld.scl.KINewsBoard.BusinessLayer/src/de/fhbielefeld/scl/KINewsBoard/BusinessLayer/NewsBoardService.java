@@ -1,16 +1,11 @@
 package de.fhbielefeld.scl.KINewsBoard.BusinessLayer;
 
-import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.AnalyzerResultModel;
-import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.NewsEntryModel;
-import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.ViewModel;
-import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.Crawler;
-import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
-import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.View;
-import de.fhbielefeld.scl.KINewsBoard.DataLayer.NewsBoardManager;
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.DBUtils;
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.*;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Klasse für den Zugriff auf die Daten in der News Board Datenbank.
@@ -18,10 +13,10 @@ import java.util.stream.Collectors;
 @Stateless
 public class NewsBoardService {
 
-    private NewsBoardManager mngr;
+    private EntityManager entityManager;
 
     public NewsBoardService() {
-        this.mngr = new NewsBoardManager();
+        DBUtils.getEntityManager();
     }
 
     /**
@@ -31,8 +26,8 @@ public class NewsBoardService {
      * @param keyword Das Keyword nach dem die News Einträge gefilter werden sollen.
      * @return Liste der News Einträge die in der Web/Mobile Ansicht angezeigt werden.
      */
-    public List<NewsEntryModel> getPublicNewsEntries(int start, String keyword) {
-        return getNewsModels(mngr.getNewsEntryDAO().getAll());
+    public List<NewsEntry> getPublicNewsEntries(int start, String keyword) {
+        return entityManager.createNamedQuery("NewsEntry.findAll", NewsEntry.class).getResultList();
     }
 
     /**
@@ -42,8 +37,8 @@ public class NewsBoardService {
      * @return Liste der News Einträge die der View zugeordnet sind.
      * @throws IllegalArgumentException wenn View mit <code>viewId</code> nicht existiert.
      */
-    public List<NewsEntryModel> getViewNewsEntries(int viewId) {
-        return getNewsModels(mngr.getNewsEntryDAO().getAll());
+    public List<NewsEntry> getViewNewsEntries(int viewId) {
+        return entityManager.createNamedQuery("NewsEntry.findAll", NewsEntry.class).getResultList();
     }
 
     /**
@@ -52,8 +47,8 @@ public class NewsBoardService {
      * @param newsId Die Id der News dessen Details geladen werden sollen.
      * @return Die Detail Ansicht zu der News.
      */
-    public NewsEntryModel getNewsEntryDetails(String newsId) {
-        return new NewsEntryModel(mngr.getNewsEntryDAO().get(newsId));
+    public NewsEntry getNewsEntryDetails(String newsId) {
+        return entityManager.find(NewsEntry.class, newsId);
     }
 
     /**
@@ -63,35 +58,29 @@ public class NewsBoardService {
      * @param model Der News Eintrag der veröffentlicht werden soll.
      * @return Der veröffentlichte News Eintrag
      */
-    public NewsEntryModel publishNewsEntry(String token, NewsEntryModel model) {
-
-        Crawler crawler = mngr.getCrawlerDAO().getByToken(token);
+    public NewsEntry publishNewsEntry(String token, NewsEntry newsEntry) {
+        Crawler crawler = entityManager.createNamedQuery("Crawler.findByToken", Crawler.class)
+                .setParameter("token", token)
+                .getSingleResult();
 
         if (crawler == null)
-            throw new IllegalArgumentException("Token nicht gültig");
+            throw new IllegalArgumentException("Token nicht gültig.");
 
-        NewsEntry entry = new NewsEntry();
-        entry.setId(model.getId());
-        entry.setCrawler(crawler);
-        entry.setTitle(model.getTitle());
-        entry.setImage(model.getImage());
-        entry.setContent(model.getContent());
-        entry.setSource(model.getSource());
-        entry.setUrl(model.getUrl());
-        entry.setDate(model.getDate());
+        if (newsEntry == null)
+            throw new IllegalArgumentException("Parameter newsEntry darf nicht null sein");
 
-        mngr.getNewsEntryDAO().create(entry);
+        entityManager.persist(newsEntry);
 
-        return model;
+        return newsEntry;
     }
 
-    public ViewModel getView(int viewId) {
-        View v = mngr.getViewDAO().get(viewId);
+    public View getView(int viewId) {
+        View view = entityManager.find(View.class, viewId);
 
-        if (v == null)
+        if (view == null)
             throw new IllegalArgumentException("View nicht gefunden.");
 
-        return new ViewModel(v);
+        return view;
     }
 
     /**
@@ -100,27 +89,26 @@ public class NewsBoardService {
      * @param token der Auth-Token für einen AnalyzerModel.
      * @return Liste der News Einträge.
      */
-    public List<NewsEntryModel> getAnalyzerNewsEntries(String token) {
-        return getNewsModels(mngr.getNewsEntryDAO().getAll());
+    public List<NewsEntry> getAnalyzerNewsEntries(String token) {
+        return entityManager.createNamedQuery("NewsEntry.findAll", NewsEntry.class).getResultList();
     }
 
     /**
      * Veröffentlicht ein Analyse Ergebnis zu einem News Eintrag.
      *
-     * @param token der Auth-Token für einen AnalyzerModel.
-     * @param model das Analyse Ergebnis.
+     * @param token          der Auth-Token für einen AnalyzerModel.
+     * @param analyzerResult das Analyse Ergebnis.
      * @return Das veröffentlichte Analyse Ergebnis.
      */
-    public AnalyzerResultModel publishAnalyzerResult(String token, AnalyzerResultModel model) {
-        return model;
-    }
+    public AnalyzerResult publishAnalyzerResult(String token, AnalyzerResult analyzerResult) {
+        Analyzer analyzer = entityManager.createNamedQuery("Analyzer.findByToken", Analyzer.class)
+                .setParameter("token", token)
+                .getSingleResult();
 
-    private List<NewsEntryModel> getNewsModels(List<NewsEntry> entries) {
-        return entries.stream().map(NewsEntryModel::new).collect(Collectors.toList());
-    }
+        if (analyzer == null)
+            throw new IllegalArgumentException("Token nicht gültig.");
 
-    public void Close() {
-        mngr.Close();
+        return analyzerResult;
     }
 
 }
