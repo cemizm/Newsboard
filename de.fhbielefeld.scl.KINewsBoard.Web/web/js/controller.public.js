@@ -55,11 +55,11 @@ angular.module('nwb.public', ['ui.router'])
                         tmp = tmp * -1;
 
                     return tmp;
-                }
+                };
 
                 $scope.getAnalyzerResultType = function() {
                     return $scope.getAnalyzerResult() < 0 ? "danger" : "success"
-                }
+                };
 
                 $scope.startTimer = function () {
                     if (angular.isDefined(stop)) return;

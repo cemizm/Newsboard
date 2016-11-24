@@ -3,9 +3,10 @@ var app = angular.module('nwb', [
     'ui.bootstrap',
     'ngAnimate',
     'slickCarousel',
+    'ngPopover',
     'nwb.frontend',
     'nwb.public'
 ]).config(function ($urlRouterProvider) {
-    $urlRouterProvider.otherwise("/frontend");
+    $urlRouterProvider.otherwise("/frontend/1");
 
 });

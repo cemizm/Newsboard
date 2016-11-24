@@ -6,25 +6,53 @@
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li ui-sref-active="active"><a ui-sref="public({viewId: 1})">Test View 1</a></li>
-                <li ui-sref-active="active"><a ui-sref="public({viewId: 2})">Test View 2</a></li>
+                <li ui-sref-active="active"><a ui-sref="frontend({viewId: 1})">Web View</a></li>
+                <li ui-sref-active="active"><a ui-sref="public({viewId: 1})">Public View 1</a></li>
+                <li ui-sref-active="active"><a ui-sref="public({viewId: 2})">Public View 2</a></li>
             </ul>
             <form class="navbar-form navbar-right">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Schlagwort">
+
+                    <input type="text" ng-model="keyword" ng-keyup="$event.keyCode == 13 ? updateView() : null"
+                           placeholder="Schlagwort"
+                           id="popover-trigger" class="ng-popover-trigger">
+                    </input>
+
                 </div>
-                <button type="submit" class="btn btn-default">Suchen</button>
+                <button type="submit" class="btn btn-default" ng-click="updateView()"><span class="glyphicon glyphicon-search"></span></button>
             </form>
         </div>
     </div>
 </nav>
 
-<div ng-repeat="entry in entriesa" class="col-md-4">
-    <div class="card">
-        <img src="{{entry.image}}">
-        <div class="container">
-            <h4><b>{{entry.title}}</b></h4>
-            <p>{{entry.source}}</p>
+<div class="col-md-6">
+        <div class="slide shadow" ng-repeat="entry in entries">
+            <div class="col-md-3 image">
+                <img ng-src="{{entry.image}}">
+            </div>
+            <div class="col-md-9 content">
+                <h4>{{entry.title}}</h4>
+                <p>{{entry.content}}</p>
+            </div>
         </div>
-    </div>
 </div>
+
+<ng-popover trigger="popover-trigger" popover-class="searchPopover" on-open="openCallback()"
+            on-close="closeCallback()">
+    <div class="checkbox">
+        <label><input type="checkbox" value="">Option 1</label>
+    </div>
+    <div class="checkbox">
+        <label><input type="checkbox" value="">Option 2</label>
+    </div>
+    <div class="checkbox">
+        <label><input type="checkbox" value="">Option 3</label>
+    </div>
+    <div class="checkbox">
+        <label><input type="checkbox" value="">Option 4</label>
+    </div>
+    <div class="checkbox">
+        <label><input type="checkbox" value="">Option 5</label>
+    </div>
+
+</ng-popover>
