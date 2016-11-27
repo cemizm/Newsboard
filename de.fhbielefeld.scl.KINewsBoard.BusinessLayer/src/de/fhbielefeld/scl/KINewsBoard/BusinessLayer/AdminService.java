@@ -1,10 +1,10 @@
 package de.fhbielefeld.scl.KINewsBoard.BusinessLayer;
 
-import de.fhbielefeld.scl.KINewsBoard.DataLayer.DBUtils;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.*;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
@@ -13,12 +13,9 @@ import java.util.List;
 @Stateless
 public class AdminService {
 
+
+    @PersistenceContext(name = "NewsBoardPU")
     private EntityManager entityManager;
-
-    public AdminService() {
-
-        entityManager = DBUtils.getEntityManager();
-    }
 
     public Analyzer getAnalyzer(int id) {
         return entityManager.find(Analyzer.class, id);
@@ -45,7 +42,11 @@ public class AdminService {
         if (analyzer == null)
             throw new IllegalArgumentException("Parameter analyzer darf nicht null sein");
 
-        return entityManager.merge(analyzer);
+        analyzer = entityManager.merge(analyzer);
+
+        entityManager.flush();
+
+        return analyzer;
     }
 
     public void deleteAnalyzer(int id) {
@@ -162,6 +163,10 @@ public class AdminService {
         return entityManager.find(GroupSet.class, id);
     }
 
+    public List<GroupSet> getGroupSets(List<Integer> ids) {
+        return entityManager.createNamedQuery("GroupSet.findByIds", GroupSet.class).setParameter("ids", ids).getResultList();
+    }
+
     public List<GroupSet> getAll() {
         return entityManager.createNamedQuery("GroupSet.findAll", GroupSet.class).getResultList();
     }
@@ -231,5 +236,4 @@ public class AdminService {
 
         entityManager.remove(newsEntry);
     }
-
 }

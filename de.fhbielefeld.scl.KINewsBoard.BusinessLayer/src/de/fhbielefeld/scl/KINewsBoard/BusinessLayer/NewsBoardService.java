@@ -1,10 +1,10 @@
 package de.fhbielefeld.scl.KINewsBoard.BusinessLayer;
 
-import de.fhbielefeld.scl.KINewsBoard.DataLayer.DBUtils;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.*;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
@@ -13,11 +13,8 @@ import java.util.List;
 @Stateless
 public class NewsBoardService {
 
+    @PersistenceContext(name = "NewsBoardPU")
     private EntityManager entityManager;
-
-    public NewsBoardService() {
-        entityManager = DBUtils.getEntityManager();
-    }
 
     /**
      * Ermitellt <code>limit</code> definierten Anzahl von News Einträge die in der Web/Mobile Ansicht angezeit werden können, beginnend mit der <code>start</code> angegeben Seite.
