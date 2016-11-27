@@ -3,6 +3,7 @@ package de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -16,6 +17,10 @@ public class AnalyzerResult implements Serializable {
     private Date date;
     private int value;
     private Set<AnalyzerSentenceResult> analyzerSentenceResult;
+
+    public AnalyzerResult() {
+        analyzerSentenceResult = new HashSet<>();
+    }
 
     @Id
     @ManyToOne

@@ -2,6 +2,7 @@ package de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -19,6 +20,10 @@ public class NewsEntry {
     private String url;
     private Date date;
     private Set<AnalyzerResult> analyzerResults;
+
+    public NewsEntry() {
+        analyzerResults = new HashSet<>();
+    }
 
     @Id
     public String getId() {

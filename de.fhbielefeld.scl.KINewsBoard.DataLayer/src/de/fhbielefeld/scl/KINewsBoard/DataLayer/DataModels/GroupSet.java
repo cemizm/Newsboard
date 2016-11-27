@@ -1,6 +1,7 @@
 package de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -13,6 +14,11 @@ public class GroupSet {
     private String name;
     private Set<View> views;
     private Set<Analyzer> analyzers;
+
+    public GroupSet() {
+        views = new HashSet<>();
+        analyzers = new HashSet<>();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
