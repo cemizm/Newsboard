@@ -57,7 +57,7 @@ var sources = [
                 content: item.summary,
                 image: item.enclosures[0].url,
                 title: item.title,
-                source: "Mindener Tageblatt",
+                source: "Mindener Tageblatt - Regionales",
                 url: item.link
             }
         }
