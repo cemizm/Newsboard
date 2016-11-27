@@ -19,6 +19,7 @@ public class BackendService extends Application {
         s.add(AnalyzerResource.class);
         s.add(GroupResource.class);
         s.add(ViewResource.class);
+        s.add(DashboardResource.class);
 
         return s;
     }
