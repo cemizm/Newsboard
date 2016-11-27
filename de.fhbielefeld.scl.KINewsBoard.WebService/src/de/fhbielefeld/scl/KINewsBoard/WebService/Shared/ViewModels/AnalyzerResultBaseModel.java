@@ -5,7 +5,6 @@ import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.AnalyzerSentenceResul
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -56,9 +55,7 @@ public class AnalyzerResultBaseModel {
         model.setDate(getDate());
         model.setValue(getValue());
 
-        Set<AnalyzerSentenceResult> results = getSentenceResults().stream().map(SentenceResultVM::getSentenceResult).collect(Collectors.toSet());
-
-        model.setAnalyzerSentenceResult(results);
+        getSentenceResults().stream().map(SentenceResultVM::getSentenceResult).forEach(sentence -> model.addAnalyzerSentenceResult(sentence));
 
         return model;
     }
@@ -102,7 +99,7 @@ public class AnalyzerResultBaseModel {
             this.value = value;
         }
 
-        public AnalyzerSentenceResult getSentenceResult(){
+        public AnalyzerSentenceResult getSentenceResult() {
             AnalyzerSentenceResult model = new AnalyzerSentenceResult();
             model.setCharStart(getCharStart());
             model.setCharEnd(getCharEnd());

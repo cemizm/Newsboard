@@ -107,6 +107,13 @@ public class NewsBoardService {
         if (analyzer == null)
             throw new IllegalArgumentException("Token nicht gültig.");
 
+        NewsEntry newsEntry = getNewsEntryDetails(newsId);
+
+        analyzerResult.setAnalyzer(analyzer);
+        analyzerResult.setNewsEntry(newsEntry);
+
+        entityManager.persist(analyzerResult);
+
         return analyzerResult;
     }
 

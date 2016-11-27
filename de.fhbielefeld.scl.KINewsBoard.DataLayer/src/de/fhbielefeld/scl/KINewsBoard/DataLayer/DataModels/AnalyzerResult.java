@@ -33,7 +33,7 @@ public class AnalyzerResult implements Serializable {
     }
 
     @Id
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     public NewsEntry getNewsEntry() {
         return newsEntry;
     }
@@ -66,5 +66,15 @@ public class AnalyzerResult implements Serializable {
 
     public void setAnalyzerSentenceResult(Set<AnalyzerSentenceResult> analyzerSentenceResult) {
         this.analyzerSentenceResult = analyzerSentenceResult;
+    }
+
+    public void addAnalyzerSentenceResult(AnalyzerSentenceResult sentence) {
+        sentence.setAnalyzerResult(this);
+        analyzerSentenceResult.add(sentence);
+    }
+
+    public void removeAnalyzerSentenceResult(AnalyzerSentenceResult sentence){
+        sentence.setAnalyzerResult(null);
+        analyzerSentenceResult.remove(sentence);
     }
 }
