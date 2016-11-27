@@ -41,7 +41,7 @@ public class GroupSet {
         this.name = name;
     }
 
-    @ManyToMany(mappedBy = "groupSets")
+    @ManyToMany(mappedBy = "groupSets", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     public Set<View> getViews() {
         return views;
     }
@@ -50,7 +50,7 @@ public class GroupSet {
         this.views = views;
     }
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     public Set<Analyzer> getAnalyzers() {
         return analyzers;
     }

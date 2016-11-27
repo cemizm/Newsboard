@@ -1,5 +1,6 @@
 package de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -16,7 +17,7 @@ public class AnalyzerSentenceResult implements Serializable {
     private int value;
 
     @Id
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     public AnalyzerResult getAnalyzerResult() {
         return analyzerResult;
     }

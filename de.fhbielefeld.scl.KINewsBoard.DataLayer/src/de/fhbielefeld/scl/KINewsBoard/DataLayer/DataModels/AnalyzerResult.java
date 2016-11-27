@@ -33,7 +33,7 @@ public class AnalyzerResult implements Serializable {
     }
 
     @Id
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     public NewsEntry getNewsEntry() {
         return newsEntry;
     }
@@ -59,7 +59,7 @@ public class AnalyzerResult implements Serializable {
         this.value = value;
     }
 
-    @OneToMany(mappedBy = "analyzerResult", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "analyzerResult", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     public Set<AnalyzerSentenceResult> getAnalyzerSentenceResult() {
         return analyzerSentenceResult;
     }

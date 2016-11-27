@@ -70,7 +70,7 @@ public class Crawler {
         this.ignoreAnalyzer = ignoreAnalyzer;
     }
 
-    @OneToMany(mappedBy = "crawler")
+    @OneToMany(mappedBy = "crawler", cascade = {CascadeType.ALL})
     public Set<NewsEntry> getEntries() {
         return entries;
     }
@@ -79,7 +79,7 @@ public class Crawler {
         this.entries = entries;
     }
 
-    @ManyToMany(mappedBy = "crawlers")
+    @ManyToMany(mappedBy = "crawlers", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     public Set<View> getViews() {
         return views;
     }

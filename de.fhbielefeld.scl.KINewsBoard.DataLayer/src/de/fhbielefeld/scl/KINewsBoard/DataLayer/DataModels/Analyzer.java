@@ -61,7 +61,7 @@ public class Analyzer {
         this.disabled = disabled;
     }
 
-    @ManyToMany(mappedBy = "analyzers")
+    @ManyToMany(mappedBy = "analyzers", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     public Set<GroupSet> getGroupSets() {
         return groupSets;
     }
@@ -70,7 +70,7 @@ public class Analyzer {
         this.groupSets = groupSets;
     }
 
-    @OneToMany(mappedBy = "analyzer")
+    @OneToMany(mappedBy = "analyzer", cascade = {CascadeType.ALL})
     public Set<AnalyzerResult> getResults() {
         return results;
     }

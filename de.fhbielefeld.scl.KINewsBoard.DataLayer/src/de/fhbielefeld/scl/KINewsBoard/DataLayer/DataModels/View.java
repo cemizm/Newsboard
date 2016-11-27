@@ -87,7 +87,7 @@ public class View {
         this.publicView = publicView;
     }
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     public Set<GroupSet> getGroupSets() {
         return groupSets;
     }
@@ -96,7 +96,7 @@ public class View {
         this.groupSets = groupSets;
     }
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     public Set<Crawler> getCrawlers() {
         return crawlers;
     }

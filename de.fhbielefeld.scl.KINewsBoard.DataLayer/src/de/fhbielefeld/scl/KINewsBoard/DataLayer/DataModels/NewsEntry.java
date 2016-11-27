@@ -61,7 +61,7 @@ public class NewsEntry {
         this.image = image;
     }
 
-    @Column(length=10485760)
+    @Column(length = 10485760)
     public String getContent() {
         return content;
     }
@@ -96,7 +96,7 @@ public class NewsEntry {
         this.date = date;
     }
 
-    @OneToMany(mappedBy = "newsEntry")
+    @OneToMany(mappedBy = "newsEntry", cascade = {CascadeType.ALL})
     public Set<AnalyzerResult> getAnalyzerResults() {
         return analyzerResults;
     }
