@@ -66,6 +66,8 @@ public class NewsBoardService {
         if (newsEntry == null)
             throw new IllegalArgumentException("Parameter newsEntry darf nicht null sein");
 
+        newsEntry.setCrawler(crawler);
+
         entityManager.persist(newsEntry);
 
         return newsEntry;
