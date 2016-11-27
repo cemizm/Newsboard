@@ -8,7 +8,10 @@ import java.util.Set;
  * Created by cem on 03.11.16.
  */
 @Entity
-@NamedQuery(name = "GroupSet.findAll", query = "select n from GroupSet n")
+@NamedQueries({
+        @NamedQuery(name = "GroupSet.findAll", query = "select n from GroupSet n"),
+        @NamedQuery(name = "GroupSet.findByIds", query = "select n from GroupSet n where n.id in :ids")
+})
 public class GroupSet {
     private int id;
     private String name;
