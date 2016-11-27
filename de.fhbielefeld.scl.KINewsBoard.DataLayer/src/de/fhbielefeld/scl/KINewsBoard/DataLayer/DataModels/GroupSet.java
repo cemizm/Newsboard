@@ -58,4 +58,14 @@ public class GroupSet {
     public void setAnalyzers(Set<Analyzer> analyzers) {
         this.analyzers = analyzers;
     }
+
+    public void addAnalyzer(Analyzer analyzer) {
+        analyzers.add(analyzer);
+        analyzer.getGroupSets().add(this);
+    }
+
+    public void removeAnalyzer(Analyzer analyzer) {
+        analyzers.remove(analyzer);
+        analyzer.getGroupSets().remove(this);
+    }
 }

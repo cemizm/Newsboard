@@ -1,7 +1,13 @@
 package de.fhbielefeld.scl.KINewsBoard.WebService.Backend.ViewModels;
 
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.Analyzer;
+import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.GroupSet;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.AnalyzerBaseModel;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by cem on 14.11.16.
@@ -10,9 +16,10 @@ public class AnalyzerVM extends AnalyzerBaseModel {
 
     private String token;
     private boolean disabled;
+    private List<Integer> groups;
 
     public AnalyzerVM() {
-
+        groups = new ArrayList<>();
     }
 
     public AnalyzerVM(Analyzer analyzer) {
@@ -20,6 +27,7 @@ public class AnalyzerVM extends AnalyzerBaseModel {
 
         token = analyzer.getToken();
         disabled = analyzer.isDisabled();
+        groups = analyzer.getGroupSets().stream().map(GroupSet::getId).collect(Collectors.toList());
     }
 
     public String getToken() {
@@ -38,6 +46,14 @@ public class AnalyzerVM extends AnalyzerBaseModel {
         this.disabled = disabled;
     }
 
+    public List<Integer> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Integer> groups) {
+        this.groups = groups;
+    }
+
     public Analyzer getAnalyzer() {
         Analyzer analyzer = new Analyzer();
 
@@ -45,6 +61,14 @@ public class AnalyzerVM extends AnalyzerBaseModel {
         analyzer.setToken(getToken());
         analyzer.setName(getName());
         analyzer.setDisabled(isDisabled());
+
+        Set<GroupSet> groups = analyzer.getGroupSets();
+        for (Integer i : this.groups) {
+            GroupSet gs = new GroupSet();
+            gs.setId(i);
+            groups.add(gs);
+        }
+        analyzer.setGroupSets(groups);
 
         return analyzer;
     }
