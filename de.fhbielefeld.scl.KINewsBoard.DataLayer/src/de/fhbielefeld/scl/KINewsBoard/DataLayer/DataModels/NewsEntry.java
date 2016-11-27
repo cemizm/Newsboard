@@ -9,7 +9,7 @@ import java.util.Set;
  * Created by cem on 29.10.16.
  */
 @Entity
-@NamedQuery(name = "NewsEntry.findAll", query = "select n from NewsEntry n")
+@NamedQuery(name = "NewsEntry.findAll", query = "select n from NewsEntry n order by n.date desc")
 public class NewsEntry {
     private String id;
     private Crawler crawler;
