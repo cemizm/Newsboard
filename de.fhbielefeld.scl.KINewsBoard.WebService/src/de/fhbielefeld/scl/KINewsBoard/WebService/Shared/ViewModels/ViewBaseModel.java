@@ -1,9 +1,6 @@
 package de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels;
 
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.View;
-import de.fhbielefeld.scl.KINewsBoard.WebService.Frontend.ViewModels.NewsEntryVM;
-
-import java.util.List;
 
 /**
  * Created by cem on 21.11.16.

@@ -1,8 +1,8 @@
 package de.fhbielefeld.scl.KINewsBoard.WebService.Frontend.ViewModels;
 
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.AnalyzerResult;
-import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.AnalyzerResultBaseModel;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.AnalyzerBaseModel;
+import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.AnalyzerResultBaseModel;
 
 /**
  * Created by cem on 21.11.16.
