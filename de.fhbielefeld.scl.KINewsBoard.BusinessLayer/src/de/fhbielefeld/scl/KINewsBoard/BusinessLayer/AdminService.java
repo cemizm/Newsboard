@@ -203,7 +203,7 @@ public class AdminService {
         return entityManager.createNamedQuery("GroupSet.findByIds", GroupSet.class).setParameter("ids", ids).getResultList();
     }
 
-    public List<GroupSet> getAll() {
+    public List<GroupSet> getAllGroupSets() {
         return entityManager.createNamedQuery("GroupSet.findAll", GroupSet.class).getResultList();
     }
 
