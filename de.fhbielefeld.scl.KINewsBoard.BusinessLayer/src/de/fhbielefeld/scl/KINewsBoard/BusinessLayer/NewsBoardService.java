@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Klasse für den Zugriff auf die Daten in der News Board Datenbank.
@@ -51,8 +52,8 @@ public class NewsBoardService {
     /**
      * Veröffentlicht einen News Eintrag.
      *
-     * @param token Der Authentifizierungs-Token für einen Crawler.
-     * @param model Der News Eintrag der veröffentlicht werden soll.
+     * @param token     Der Authentifizierungs-Token für einen Crawler.
+     * @param newsEntry Der News Eintrag der veröffentlicht werden soll.
      * @return Der veröffentlichte News Eintrag
      */
     public NewsEntry publishNewsEntry(String token, NewsEntry newsEntry) {
@@ -89,7 +90,15 @@ public class NewsBoardService {
      * @return Liste der News Einträge.
      */
     public List<NewsEntry> getAnalyzerNewsEntries(String token) {
-        return entityManager.createNamedQuery("NewsEntry.findAll", NewsEntry.class).getResultList();
+        Optional<Analyzer> o = entityManager.createNamedQuery("Analyzer.findByToken", Analyzer.class)
+                .setParameter("token", token).getResultList().stream().findFirst();
+
+        if (!o.isPresent())
+            throw new IllegalArgumentException("Analyzer nicht gefunden.");
+
+        return entityManager.createNamedQuery("NewsEntry.getNotAnalyzedNewsEntries", NewsEntry.class)
+                .setParameter("analyzer", o.get().getId())
+                .getResultList();
     }
 
     /**

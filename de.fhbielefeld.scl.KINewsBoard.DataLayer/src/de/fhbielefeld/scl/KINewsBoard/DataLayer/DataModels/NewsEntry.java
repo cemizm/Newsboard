@@ -11,7 +11,7 @@ import java.util.Set;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "NewsEntry.findAll", query = "select n from NewsEntry n order by n.date desc"),
-        @NamedQuery(name = "NewsEntry.getNotAnalyzedNewsEntries", query = "select n from NewsEntry n order by n.date desc"),
+        @NamedQuery(name = "NewsEntry.getNotAnalyzedNewsEntries", query = "select n from NewsEntry n left join AnalyzerResult ar on n.id = ar.newsEntry.id and ar.analyzer.id = :analyzer where ar.newsEntry.id is null order by n.date desc"),
         @NamedQuery(name = "NewsEntry.getNewsEntriesByViewId", query = "select n from NewsEntry n left join Crawler c on n.crawler.id = c.id left join c.views cv where cv.id = :viewId order by n.date desc")
 })
 public class NewsEntry {
@@ -38,7 +38,7 @@ public class NewsEntry {
         this.id = id;
     }
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER, optional = false)
     public Crawler getCrawler() {
         return crawler;
     }

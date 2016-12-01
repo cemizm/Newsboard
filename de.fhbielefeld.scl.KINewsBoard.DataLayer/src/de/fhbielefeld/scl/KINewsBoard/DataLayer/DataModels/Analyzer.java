@@ -36,7 +36,7 @@ public class Analyzer {
         this.id = id;
     }
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     public String getToken() {
         return token;
     }
@@ -45,6 +45,7 @@ public class Analyzer {
         this.token = token;
     }
 
+    @Column(length = 50)
     public String getName() {
         return name;
     }

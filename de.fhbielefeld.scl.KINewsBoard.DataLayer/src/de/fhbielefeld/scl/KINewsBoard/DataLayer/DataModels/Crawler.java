@@ -37,7 +37,7 @@ public class Crawler {
         this.id = id;
     }
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     public String getToken() {
         return token;
     }
@@ -46,6 +46,7 @@ public class Crawler {
         this.token = token;
     }
 
+    @Column(length = 50)
     public String getName() {
         return name;
     }
