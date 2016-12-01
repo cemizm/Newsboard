@@ -1,6 +1,7 @@
 package de.fhbielefeld.scl.KINewsBoard.WebService.Crawler;
 
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.NewsBoardService;
+import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.ErrorModel;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.NewsEntryBaseModel;
 
 import javax.ejb.EJB;
@@ -10,7 +11,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.IOException;
 
 /**
  * Created by cem on 10.11.16.
@@ -28,9 +28,14 @@ public class NewsResource {
     public Response publish(
             @HeaderParam("token") String token,
             NewsEntryBaseModel model
-    ) throws IOException {
-        newsBoardService.publishNewsEntry(token, model.getNewsEntryModel());
-
+    ) {
+        try {
+            newsBoardService.publishNewsEntry(token, model.getNewsEntryModel());
+        } catch (IllegalArgumentException ex) {
+            return Response.status(Response.Status.UNAUTHORIZED).entity(new ErrorModel(ex.getMessage())).build();
+        } catch (Exception ex) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorModel(ex.getMessage())).build();
+        }
         return Response.ok().build();
     }
 }
