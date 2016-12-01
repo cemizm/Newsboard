@@ -57,17 +57,16 @@ public class NewsBoardService {
      * @return Der veröffentlichte News Eintrag
      */
     public NewsEntry publishNewsEntry(String token, NewsEntry newsEntry) {
-        Crawler crawler = entityManager.createNamedQuery("Crawler.findByToken", Crawler.class)
-                .setParameter("token", token)
-                .getSingleResult();
+        Optional<Crawler> o = entityManager.createNamedQuery("Crawler.findByToken", Crawler.class)
+                .setParameter("token", token).getResultList().stream().findFirst();
 
-        if (crawler == null)
-            throw new IllegalArgumentException("Token nicht gültig.");
+        if (!o.isPresent())
+            throw new IllegalArgumentException("Crawler nicht gefunden.");
 
         if (newsEntry == null)
             throw new IllegalArgumentException("Parameter newsEntry darf nicht null sein");
 
-        newsEntry.setCrawler(crawler);
+        newsEntry.setCrawler(o.get());
 
         entityManager.persist(newsEntry);
 
