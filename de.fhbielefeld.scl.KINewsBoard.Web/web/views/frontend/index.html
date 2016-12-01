@@ -19,22 +19,46 @@
                     </input>
 
                 </div>
-                <button type="submit" class="btn btn-default" ng-click="updateView()"><span class="glyphicon glyphicon-search"></span></button>
+                <button type="submit" class="btn btn-default" ng-click="updateView()"><span
+                        class="glyphicon glyphicon-search"></span></button>
             </form>
         </div>
     </div>
 </nav>
 
-<div class="col-md-6">
-        <div class="slide shadow" ng-repeat="entry in entries">
-            <div class="col-md-3 image">
-                <img ng-src="{{entry.image}}">
-            </div>
-            <div class="col-md-9 content">
-                <h4>{{entry.title}}</h4>
-                <p>{{entry.content}}</p>
-            </div>
+<div class="col-md-12">
+    <div class="slide shadow" ng-repeat="entry in entries">
+
+        <div class="card">
+            <a href="{{entry.url}}">
+                <div class="col-md-3 image">
+                    <img ng-src="{{entry.image}}">
+                </div>
+                <div class="col-md-6 content">
+                    {{entry.source}} @ {{entry.date | date:'dd.MM.yyyy HH:mm'}}
+                    <h4>{{entry.title}}</h4>
+                    <p>{{ entry.content | limitTo: 200 }}{{entry.content.length > 200 ? '...' : ''}}</p>
+                </div>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-6 progress-container">
+                            <uib-progressbar class="progress-rtl"
+                                             value="entry.analyzerResult > 0 ? 0 :entry.analyzerResult * -1"
+                                             type="danger"></uib-progressbar>
+
+                        </div>
+                        <div class="col-md-6 progress-container">
+                            <uib-progressbar
+                                    value="entry.analyzerResult < 0 ? 0 :entry.analyzerResult"
+                                    type="success"></uib-progressbar>
+                        </div>
+                    </div>
+                </div>
+
+
+            </a>
         </div>
+    </div>
 </div>
 
 <ng-popover trigger="popover-trigger" popover-class="searchPopover" on-open="openCallback()"
