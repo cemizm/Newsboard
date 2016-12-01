@@ -73,7 +73,7 @@ public class AnalyzerResult implements Serializable {
         analyzerSentenceResult.add(sentence);
     }
 
-    public void removeAnalyzerSentenceResult(AnalyzerSentenceResult sentence){
+    public void removeAnalyzerSentenceResult(AnalyzerSentenceResult sentence) {
         sentence.setAnalyzerResult(null);
         analyzerSentenceResult.remove(sentence);
     }
