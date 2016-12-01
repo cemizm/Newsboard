@@ -27,5 +27,9 @@ angular.module('nwb')
             });
         };
 
+        service.voteNewsEntry = function (newsEntry, vote) {
+            //TODO wie wird vote dargestellt, JUNGE! keine ahnung jetzt um 19 Uhr Kurwaaa mać
+        }
+
         return service;
     }]);
