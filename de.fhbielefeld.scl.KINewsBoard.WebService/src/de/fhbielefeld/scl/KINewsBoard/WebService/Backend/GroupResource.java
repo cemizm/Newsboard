@@ -22,7 +22,7 @@ public class GroupResource {
     @GET
     @Path("/")
     public List<GroupSetVM> get() {
-        return adminService.getAll().stream().map(GroupSetVM::new).collect(Collectors.toList());
+        return adminService.getAllGroupSets().stream().map(GroupSetVM::new).collect(Collectors.toList());
     }
 
     @POST
