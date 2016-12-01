@@ -75,12 +75,7 @@ public class NewsBoardService {
     }
 
     public View getView(int viewId) {
-        View view = entityManager.find(View.class, viewId);
-
-        if (view == null)
-            throw new IllegalArgumentException("View nicht gefunden.");
-
-        return view;
+        return entityManager.find(View.class, viewId);
     }
 
     /**
