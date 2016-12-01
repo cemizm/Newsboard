@@ -45,6 +45,7 @@ public class Analyzer {
         this.token = token;
     }
 
+    @Column(length = 50)
     public String getName() {
         return name;
     }

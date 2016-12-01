@@ -39,6 +39,7 @@ public class View {
         this.id = id;
     }
 
+    @Column(length = 50)
     public String getName() {
         return name;
     }
@@ -47,6 +48,7 @@ public class View {
         this.name = name;
     }
 
+    @Column(length = 1024)
     public String getDescription() {
         return description;
     }
