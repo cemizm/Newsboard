@@ -10,6 +10,6 @@
     <orderEntry type="module" module-name="de.fhbielefeld.scl.KINewsBoard.DataLayer" />
     <orderEntry type="library" name="Hibernate 5.2.3-5.2.3" level="project" />
     <orderEntry type="library" name="GlassFish 4.1.1.163" level="application_server_libraries" />
-    <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
+    <orderEntry type="library" name="GlassFish 4.1.1.163 - JSON Processing (JSR 353)" level="application_server_libraries" />
   </component>
 </module>
