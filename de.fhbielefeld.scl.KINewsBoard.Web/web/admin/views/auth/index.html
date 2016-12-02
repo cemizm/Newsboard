@@ -17,8 +17,10 @@
                     <input type="password" class="form-control" id="password" placeholder="Passwort" ng-model="password"
                            required="">
                 </div>
-                <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw" ng-show="isLoading"></i>
-                <button class="btn btn-lg btn-primary btn-block" value="Anmelden" ng-click="login()">Login</button>
+
+                <button class="btn btn-lg btn-primary btn-block" ng-click="login()"><i
+                        class="fa fa-circle-o-notch fa-spin fa-fw" ng-show="isLoading"></i> {{isLoading ? "" : "Anmelden"}}
+                </button>
             </fieldset>
         </form>
         <div style="height: 250px"></div>
