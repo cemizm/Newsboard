@@ -85,6 +85,7 @@ public class NewsEntryBaseModel {
     public void setDate(Date date) {
         this.date = date;
     }
+
     public NewsEntry getNewsEntryModel() {
         NewsEntry entry = new NewsEntry();
         entry.setId(getId());

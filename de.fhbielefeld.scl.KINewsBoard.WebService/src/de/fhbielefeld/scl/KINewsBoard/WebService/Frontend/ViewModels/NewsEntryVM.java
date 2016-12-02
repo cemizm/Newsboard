@@ -11,6 +11,8 @@ import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.NewsEntryBase
 public class NewsEntryVM extends NewsEntryBaseModel {
     private CrawlerBaseModel crawler;
     private int analyzerResult;
+    private int rating;
+
 
     public NewsEntryVM() {
 
@@ -44,5 +46,13 @@ public class NewsEntryVM extends NewsEntryBaseModel {
 
     public void setAnalyzerResult(int analyzerResult) {
         this.analyzerResult = analyzerResult;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 }

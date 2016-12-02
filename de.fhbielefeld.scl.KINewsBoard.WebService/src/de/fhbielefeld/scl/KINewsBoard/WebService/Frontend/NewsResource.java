@@ -7,10 +7,12 @@ import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.View;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Frontend.ViewModels.NewsEntryDetailVM;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Frontend.ViewModels.NewsEntryVM;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Frontend.ViewModels.ViewVM;
+import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.ErrorModel;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +29,7 @@ public class NewsResource {
 
     @GET
     @Path("/")
-    public List<NewsEntryVM> getPublicNewsEntries(
+    public Response getPublicNewsEntries(
             @DefaultValue("1") @QueryParam("page") int page,
             @QueryParam("keyword") String keyword
     ) {
@@ -36,29 +38,33 @@ public class NewsResource {
                 .map(NewsEntryVM::new)
                 .collect(Collectors.toList());
 
-        return res;
+        return Response.ok(res.toArray(new NewsEntryVM[0])).build();
     }
 
     @GET
     @Path("/{newsId}")
-    public NewsEntryDetailVM getNewsEntryDetails(
+    public Response getNewsEntryDetails(
             @NotNull @PathParam("newsId") String newsId
     ) {
         NewsEntry newsEntry = newsBoardService.getNewsEntryDetails(newsId);
+
+        if (newsEntry == null)
+            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorModel("NewsEntry nicht gefunden.")).build();
+
         NewsEntryDetailVM detail = new NewsEntryDetailVM(newsEntry);
 
-        return detail;
+        return Response.ok(detail).build();
     }
 
     @GET
     @Path("/findByView/{viewId}")
-    public ViewVM getViewEntries(
+    public Response getViewEntries(
             @PathParam("viewId") int viewId
     ) {
         View view = newsBoardService.getView(viewId);
 
         if (view == null)
-            return null;
+            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorModel("View nicht gefunden.")).build();
 
         List<NewsEntryVM> entries = newsBoardService.getViewNewsEntries(viewId)
                 .stream()
@@ -67,6 +73,6 @@ public class NewsResource {
 
         ViewVM res = new ViewVM(view, entries);
 
-        return res;
+        return Response.ok(res).build();
     }
 }

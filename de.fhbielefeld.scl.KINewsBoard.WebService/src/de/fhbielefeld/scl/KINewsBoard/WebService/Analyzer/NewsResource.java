@@ -3,6 +3,7 @@ package de.fhbielefeld.scl.KINewsBoard.WebService.Analyzer;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.NewsBoardService;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Analyzer.ViewModels.AnalyzerResultVM;
+import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.ErrorModel;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.NewsEntryBaseModel;
 
 import javax.ejb.EJB;
@@ -25,22 +26,39 @@ public class NewsResource {
 
     @GET
     @Path("/")
-    public List<NewsEntryBaseModel> getNewsEntries(
+    public Response getNewsEntries(
             @HeaderParam("token") String token
     ) {
-        List<NewsEntry> entries = newsBoardService.getAnalyzerNewsEntries(token);
-        List<NewsEntryBaseModel> res = entries.stream().map(NewsEntryBaseModel::new).collect(Collectors.toList());
-        return res;
-    }
+        List<NewsEntry> entries;
 
+        try {
+            entries = newsBoardService.getAnalyzerNewsEntries(token);
+        } catch (IllegalArgumentException ex) {
+            return Response.status(Response.Status.UNAUTHORIZED).entity(new ErrorModel(ex.getMessage())).build();
+        } catch (Exception ex) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorModel(ex.getMessage())).build();
+        }
+
+        List<NewsEntryBaseModel> res = entries.stream().map(NewsEntryBaseModel::new).collect(Collectors.toList());
+
+        return Response.ok(res.toArray(new NewsEntryBaseModel[0])).build();
+    }
 
     @POST
     @Path("/")
     public Response publish(
             @HeaderParam("token") String token,
             AnalyzerResultVM model
-    ) throws Exception {
-        newsBoardService.publishAnalyzerResult(token, model.getNewsId(), model.getAnalyzerResult());
+    ) {
+
+        try {
+            newsBoardService.publishAnalyzerResult(token, model.getNewsId(), model.getAnalyzerResult());
+
+        } catch (IllegalArgumentException ex) {
+            return Response.status(Response.Status.UNAUTHORIZED).entity(new ErrorModel(ex.getMessage())).build();
+        } catch (Exception ex) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorModel(ex.getMessage())).build();
+        }
 
         return Response.ok().build();
     }

@@ -26,37 +26,45 @@
     </div>
 </nav>
 
-<div class="col-md-12">
-    <div class="slide shadow" ng-repeat="entry in entries">
-
+<div class="row">
+    <div ng-repeat="entry in entries">
+        <div class="col-md-4 col-sm-6 card-container">
         <div class="card">
-            <a href="{{entry.url}}">
-                <div class="col-md-3 image">
+            <!--a href="{{entry.url}}"-->
+                <div class="image">
                     <img ng-src="{{entry.image}}">
                 </div>
-                <div class="col-md-6 content">
-                    {{entry.source}} @ {{entry.date | date:'dd.MM.yyyy HH:mm'}}
-                    <h4>{{entry.title}}</h4>
-                    <p>{{ entry.content | limitTo: 200 }}{{entry.content.length > 200 ? '...' : ''}}</p>
-                </div>
-                <div class="col-md-3">
+                <div class="content">
                     <div class="row">
-                        <div class="col-md-6 progress-container">
-                            <uib-progressbar class="progress-rtl"
-                                             value="entry.analyzerResult > 0 ? 0 :entry.analyzerResult * -1"
-                                             type="danger"></uib-progressbar>
-
+                        <div class="col-md-10">
+                            <h4>{{entry.title}}</h4>
+                            <div class="date">
+                                {{entry.source}} @ {{entry.date | date:'dd.MM.yyyy HH:mm'}}
+                            </div>
+                            <p>{{ entry.content | limitTo: contentsize }}{{entry.content.length > contentsize ? '...' : ''}}</p>
                         </div>
-                        <div class="col-md-6 progress-container">
-                            <uib-progressbar
-                                    value="entry.analyzerResult < 0 ? 0 :entry.analyzerResult"
-                                    type="success"></uib-progressbar>
+                        <div class="col-md-2">
+                            <i ng-click="upvote(entry)" class="fa fa-angle-up" style="font-size:36px"></i>
+                            <h2>{{entry.rating}}</h2>
+                            <i ng-click="downvote(entry)" class="fa fa-angle-down" style="font-size:36px"></i>
                         </div>
                     </div>
                 </div>
+            <div class="row">
+                    <div class="col-md-6 progress-container">
+                        <uib-progressbar class="progress-rtl"
+                                         value="entry.analyzerResult > 0 ? 0 :entry.analyzerResult * -1"
+                                         type="danger"></uib-progressbar>
 
-
-            </a>
+                    </div>
+                    <div class="col-md-6 progress-container">
+                        <uib-progressbar
+                                value="entry.analyzerResult < 0 ? 0 :entry.analyzerResult"
+                                type="success"></uib-progressbar>
+                    </div>
+                </div>
+            <!--/a-->
+        </div>
         </div>
     </div>
 </div>
