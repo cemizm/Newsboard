@@ -40,17 +40,13 @@
         </div>
         <!-- Top Menu Items -->
         <ul class="nav navbar-right top-nav">
-            <li><a ui-sref="logout"><i class="fa fa-fw fa-power-off"></i> Abmelden</a></li>
-            <!--li class="dropdown" uib-dropdown on-toggle="toggled(open)">
-                <a href="#" class="dropdown-toggle" uib-dropdown-toggle><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+            <li class="dropdown" uib-dropdown on-toggle="toggled(open)" ng-show="user">
+                <a href="#" class="dropdown-toggle" uib-dropdown-toggle><i class="fa fa-user"></i>
+                    {{user.firstname + ", " + user.lastname}} <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a href="#"><i class="fa fa-fw fa-user"></i> Profile</a></li>
-                    <li><a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a></li>
-                    <li><a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a></li>
+                    <li><a ui-sref="auth({logout: 'logout'})"><i class="fa fa-fw fa-power-off"></i> Abmelden</a></li>
                 </ul>
-            </li-->
+            </li>
         </ul>
         <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
         <div class="collapse navbar-collapse" uib-collapse="menuCol">
@@ -59,7 +55,8 @@
                 </li>
                 <li ui-sref-active="active"><a ui-sref="crawler"><i class="fa fa-fw fa-search"></i> Crawler</a>
                 </li>
-                <li ui-sref-active="active"><a ui-sref="analyzer"><i class="fa fa-fw fa-bar-chart-o"></i> Analyzer</a></li>
+                <li ui-sref-active="active"><a ui-sref="analyzer"><i class="fa fa-fw fa-bar-chart-o"></i> Analyzer</a>
+                </li>
                 <li ui-sref-active="active"><a ui-sref="groups"><i class="fa fa-fw fa-users"></i> Gruppen</a></li>
                 <li ui-sref-active="active"><a ui-sref="views"><i class="fa fa-fw fa-columns"></i> Views</a></li>
             </ul>
@@ -85,16 +82,19 @@
 <script src="../bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="js/app.js"></script>
+<script src="js/controller.auth.js"></script>
 <script src="js/controller.dashboard.js"></script>
 <script src="js/controller.crawler.js"></script>
 <script src="js/controller.analyzer.js"></script>
 <script src="js/controller.groups.js"></script>
 <script src="js/controller.views.js"></script>
+<script src="js/interceptor.auth.js"></script>
 <script src="js/service.dashboard.js"></script>
 <script src="js/service.crawler.js"></script>
 <script src="js/service.analyzer.js"></script>
 <script src="js/service.group.js"></script>
 <script src="js/service.token.js"></script>
+<script src="js/service.auth.js"></script>
 
 </body>
 

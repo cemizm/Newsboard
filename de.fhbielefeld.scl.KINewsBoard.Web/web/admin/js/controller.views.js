@@ -7,7 +7,10 @@ angular.module('nwbadmin.views', ['ui.router'])
         $stateProvider.state('views', {
             url: '/views',
             templateUrl: 'views/views/index.html',
-            controller: 'ViewsViewController'
+            controller: 'ViewsViewController',
+            data: {
+                authenticate: true,
+            }
         });
 
     }])

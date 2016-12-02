@@ -7,7 +7,10 @@ angular.module('nwbadmin.analyzer', ['ui.router'])
         $stateProvider.state('analyzer', {
             url: '/analyzer',
             templateUrl: 'views/analyzer/index.html',
-            controller: 'AnalyzerViewController'
+            controller: 'AnalyzerViewController',
+            data: {
+                authenticate: true,
+            }
         });
 
 

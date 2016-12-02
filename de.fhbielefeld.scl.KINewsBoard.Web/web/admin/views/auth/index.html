@@ -1,0 +1,26 @@
+<h3 class="form-signin-heading">Anmeldung</h3>
+<hr class="colorgraph"><br>
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <label>{{error}}</label>
+        <form>
+            <fieldset ng-disabled="isLoading">
+                <div class="form-group">
+                    <label for="username">Benutzername</label>
+                    <input type="text" class="form-control" id="username" placeholder="Benutzername"
+                           ng-model="username"
+                           required="" autofocus="">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Passwort" ng-model="password"
+                           required="">
+                </div>
+                <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw" ng-show="isLoading"></i>
+                <button class="btn btn-lg btn-primary btn-block" value="Anmelden" ng-click="login()">Login</button>
+            </fieldset>
+        </form>
+        <div style="height: 250px"></div>
+    </div>
+</div>

@@ -7,7 +7,10 @@ angular.module('nwbadmin.groups', ['ui.router'])
         $stateProvider.state('groups', {
             url: '/groups',
             templateUrl: 'views/groups/index.html',
-            controller: 'GroupViewController'
+            controller: 'GroupViewController',
+            data: {
+                authenticate: true,
+            }
         });
 
 

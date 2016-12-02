@@ -7,7 +7,10 @@ angular.module('nwbadmin.crawler', ['ui.router'])
         $stateProvider.state('crawler', {
             url: '/crawler',
             templateUrl: 'views/crawler/index.html',
-            controller: 'CrawlerViewController'
+            controller: 'CrawlerViewController',
+            data: {
+                authenticate: true,
+            }
         });
 
 

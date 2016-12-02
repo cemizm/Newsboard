@@ -7,7 +7,10 @@ angular.module('nwbadmin.dashboard', ['ui.router'])
         $stateProvider.state('dashboard', {
             url: '/dashboard',
             templateUrl: 'views/dashboard/index.html',
-            controller: 'DashboardViewController'
+            controller: 'DashboardViewController',
+            data: {
+                authenticate: true,
+            }
         });
 
     }])
