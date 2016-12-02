@@ -5,6 +5,7 @@ import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Backend.ViewModels.DashboardVM;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.NewsEntryBaseModel;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -25,6 +26,7 @@ public class DashboardResource {
 
     @GET
     @Path("/")
+    @RolesAllowed({})
     public DashboardVM get() {
         DashboardVM model = new DashboardVM();
 

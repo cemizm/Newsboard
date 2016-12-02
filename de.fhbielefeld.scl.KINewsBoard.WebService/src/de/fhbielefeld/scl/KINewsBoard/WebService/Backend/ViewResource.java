@@ -3,6 +3,7 @@ package de.fhbielefeld.scl.KINewsBoard.WebService.Backend;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.AdminService;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Backend.ViewModels.ViewVM;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -21,12 +22,14 @@ public class ViewResource {
 
     @GET
     @Path("/")
+    @RolesAllowed({})
     public List<ViewVM> get() {
         return adminService.getAllView().stream().map(ViewVM::new).collect(Collectors.toList());
     }
 
     @POST
     @Path("/")
+    @RolesAllowed({})
     public Response create(ViewVM model) {
         adminService.createView(model.getView());
         return Response.ok().build();
@@ -34,6 +37,7 @@ public class ViewResource {
 
     @PUT
     @Path("/")
+    @RolesAllowed({})
     public Response update(ViewVM model) {
         adminService.updateView(model.getView());
         return Response.ok().build();
@@ -41,6 +45,7 @@ public class ViewResource {
 
     @DELETE
     @Path("/{viewId}")
+    @RolesAllowed({})
     public Response delete(@PathParam("viewId") int viewId) {
         adminService.deleteView(viewId);
         return Response.ok().build();

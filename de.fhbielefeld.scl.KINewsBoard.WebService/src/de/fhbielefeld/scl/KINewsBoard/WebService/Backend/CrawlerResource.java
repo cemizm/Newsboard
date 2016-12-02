@@ -3,6 +3,7 @@ package de.fhbielefeld.scl.KINewsBoard.WebService.Backend;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.AdminService;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Backend.ViewModels.CrawlerVM;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -22,12 +23,14 @@ public class CrawlerResource {
 
     @GET
     @Path("/")
+    @RolesAllowed({})
     public List<CrawlerVM> get() {
         return adminService.getAllCrawler().stream().map(CrawlerVM::new).collect(Collectors.toList());
     }
 
     @POST
     @Path("/")
+    @RolesAllowed({})
     public Response create(CrawlerVM model) {
         adminService.createCrawler(model.getCrawler());
         return Response.ok().build();
@@ -35,6 +38,7 @@ public class CrawlerResource {
 
     @PUT
     @Path("/")
+    @RolesAllowed({})
     public Response update(CrawlerVM model) {
         adminService.updateCrawler(model.getCrawler());
         return Response.ok().build();
@@ -42,6 +46,7 @@ public class CrawlerResource {
 
     @DELETE
     @Path("/{crawlerId}")
+    @RolesAllowed({})
     public Response delete(@PathParam("crawlerId") int crawlerId) {
         adminService.deleteCrawler(crawlerId);
         return Response.ok().build();

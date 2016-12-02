@@ -3,6 +3,7 @@ package de.fhbielefeld.scl.KINewsBoard.WebService.Backend;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.AdminService;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Backend.ViewModels.AnalyzerVM;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -21,12 +22,14 @@ public class AnalyzerResource {
 
     @GET
     @Path("/")
+    @RolesAllowed({})
     public List<AnalyzerVM> get() {
         return adminService.getAllAnalyzer().stream().map(AnalyzerVM::new).collect(Collectors.toList());
     }
 
     @POST
     @Path("/")
+    @RolesAllowed({})
     public Response create(AnalyzerVM model) {
         adminService.createAnalyzer(model.getAnalyzer());
         return Response.ok().build();
@@ -34,6 +37,7 @@ public class AnalyzerResource {
 
     @PUT
     @Path("/")
+    @RolesAllowed({})
     public Response update(AnalyzerVM model) {
         adminService.updateAnalyzer(model.getAnalyzer());
         return Response.ok().build();
@@ -41,6 +45,7 @@ public class AnalyzerResource {
 
     @DELETE
     @Path("/{analyzerId}")
+    @RolesAllowed({})
     public Response delete(@PathParam("analyzerId") int analyzerId) {
         adminService.deleteAnalyzer(analyzerId);
         return Response.ok().build();
