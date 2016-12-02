@@ -6,12 +6,22 @@ package de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels;
 public class ErrorModel {
     private String message;
 
-    public ErrorModel(){
+    public ErrorModel() {
 
     }
 
-    public ErrorModel(String message){
+    public ErrorModel(String message) {
         this.message = message;
+    }
+
+    public ErrorModel(Throwable ex) {
+        this.message = "";
+        do {
+
+            this.message = ex.getMessage();
+
+            ex = ex.getCause();
+        } while ((this.message == null || this.message.isEmpty()) && ex != null);
     }
 
     public String getMessage() {
