@@ -23,45 +23,43 @@
         </table>
     </div>
     <div class="col-md-4">
-        <form class="form-horizontal">
-            <fieldset ng-disabled="active == null">
-                <div class="form-group">
-                    <label for="name">Bezeichnung</label>
-                    <input type="text" id="name" class="form-control" placeholder="Bezeichnung" ng-model="active.name">
-                </div>
-                <div class="form-group">
-                    <label for="token">Token</label>
-                    <input type="text" id="token" class="form-control" placeholder="Token" ng-model="active.token">
-                </div>
-                <div class="form-group">
-                    <label for="status">Status</label>
-                    <input id="status" type="checkbox" ng-model="active.disabled"> Inaktiv
-                </div>
-                <div class="form-group">
-                    <label>Groups</label>
-                    <table class="table table-bordered">
-                        <thead>
-                        <th>#</th>
-                        <th>Bezeichnung</th>
-                        </thead>
-                        <tr ng-repeat="group in groups" ng-click="toggle(group.id)"
-                            ng-class="{info: active.groups.indexOf(group.id) > -1}">
-                            <td>{{group.id}}</td>
-                            <td>{{group.name}}</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="form-group">
-                    <button type="button" class="btn btn-danger" ng-click="delete()" ng-disabled="!active.id">Löschen
-                    </button>
-                    <button type="button" class="btn btn-primary pull-right" style="margin: 0px 5px;" ng-click="save()">
-                        Speichern
-                    </button>
-                    <button type="button" class="btn btn-warning pull-right" style="margin: 0px 5px;"
-                            ng-click="active = null">Abbrechen
-                    </button>
-                </div>
-            </fieldset>
-        </form>
+        <fieldset ng-disabled="active == null">
+            <div class="form-group">
+                <label for="name">Bezeichnung</label>
+                <input type="text" id="name" class="form-control" placeholder="Bezeichnung" ng-model="active.name">
+            </div>
+            <div class="form-group">
+                <label for="token">Token</label>
+                <input type="text" id="token" class="form-control" placeholder="Token" ng-model="active.token">
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <input id="status" type="checkbox" ng-model="active.disabled"> Inaktiv
+            </div>
+            <div class="form-group">
+                <label>Groups</label>
+                <table class="table table-bordered">
+                    <thead>
+                    <th>#</th>
+                    <th>Bezeichnung</th>
+                    </thead>
+                    <tr ng-repeat="group in groups" ng-click="toggle(group.id)"
+                        ng-class="{info: active.groups.indexOf(group.id) > -1}">
+                        <td>{{group.id}}</td>
+                        <td>{{group.name}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-danger" ng-click="delete()" ng-disabled="!active.id">Löschen
+                </button>
+                <button type="button" class="btn btn-primary pull-right" style="margin: 0px 5px;" ng-click="save()">
+                    Speichern
+                </button>
+                <button type="button" class="btn btn-warning pull-right" style="margin: 0px 5px;"
+                        ng-click="active = null">Abbrechen
+                </button>
+            </div>
+        </fieldset>
     </div>
 </div>
