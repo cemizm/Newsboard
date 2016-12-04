@@ -12,13 +12,16 @@ angular.module('nwb.public', ['ui.router'])
 
     }])
     .controller('PublicViewController',
-        ['$scope', '$location', '$stateParams', 'FrontendService', '$interval',
-            function ($scope, $location, $stateParams, FrontendService, $interval) {
+        ['$scope', '$location', '$stateParams', 'FrontendService', '$interval', '$state',
+            function ($scope, $location, $stateParams, FrontendService, $interval, $state) {
 
                 var counter = 10000;
                 var stop;
 
                 FrontendService.getNewsEntriesByViewId($stateParams.viewId, 0).then(function (view) {
+                    if(view == null)
+                        $state.go("frontend")
+
                     $scope.view = view;
 
 
