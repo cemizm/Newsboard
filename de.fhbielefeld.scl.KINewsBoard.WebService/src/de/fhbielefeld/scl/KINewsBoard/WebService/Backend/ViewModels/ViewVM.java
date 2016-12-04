@@ -11,10 +11,6 @@ import java.util.stream.Collectors;
  * Created by azad- on 17.11.2016.
  */
 public class ViewVM extends ViewBaseModel {
-    private int type;
-    private int maxResults;
-    private int lastDays;
-    private boolean publicView;
 
     private List<GroupSetVM> groupSetModels;
     private List<CrawlerVM> crawlerModels;
@@ -27,11 +23,6 @@ public class ViewVM extends ViewBaseModel {
     public ViewVM(View view) {
         super(view);
 
-        type = view.getType();
-        maxResults = view.getMaxResults();
-        lastDays = view.getLastDays();
-        publicView = view.isPublicView();
-
         groupSetModels.addAll(view.getGroupSets()
                 .stream()
                 .map(GroupSetVM::new)
@@ -41,38 +32,6 @@ public class ViewVM extends ViewBaseModel {
                 .stream()
                 .map(CrawlerVM::new)
                 .collect(Collectors.toList()));
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public int getMaxResults() {
-        return maxResults;
-    }
-
-    public void setMaxResults(int maxResults) {
-        this.maxResults = maxResults;
-    }
-
-    public int getLastDays() {
-        return lastDays;
-    }
-
-    public void setLastDays(int lastDays) {
-        this.lastDays = lastDays;
-    }
-
-    public boolean isPublicView() {
-        return publicView;
-    }
-
-    public void setPublicView(boolean publicView) {
-        this.publicView = publicView;
     }
 
     public List<GroupSetVM> getGroupSetModels() {
@@ -96,10 +55,6 @@ public class ViewVM extends ViewBaseModel {
         view.setId(getId());
         view.setName(getName());
         view.setDescription(getDescription());
-        view.setType(getType());
-        view.setMaxResults(getMaxResults());
-        view.setLastDays(getLastDays());
-        view.setPublicView(isPublicView());
 
         return view;
     }
