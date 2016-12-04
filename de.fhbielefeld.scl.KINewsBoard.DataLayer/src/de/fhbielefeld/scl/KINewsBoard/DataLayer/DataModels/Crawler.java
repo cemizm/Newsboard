@@ -46,7 +46,7 @@ public class Crawler {
         this.token = token;
     }
 
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
     public String getName() {
         return name;
     }
