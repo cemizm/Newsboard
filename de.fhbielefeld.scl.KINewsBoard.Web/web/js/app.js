@@ -9,6 +9,6 @@ var app = angular.module('nwb', [
     'nwb.frontend',
     'nwb.public'
 ]).config(function ($urlRouterProvider) {
-    $urlRouterProvider.otherwise("/frontend/1");
+    $urlRouterProvider.otherwise("/frontend");
 
 });
