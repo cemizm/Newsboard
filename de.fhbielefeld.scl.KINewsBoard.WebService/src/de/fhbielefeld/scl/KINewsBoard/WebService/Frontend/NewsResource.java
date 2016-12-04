@@ -63,6 +63,26 @@ public class NewsResource {
         return Response.ok(detail).build();
     }
 
+    @POST
+    @Path("/{newsId}/rate")
+    public Response rateNewsEntry(
+            @NotNull @PathParam("newsId") String newsId,
+            @QueryParam("up") boolean up
+    ) {
+        NewsEntry newsEntry = null;
+        try {
+            newsEntry = newsBoardService.rateNewsEntry(newsId, up);
+
+        } catch (IllegalArgumentException ex) {
+            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorModel(ex)).build();
+        } catch (Exception ex) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorModel(ex)).build();
+        }
+
+
+        return Response.ok(new NewsEntryVM(newsEntry)).build();
+    }
+
     @GET
     @Path("/findByView/{viewId}")
     public Response getViewEntries(

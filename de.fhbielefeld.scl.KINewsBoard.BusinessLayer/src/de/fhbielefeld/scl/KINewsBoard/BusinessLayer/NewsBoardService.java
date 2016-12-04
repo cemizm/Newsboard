@@ -55,6 +55,12 @@ public class NewsBoardService {
         return entry;
     }
 
+    public NewsEntry rateNewsEntry(String newsEntryId, boolean up) {
+        NewsEntry newsEntry = getNewsEntryDetails(newsEntryId);
+        newsEntry.setRating(newsEntry.getRating() + (up ? 1 : -1));
+        return entityManager.merge(newsEntry);
+    }
+
     /**
      * Veröffentlicht einen News Eintrag.
      *

@@ -23,6 +23,7 @@ public class NewsEntry {
     private String source;
     private String url;
     private Date date;
+    private int rating;
     private Set<AnalyzerResult> analyzerResults;
 
     public NewsEntry() {
@@ -98,6 +99,14 @@ public class NewsEntry {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int vote) {
+        this.rating = vote;
     }
 
     @OneToMany(mappedBy = "newsEntry", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)

@@ -30,6 +30,8 @@ public class NewsEntryVM extends NewsEntryBaseModel {
 
         if (newsEntry.getAnalyzerResults().size() > 0)
             analyzerResult /= newsEntry.getAnalyzerResults().size();
+
+        rating = newsEntry.getRating();
     }
 
     public CrawlerBaseModel getCrawler() {
