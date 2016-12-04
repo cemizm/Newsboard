@@ -44,9 +44,9 @@
                             <p>{{ entry.content | limitTo: contentsize }}{{entry.content.length > contentsize ? '...' : ''}}</p>
                         </div>
                         <div class="col-md-2">
-                            <i ng-click="upvote(entry)" class="fa fa-angle-up" style="font-size:36px"></i>
+                            <i ng-click="rate(entry, true)" class="fa fa-angle-up" style="font-size:36px"></i>
                             <h2>{{entry.rating}}</h2>
-                            <i ng-click="downvote(entry)" class="fa fa-angle-down" style="font-size:36px"></i>
+                            <i ng-click="rate(entry, false)" class="fa fa-angle-down" style="font-size:36px"></i>
                         </div>
                     </div>
                 </div>

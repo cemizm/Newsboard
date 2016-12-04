@@ -18,6 +18,8 @@ angular.module('nwb')
         service.getNewsEntriesByViewId = function (viewId) {
             return $http.get(api + "news/findByView/" + viewId).then(function (response) {
                 return response.data;
+            }, function error(response) {
+                return null;
             });
         };
 
@@ -27,8 +29,10 @@ angular.module('nwb')
             });
         };
 
-        service.voteNewsEntry = function (newsEntry, vote) {
-            //TODO wie wird vote dargestellt, JUNGE! keine ahnung jetzt um 19 Uhr Kurwaaa mać
+        service.rateNewsEntry = function (newsEntry, rate) {
+            return $http.post(api + "news/" + newsEntry.id + "/rate?up=" + rate, null).then(function (response) {
+                return response.data;
+            });
         }
 
         return service;

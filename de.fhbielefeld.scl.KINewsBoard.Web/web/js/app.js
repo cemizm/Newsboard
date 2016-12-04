@@ -5,6 +5,7 @@ var app = angular.module('nwb', [
     'slickCarousel',
     'ngPopover',
     'monospaced.qrcode',
+    'LocalStorageModule',
     'nwb.frontend',
     'nwb.public'
 ]).config(function ($urlRouterProvider) {

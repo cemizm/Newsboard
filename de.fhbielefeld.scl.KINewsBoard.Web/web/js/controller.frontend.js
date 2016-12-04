@@ -12,8 +12,8 @@ angular.module('nwb.frontend', ['ui.router'])
 
     }])
     .controller('FrontendViewController',
-        ['$scope', '$location', '$stateParams', 'FrontendService',
-            function ($scope, $location, $stateParams, FrontendService) {
+        ['$scope', '$location', '$stateParams', 'FrontendService', 'localStorageService',
+            function ($scope, $location, $stateParams, FrontendService, localStorageService) {
 
                 $scope.page = 1;
                 $scope.keyword = "";
@@ -25,14 +25,15 @@ angular.module('nwb.frontend', ['ui.router'])
                     });
                 };
 
-                $scope.upvote = function (entry) {
-                    entry.rating += 1;
-                };
+                $scope.rate = function (entry, up) {
+                    var value = localStorageService.get(entry.id);
+                    if(value) return;
 
-                $scope.downvote = function (entry) {
-                    entry.rating -= 1;
+                    localStorageService.set(entry.id, up);
+                    FrontendService.rateNewsEntry(entry, up).then(function(updated){
+                        entry.rating = updated.rating;
+                    });
                 };
-
                 $scope.updateView();
 
             }]);
