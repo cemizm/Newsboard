@@ -46,10 +46,17 @@ public class NewsResource {
     public Response getNewsEntryDetails(
             @NotNull @PathParam("newsId") String newsId
     ) {
-        NewsEntry newsEntry = newsBoardService.getNewsEntryDetails(newsId);
+        NewsEntry newsEntry = null;
+        try {
 
-        if (newsEntry == null)
-            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorModel("NewsEntry nicht gefunden.")).build();
+
+            newsEntry = newsBoardService.getNewsEntryDetails(newsId);
+
+        } catch (IllegalArgumentException ex) {
+            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorModel(ex)).build();
+        } catch (Exception ex) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorModel(ex)).build();
+        }
 
         NewsEntryDetailVM detail = new NewsEntryDetailVM(newsEntry);
 
