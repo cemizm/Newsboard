@@ -17,10 +17,6 @@ public class View {
     private int id;
     private String name;
     private String description;
-    private int type;
-    private int maxResults;
-    private int lastDays;
-    private boolean publicView;
     private Set<GroupSet> groupSets;
     private Set<Crawler> crawlers;
 
@@ -39,7 +35,7 @@ public class View {
         this.id = id;
     }
 
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
     public String getName() {
         return name;
     }
@@ -55,38 +51,6 @@ public class View {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public int getMaxResults() {
-        return maxResults;
-    }
-
-    public void setMaxResults(int maxResults) {
-        this.maxResults = maxResults;
-    }
-
-    public int getLastDays() {
-        return lastDays;
-    }
-
-    public void setLastDays(int lastDays) {
-        this.lastDays = lastDays;
-    }
-
-    public boolean isPublicView() {
-        return publicView;
-    }
-
-    public void setPublicView(boolean publicView) {
-        this.publicView = publicView;
     }
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
