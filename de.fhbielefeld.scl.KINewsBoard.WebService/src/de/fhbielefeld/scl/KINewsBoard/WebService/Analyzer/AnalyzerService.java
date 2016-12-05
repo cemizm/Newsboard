@@ -3,6 +3,7 @@ package de.fhbielefeld.scl.KINewsBoard.WebService.Analyzer;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ExceptionMappers.AuthenticationExceptionMapper;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ExceptionMappers.DefaultExceptionMapper;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ExceptionMappers.IllegalArgumentExceptionMapper;
+import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ExceptionMappers.ValidationExceptionMapper;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -27,6 +28,7 @@ public class AnalyzerService extends Application {
 
 
         s.add(AuthenticationExceptionMapper.class);
+        s.add(ValidationExceptionMapper.class);
         s.add(IllegalArgumentExceptionMapper.class);
         s.add(DefaultExceptionMapper.class);
         return s;
