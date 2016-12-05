@@ -51,6 +51,10 @@ angular.module('nwb.public', ['ui.router'])
                     };
                 });
 
+                $scope.getViewUrl = function(){
+                    return $state.href('view', { viewId: $scope.view.id }, {absolute: true});
+                };
+
                 $scope.getAnalyzerResult = function () {
                     var tmp = $scope.view.newsEntries[$scope.currentIndex].analyzerResult;
 
