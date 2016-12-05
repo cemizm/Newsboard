@@ -88,10 +88,15 @@ public class NewsResource {
     public Response getViewEntries(
             @PathParam("viewId") int viewId
     ) {
-        View view = newsBoardService.getView(viewId);
 
-        if (view == null)
-            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorModel("View nicht gefunden.")).build();
+        View view = null;
+        try {
+            view = newsBoardService.getView(viewId);
+        } catch (IllegalArgumentException ex) {
+            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorModel(ex)).build();
+        } catch (Exception ex) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorModel(ex)).build();
+        }
 
         List<NewsEntryVM> entries = newsBoardService.getViewNewsEntries(viewId)
                 .stream()

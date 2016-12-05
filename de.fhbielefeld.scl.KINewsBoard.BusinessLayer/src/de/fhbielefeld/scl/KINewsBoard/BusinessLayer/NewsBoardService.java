@@ -81,10 +81,6 @@ public class NewsBoardService {
         return newsEntry;
     }
 
-    public View getView(int viewId) {
-        return entityManager.find(View.class, viewId);
-    }
-
     /**
      * Liefert alle noch nicht analysierten News Einträge für einen Ananlyzer.
      *
@@ -145,6 +141,15 @@ public class NewsBoardService {
             throw new AuthenticationException("Token nicht gültig.");
 
         return o.get();
+    }
+
+    public View getView(int viewId) {
+        View view = entityManager.find(View.class, viewId);
+
+        if (view == null)
+            throw new IllegalArgumentException("View nicht gefunden!");
+
+        return view;
     }
 
 
