@@ -8,7 +8,7 @@
 
 .card img {
     margin: 0px;
-    height: 200px;
+    height: 300px;
     width: 100%;
     object-fit: cover;
 }
@@ -18,12 +18,37 @@
 }
 
 .card .content {
-    margin: 10px;
+    margin: 15px 0px;
     height: 170px;
+    max-height: 170px;
+    min-height: 170px;
+    overflow: hidden;
+}
+
+.content p {
+    font-size: 15px;
+}
+
+.card .image {
+    position: relative;
+}
+
+.card .image-overlay {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 10px;
 }
 
 .card h4 {
     font-weight: bold;
+    margin: 0px;
+}
+
+.rating h3{
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .card:hover {
@@ -36,12 +61,15 @@
 }
 
 .card .progress {
-    margin-bottom: 0px;
+    height: 12px;
+    max-height: 12px;
+    margin: 0px;
+    border-radius: 0px;
 }
 
 .card .date {
     color: grey;
-    margin-bottom: 10px;
+    margin: 0px;
 }
 
 a:link {
@@ -243,9 +271,14 @@ i:hover {
     float: right;
 }
 
+.rating {
+    margin-top: 12px;
+}
+
 .voted i {
     color: lightgray;
 }
+
 .voted i.isRate {
     color: darkgray;
 }
