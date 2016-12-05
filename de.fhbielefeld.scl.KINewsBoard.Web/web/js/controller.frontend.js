@@ -32,14 +32,25 @@ angular.module('nwb.frontend', ['ui.router'])
                 };
 
                 $scope.rate = function (entry, up) {
-                    var value = localStorageService.get(entry.id);
-                    if (value) return;
+                    if ($scope.isRated(entry)) return;
 
                     localStorageService.set(entry.id, up);
                     FrontendService.rateNewsEntry(entry, up).then(function (updated) {
                         entry.rating = updated.rating;
                     });
                 };
+
+                $scope.isRated = function(entry) {
+                    return localStorageService.get(entry.id) !== null;
+                };
+
+                $scope.isCurrentVote = function(entry, up) {
+                    if(!$scope.isRated(entry))
+                        return false;
+
+                    return localStorageService.get(entry.id) === up;
+                };
+
                 $scope.updateView();
 
             }]);

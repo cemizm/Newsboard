@@ -22,7 +22,7 @@
     height: 170px;
 }
 
-.card h4{
+.card h4 {
     font-weight: bold;
 }
 
@@ -61,7 +61,7 @@ a:active {
 }
 
 i:hover {
-    color:darkgrey;
+    color: darkgrey;
 }
 
 .public h4 {
@@ -241,4 +241,11 @@ i:hover {
 
 .progress-rtl .progress-bar {
     float: right;
+}
+
+.voted i {
+    color: lightgray;
+}
+.voted i.isRate {
+    color: darkgray;
 }
