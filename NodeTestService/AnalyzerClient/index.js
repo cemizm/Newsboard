@@ -3,7 +3,7 @@ var Client = require('node-rest-client').Client;
 
 var AnalyzerClient = {
     client: new Client(),
-    publish: function (token, item, cb) {
+    publish: function (token, newsId, item, cb) {
 
         var args = {
             data: item,
@@ -13,7 +13,7 @@ var AnalyzerClient = {
             }
         };
 
-        this.client.post("http://localhost:8080/WebService/analyzer/news", args, cb);
+        this.client.post("http://localhost:8080/WebService/analyzer/news/" + newsId, args, cb);
     },
 
     getNewsEntries: function (token, cb) {

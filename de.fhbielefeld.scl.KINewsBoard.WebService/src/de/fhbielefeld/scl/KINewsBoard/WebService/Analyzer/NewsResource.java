@@ -1,8 +1,9 @@
 package de.fhbielefeld.scl.KINewsBoard.WebService.Analyzer;
 
+import com.sun.istack.internal.NotNull;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.NewsBoardService;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
-import de.fhbielefeld.scl.KINewsBoard.WebService.Analyzer.ViewModels.AnalyzerResultVM;
+import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.AnalyzerResultBaseModel;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.ErrorModel;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.NewsEntryBaseModel;
 
@@ -48,14 +49,15 @@ public class NewsResource {
     }
 
     @POST
-    @Path("/")
+    @Path("/{newsId}")
     public Response publish(
             @HeaderParam("token") String token,
-            AnalyzerResultVM model
+            @NotNull @PathParam("newsId") String newsId,
+            AnalyzerResultBaseModel model
     ) {
 
         try {
-            newsBoardService.publishAnalyzerResult(token, model.getNewsId(), model.getAnalyzerResult());
+            newsBoardService.publishAnalyzerResult(token, newsId, model.getAnalyzerResult());
         } catch (AuthenticationException ex) {
             return Response.status(Response.Status.UNAUTHORIZED).entity(new ErrorModel(ex)).build();
         } catch (IllegalArgumentException ex) {

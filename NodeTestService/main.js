@@ -77,8 +77,15 @@ console.log("Publishing News Entries:");
 sources.forEach(function (source) {
     var reader = new RSSReader();
     reader.read(source, function (item) {
+        const regex = /&#...;/g;
+
+        var entry = source.getEntry(item);
+
+        entry.content = entry.content.replace(regex, "");
+        entry.title = entry.title.replace(regex, "");
+
         CrawlerCient.publish('da39a3ee5e6b4b0d5255bfef95601890afd80709',
-            source.getEntry(item),
+            entry,
             function (data, response) {
                 if (response.statusCode != 200) return console.log("Error: " + response.statusCode);
 
@@ -93,7 +100,6 @@ analyzers.forEach(function (analyzer) {
         items.forEach(function (entry) {
 
             var result = {
-                "newsId": entry.id,
                 "value": getRandomInt(-100, 100),
                 "date": (new Date()).toJSON(),
                 "sentenceResults": []
@@ -110,7 +116,7 @@ analyzers.forEach(function (analyzer) {
                     });
                 start += sentence.length + 1;
             });
-            AnalyzerClient.publish(analyzer.token, result, function (data, response) {
+            AnalyzerClient.publish(analyzer.token, entry.id, result, function (data, response) {
                 if (response.statusCode != 200) return console.log("Error: " + response.statusCode);
 
                 console.log("published: " + result.newsId);
