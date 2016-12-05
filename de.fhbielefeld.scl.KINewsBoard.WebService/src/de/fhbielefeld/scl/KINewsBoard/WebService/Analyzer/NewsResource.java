@@ -1,6 +1,5 @@
 package de.fhbielefeld.scl.KINewsBoard.WebService.Analyzer;
 
-import com.sun.istack.internal.NotNull;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.NewsBoardService;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.AnalyzerResultBaseModel;
@@ -8,6 +7,8 @@ import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.NewsEntryBase
 
 import javax.ejb.EJB;
 import javax.naming.AuthenticationException;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -42,7 +43,7 @@ public class NewsResource {
     public Response publish(
             @HeaderParam("token") String token,
             @NotNull @PathParam("newsId") String newsId,
-            AnalyzerResultBaseModel model
+            @Valid @NotNull AnalyzerResultBaseModel model
     ) throws AuthenticationException {
 
         newsBoardService.publishAnalyzerResult(token, newsId, model.getAnalyzerResult());

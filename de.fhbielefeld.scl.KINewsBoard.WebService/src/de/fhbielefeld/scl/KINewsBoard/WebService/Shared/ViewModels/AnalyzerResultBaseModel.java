@@ -3,6 +3,10 @@ package de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.AnalyzerResult;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.AnalyzerSentenceResult;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,6 +37,9 @@ public class AnalyzerResultBaseModel {
         this.date = date;
     }
 
+    @Min(-100)
+    @Max(100)
+    @NotNull
     public int getValue() {
         return value;
     }
@@ -41,6 +48,7 @@ public class AnalyzerResultBaseModel {
         this.value = value;
     }
 
+    @Valid
     public List<SentenceResultVM> getSentenceResults() {
         return sentenceResults;
     }
@@ -75,6 +83,7 @@ public class AnalyzerResultBaseModel {
             value = result.getValue();
         }
 
+        @Min(0)
         public int getCharStart() {
             return charStart;
         }
@@ -83,6 +92,7 @@ public class AnalyzerResultBaseModel {
             this.charStart = charStart;
         }
 
+        @Min(0)
         public int getCharEnd() {
             return charEnd;
         }
@@ -91,6 +101,8 @@ public class AnalyzerResultBaseModel {
             this.charEnd = charEnd;
         }
 
+        @Min(-100)
+        @Max(100)
         public int getValue() {
             return value;
         }
