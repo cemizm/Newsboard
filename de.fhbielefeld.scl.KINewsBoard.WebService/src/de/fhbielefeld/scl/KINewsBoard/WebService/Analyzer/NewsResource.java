@@ -4,7 +4,6 @@ import com.sun.istack.internal.NotNull;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.NewsBoardService;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.AnalyzerResultBaseModel;
-import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.ErrorModel;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.NewsEntryBaseModel;
 
 import javax.ejb.EJB;
@@ -30,18 +29,8 @@ public class NewsResource {
     @Path("/")
     public Response getNewsEntries(
             @HeaderParam("token") String token
-    ) {
-        List<NewsEntry> entries;
-
-        try {
-            entries = newsBoardService.getAnalyzerNewsEntries(token);
-        } catch (AuthenticationException ex) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity(new ErrorModel(ex)).build();
-        } catch (IllegalArgumentException ex) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorModel(ex)).build();
-        } catch (Exception ex) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorModel(ex)).build();
-        }
+    ) throws AuthenticationException {
+        List<NewsEntry> entries = newsBoardService.getAnalyzerNewsEntries(token);
 
         List<NewsEntryBaseModel> res = entries.stream().map(NewsEntryBaseModel::new).collect(Collectors.toList());
 
@@ -54,17 +43,9 @@ public class NewsResource {
             @HeaderParam("token") String token,
             @NotNull @PathParam("newsId") String newsId,
             AnalyzerResultBaseModel model
-    ) {
+    ) throws AuthenticationException {
 
-        try {
-            newsBoardService.publishAnalyzerResult(token, newsId, model.getAnalyzerResult());
-        } catch (AuthenticationException ex) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity(new ErrorModel(ex)).build();
-        } catch (IllegalArgumentException ex) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorModel(ex)).build();
-        } catch (Exception ex) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorModel(ex)).build();
-        }
+        newsBoardService.publishAnalyzerResult(token, newsId, model.getAnalyzerResult());
 
         return Response.ok().build();
     }

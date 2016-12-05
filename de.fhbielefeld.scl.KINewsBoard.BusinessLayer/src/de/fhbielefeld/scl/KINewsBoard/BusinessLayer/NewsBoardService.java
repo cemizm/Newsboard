@@ -107,14 +107,6 @@ public class NewsBoardService {
         Analyzer analyzer = getAnalyzerByToken(token);
         NewsEntry newsEntry = getNewsEntryDetails(newsId);
 
-        if (analyzerResult.getValue() > 100 || analyzerResult.getValue() < 100)
-            throw new IllegalArgumentException("Das Analyseergebnis muss zwischen -100 und 100 liegen.");
-
-        for (AnalyzerSentenceResult sc : analyzerResult.getAnalyzerSentenceResult()) {
-            if (sc.getValue() > 100 || sc.getValue() < 100)
-                throw new IllegalArgumentException("Die Satz-Analyse muss zwischen -100 und 100 liegen.");
-        }
-
         analyzerResult.setAnalyzer(analyzer);
         analyzerResult.setNewsEntry(newsEntry);
 
