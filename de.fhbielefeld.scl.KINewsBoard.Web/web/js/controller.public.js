@@ -52,7 +52,10 @@ angular.module('nwb.public', ['ui.router'])
                 });
 
                 $scope.getViewUrl = function(){
-                    return $state.href('view', { viewId: $scope.view.id }, {absolute: true});
+                    if(!$scope.view)
+                        return "";
+
+                    return $location.absUrl('/').replace($state.href($state.current.name, $state.params), "") + $state.href('view', { viewId: $scope.view.id });
                 };
 
                 $scope.getAnalyzerResult = function () {
