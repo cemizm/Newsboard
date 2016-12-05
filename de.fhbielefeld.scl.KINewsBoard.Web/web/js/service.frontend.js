@@ -1,6 +1,6 @@
 angular.module('nwb')
     .factory('FrontendService', ['$http', '$q', function ($http, $q) {
-        var api = "http://localhost:8080/WebService/frontend/";
+        var api = "/WebService/frontend/";
         var service = {};
 
         service.getNewsEntries = function (page, keyword) {
