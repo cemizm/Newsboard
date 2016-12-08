@@ -66,7 +66,7 @@ public class NewsEntry {
         this.image = image;
     }
 
-    @Column(length = 10485760)
+    @Column(length = 10485760, nullable = false)
     public String getContent() {
         return content;
     }
