@@ -1,5 +1,8 @@
 package de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels;
 
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Index;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -8,11 +11,14 @@ import java.util.Set;
 /**
  * Created by cem on 29.10.16.
  */
+@Indexed
 @Entity
 @NamedQueries({
         @NamedQuery(name = "NewsEntry.findAll", query = "select n from NewsEntry n order by n.date desc"),
-        @NamedQuery(name = "NewsEntry.getNotAnalyzedNewsEntries", query = "select n from NewsEntry n left join AnalyzerResult ar on n.id = ar.newsEntry.id and ar.analyzer.id = :analyzer where ar.newsEntry.id is null order by n.date desc"),
-        @NamedQuery(name = "NewsEntry.getNewsEntriesByViewId", query = "select n from NewsEntry n left join Crawler c on n.crawler.id = c.id left join c.views cv where cv.id = :viewId order by n.date desc")
+        @NamedQuery(name = "NewsEntry.getNotAnalyzedNewsEntries", query = "select n from NewsEntry n left join n.analyzerResults ar on ar.analyzer.id = :analyzer where ar.newsEntry.id is null order by n.date desc"),
+        @NamedQuery(name = "NewsEntry.getNewsEntriesByViewId", query = "select n from NewsEntry n left join n.crawler c left join c.views cv where cv.id = :viewId order by n.date desc")
+//        @NamedQuery(name = "NewsEntry.getNotAnalyzedNewsEntries", query = "select n from NewsEntry n left join n.analyzerResults ar on n.id = ar.newsEntry.id and ar.analyzer.id = :analyzer where ar.newsEntry.id is null order by n.date desc"),
+//        @NamedQuery(name = "NewsEntry.getNewsEntriesByViewId", query = "select n from NewsEntry n left join n.crawler c on n.crawler.id = c.id left join c.views cv where cv.id = :viewId order by n.date desc")
 })
 public class NewsEntry {
     private String id;
@@ -48,6 +54,7 @@ public class NewsEntry {
         this.crawler = crawler;
     }
 
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     @Column(length = 1024)
     public String getTitle() {
         return title;
