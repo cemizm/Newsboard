@@ -14,6 +14,8 @@
             <property name="hibernate.transaction.jta.platform"
                       value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.search.default.directory_provider" value="filesystem"/>
+            <property name="hibernate.search.default.indexBase" value="/Users/cem/xeniC/SDKs/payara41/lucene/indexes"/>
         </properties>
     </persistence-unit>
 </persistence>
