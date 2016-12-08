@@ -5,6 +5,7 @@ import de.fhbielefeld.scl.KINewsBoard.WebService.Backend.ViewModels.AnalyzerVM;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -30,7 +31,7 @@ public class AnalyzerResource {
     @POST
     @Path("/")
     @RolesAllowed({})
-    public Response create(AnalyzerVM model) {
+    public Response create(@NotNull AnalyzerVM model) {
         adminService.createAnalyzer(model.getAnalyzer());
         return Response.ok().build();
     }
@@ -38,7 +39,7 @@ public class AnalyzerResource {
     @PUT
     @Path("/")
     @RolesAllowed({})
-    public Response update(AnalyzerVM model) {
+    public Response update(@NotNull AnalyzerVM model) {
         adminService.updateAnalyzer(model.getAnalyzer());
         return Response.ok().build();
     }

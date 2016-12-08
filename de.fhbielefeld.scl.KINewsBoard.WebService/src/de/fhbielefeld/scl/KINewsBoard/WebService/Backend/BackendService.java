@@ -1,10 +1,12 @@
 package de.fhbielefeld.scl.KINewsBoard.WebService.Backend;
 
 import de.fhbielefeld.scl.KINewsBoard.WebService.Backend.Filters.AuthenticationFilter;
+import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ExceptionMappers.AuthenticationExceptionMapper;
+import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ExceptionMappers.DefaultExceptionMapper;
 
-import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+import javax.xml.bind.ValidationException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,6 +27,11 @@ public class BackendService extends Application {
         s.add(ViewResource.class);
         s.add(DashboardResource.class);
         s.add(AuthResource.class);
+
+        s.add(AuthenticationExceptionMapper.class);
+        s.add(DefaultExceptionMapper.class);
+        s.add(IllegalArgumentException.class);
+        s.add(ValidationException.class);
 
         return s;
     }
