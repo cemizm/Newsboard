@@ -2,6 +2,7 @@ package de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels;
 
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -30,6 +31,7 @@ public class NewsEntryBaseModel {
         date = entry.getDate();
     }
 
+    @NotNull
     public String getId() {
         return id;
     }
@@ -62,6 +64,7 @@ public class NewsEntryBaseModel {
         this.content = content;
     }
 
+    @NotNull
     public String getSource() {
         return source;
     }
@@ -70,6 +73,7 @@ public class NewsEntryBaseModel {
         this.source = source;
     }
 
+    @NotNull
     public String getUrl() {
         return url;
     }

@@ -1,5 +1,10 @@
 package de.fhbielefeld.scl.KINewsBoard.WebService.Crawler;
 
+import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ExceptionMappers.AuthenticationExceptionMapper;
+import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ExceptionMappers.DefaultExceptionMapper;
+import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ExceptionMappers.IllegalArgumentExceptionMapper;
+import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ExceptionMappers.ValidationExceptionMapper;
+
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
@@ -16,6 +21,11 @@ public class CrawlerService extends Application {
         Set<Class<?>> s = new HashSet<>();
 
         s.add(NewsResource.class);
+
+        s.add(AuthenticationExceptionMapper.class);
+        s.add(DefaultExceptionMapper.class);
+        s.add(IllegalArgumentExceptionMapper.class);
+        s.add(ValidationExceptionMapper.class);
 
         return s;
     }
