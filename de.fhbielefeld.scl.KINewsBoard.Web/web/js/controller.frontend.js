@@ -54,3 +54,92 @@ angular.module('nwb.frontend', ['ui.router'])
                 $scope.updateView();
 
             }]);
+
+angular.module('nwb.frontend').controller('ModalDemoCtrl', function ($uibModal, $log, $document) {
+    var $ctrl = this;
+    $ctrl.items = ['item1', 'item2', 'item3'];
+
+    $ctrl.animationsEnabled = true;
+
+    $ctrl.open = function (size, entry, parentSelector) {
+        var parentElem = parentSelector ?
+            angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+
+        $ctrl.entry = entry;
+
+        var modalInstance = $uibModal.open({
+            animation: $ctrl.animationsEnabled,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'myModalContent.html',
+            controller: 'ModalInstanceCtrl',
+            controllerAs: '$ctrl',
+            size: size,
+            appendTo: parentElem,
+            resolve: {
+                items: function () {
+                    return $ctrl.items;
+                },
+                entry: function () {
+                    return $ctrl.entry;
+
+                }
+            }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+            $ctrl.selected = selectedItem;
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+    };
+});
+
+// Please note that $uibModalInstance represents a modal window (instance) dependency.
+// It is not the same as the $uibModal service used above.
+
+angular.module('nwb.frontend').controller('ModalInstanceCtrl', function ($uibModalInstance, items, entry) {
+    var $ctrl = this;
+    $ctrl.items = items;
+    $ctrl.entry = entry;
+    $ctrl.selected = {
+        item: $ctrl.items[0]
+    };
+
+    $ctrl.ok = function () {
+        $uibModalInstance.close($ctrl.selected.item);
+    };
+
+    $ctrl.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
+
+// Please note that the close and dismiss bindings are from $uibModalInstance.
+
+angular.module('nwb.frontend').component('modalComponent', {
+    templateUrl: 'myModalContent.html',
+    bindings: {
+        resolve: '<',
+        close: '&',
+        dismiss: '&'
+    },
+    controller: function () {
+        var $ctrl = this;
+
+        $ctrl.$onInit = function () {
+            $ctrl.items = $ctrl.resolve.items;
+            $ctrl.selected = {
+                item: $ctrl.items[0]
+            };
+        };
+
+        $ctrl.ok = function () {
+            $ctrl.close({$value: $ctrl.selected.item});
+        };
+
+        $ctrl.cancel = function () {
+            $ctrl.dismiss({$value: 'cancel'});
+        };
+    }
+});

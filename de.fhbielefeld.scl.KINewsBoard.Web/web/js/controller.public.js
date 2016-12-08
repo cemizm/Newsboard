@@ -20,7 +20,7 @@ angular.module('nwb.public', ['ui.router'])
 
                 FrontendService.getNewsEntriesByViewId($stateParams.viewId, 0).then(function (view) {
                     if(view == null)
-                        $state.go("frontend")
+                        $state.go("frontend");
 
                     $scope.view = view;
 
