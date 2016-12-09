@@ -23,14 +23,12 @@ public class CrawlerResource {
     private AdminService adminService;
 
     @GET
-    @Path("/")
     @RolesAllowed({})
     public List<CrawlerVM> get() {
         return adminService.getAllCrawler().stream().map(CrawlerVM::new).collect(Collectors.toList());
     }
 
     @POST
-    @Path("/")
     @RolesAllowed({})
     public Response create(@NotNull CrawlerVM model) {
         adminService.createCrawler(model.getCrawler());
@@ -38,7 +36,6 @@ public class CrawlerResource {
     }
 
     @PUT
-    @Path("/")
     @RolesAllowed({})
     public Response update(@NotNull CrawlerVM model) {
         adminService.updateCrawler(model.getCrawler());

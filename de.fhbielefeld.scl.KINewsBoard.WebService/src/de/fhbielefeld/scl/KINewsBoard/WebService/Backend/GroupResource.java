@@ -22,14 +22,12 @@ public class GroupResource {
     private AdminService adminService;
 
     @GET
-    @Path("/")
     @RolesAllowed({})
     public List<GroupSetVM> get() {
         return adminService.getAllGroupSets().stream().map(GroupSetVM::new).collect(Collectors.toList());
     }
 
     @POST
-    @Path("/")
     @RolesAllowed({})
     public Response create(@NotNull GroupSetVM model) {
         adminService.createGroupSet(model.getGroupSet());
@@ -37,7 +35,6 @@ public class GroupResource {
     }
 
     @PUT
-    @Path("/")
     @RolesAllowed({})
     public Response update(@NotNull GroupSetVM model) {
         adminService.updateGroupSet(model.getGroupSet());

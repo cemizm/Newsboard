@@ -27,7 +27,6 @@ public class NewsResource {
     private NewsBoardService newsBoardService;
 
     @GET
-    @Path("/")
     public Response getNewsEntries(
             @HeaderParam("token") String token
     ) throws AuthenticationException {

@@ -27,7 +27,6 @@ public class NewsResource {
     private NewsBoardService newsBoardService;
 
     @GET
-    @Path("/")
     public Response getPublicNewsEntries(
             @DefaultValue("1") @QueryParam("page") int page,
             @QueryParam("keyword") String keyword

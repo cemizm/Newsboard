@@ -22,14 +22,12 @@ public class ViewResource {
     private AdminService adminService;
 
     @GET
-    @Path("/")
     @RolesAllowed({})
     public List<ViewVM> get() {
         return adminService.getAllView().stream().map(ViewVM::new).collect(Collectors.toList());
     }
 
     @POST
-    @Path("/")
     @RolesAllowed({})
     public Response create(@NotNull ViewVM model) {
         adminService.createView(model.getView());
@@ -37,7 +35,6 @@ public class ViewResource {
     }
 
     @PUT
-    @Path("/")
     @RolesAllowed({})
     public Response update(@NotNull ViewVM model) {
         adminService.updateView(model.getView());

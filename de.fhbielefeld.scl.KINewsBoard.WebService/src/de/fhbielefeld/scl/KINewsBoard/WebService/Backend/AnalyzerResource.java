@@ -22,14 +22,12 @@ public class AnalyzerResource {
     private AdminService adminService;
 
     @GET
-    @Path("/")
     @RolesAllowed({})
     public List<AnalyzerVM> get() {
         return adminService.getAllAnalyzer().stream().map(AnalyzerVM::new).collect(Collectors.toList());
     }
 
     @POST
-    @Path("/")
     @RolesAllowed({})
     public Response create(@NotNull AnalyzerVM model) {
         adminService.createAnalyzer(model.getAnalyzer());
@@ -37,7 +35,6 @@ public class AnalyzerResource {
     }
 
     @PUT
-    @Path("/")
     @RolesAllowed({})
     public Response update(@NotNull AnalyzerVM model) {
         adminService.updateAnalyzer(model.getAnalyzer());

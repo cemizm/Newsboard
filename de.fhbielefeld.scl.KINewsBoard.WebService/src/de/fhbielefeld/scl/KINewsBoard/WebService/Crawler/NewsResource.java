@@ -26,7 +26,6 @@ public class NewsResource {
     private NewsBoardService newsBoardService;
 
     @POST
-    @Path("/")
     public Response publish(
             @HeaderParam("token") String token,
             @Valid @NotNull NewsEntryBaseModel model
