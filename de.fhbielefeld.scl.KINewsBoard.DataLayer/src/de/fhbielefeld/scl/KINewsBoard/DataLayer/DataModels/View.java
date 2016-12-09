@@ -69,4 +69,24 @@ public class View {
     public void setCrawlers(Set<Crawler> crawlers) {
         this.crawlers = crawlers;
     }
+
+    public void addGroupSet(GroupSet groupSet) {
+        groupSets.add(groupSet);
+        groupSet.getViews().add(this);
+    }
+
+    public void removeGroupSet(GroupSet groupSet){
+        groupSets.remove(groupSet);
+        groupSet.getViews().remove(this);
+    }
+
+    public void addCrawler(Crawler crawler) {
+        crawlers.add(crawler);
+        crawler.getViews().add(this);
+    }
+
+    public void removeCrawler(Crawler crawler){
+        groupSets.remove(crawler);
+        crawler.getViews().remove(this);
+    }
 }
