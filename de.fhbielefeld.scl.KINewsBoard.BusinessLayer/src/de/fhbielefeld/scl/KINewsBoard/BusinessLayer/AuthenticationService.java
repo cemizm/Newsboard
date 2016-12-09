@@ -4,6 +4,7 @@ import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Authentication.UserWebServic
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Authentication.UserWebService_Service;
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models.User;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -19,15 +20,8 @@ public class AuthenticationService {
 
     private Hashtable<String, User> users = new Hashtable<>();
 
-    public User login(String username, String password) {
-        if (username == null || username.isEmpty())
-            throw new IllegalArgumentException("Parameter 'user' darf nicht null oder leer sein!");
-
-        if (password == null || password.isEmpty())
-            throw new IllegalArgumentException("Parameter 'password' darf nicht null oder leer sein!");
-
-        username = username.replaceAll("@[\\w.\\-]+\\.\\w+", "");
-/*
+    @PostConstruct
+    public void init(){
         User user = new User();
         user.setAuthtoken("f1ac2c84a417f043c08af24e25c232b1");
         user.setUsername("hwurst");
@@ -37,7 +31,19 @@ public class AuthenticationService {
         user.setAddress("");
         user.setEmail("hwurst@fh-bielefeld.de");
         user.setPhone("");
-*/
+
+        users.put(user.getAuthtoken(), user);
+    }
+
+    public User login(String username, String password) {
+        if (username == null || username.isEmpty())
+            throw new IllegalArgumentException("Parameter 'user' darf nicht null oder leer sein!");
+
+        if (password == null || password.isEmpty())
+            throw new IllegalArgumentException("Parameter 'password' darf nicht null oder leer sein!");
+
+        username = username.replaceAll("@[\\w.\\-]+\\.\\w+", "");
+
 
         UserWebService_Service svc = new UserWebService_Service();
         UserWebService s = svc.getUserWebServicePort();
@@ -47,7 +53,7 @@ public class AuthenticationService {
         if (res == null || res.isEmpty())
             return null;
 
-        res = res.replaceAll(",[\\n\\r\\s]+}","}");
+        res = res.replaceAll(",[\\n\\r\\s]+}", "}");
 
         JsonReader reader = Json.createReader(new StringReader(res));
         JsonObject object = reader.readObject();
