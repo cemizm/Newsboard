@@ -3,6 +3,9 @@ package de.fhbielefeld.scl.KINewsBoard.WebService.Backend.ViewModels;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.Crawler;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.CrawlerBaseModel;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * Created by cem on 14.11.16.
  */
@@ -22,6 +25,8 @@ public class CrawlerVM extends CrawlerBaseModel {
         ignoreAnalyzer = crawler.isIgnoreAnalyzer();
     }
 
+    @Size(min = 10, max = 256)
+    @NotNull
     public String getToken() {
         return token;
     }

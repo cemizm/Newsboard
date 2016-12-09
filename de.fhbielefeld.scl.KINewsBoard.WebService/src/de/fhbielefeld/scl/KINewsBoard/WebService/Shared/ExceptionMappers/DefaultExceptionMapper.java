@@ -12,7 +12,7 @@ public class DefaultExceptionMapper implements ExceptionMapper<Exception> {
     @Override
     public Response toResponse(Exception e) {
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                .entity(new ErrorModel(e.getMessage()))
+                .entity(new ErrorModel(e))
                 .build();
     }
 

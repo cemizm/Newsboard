@@ -5,6 +5,8 @@ import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.*;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -42,6 +44,10 @@ public class AdminService {
         analyzer.setGroupSets(new HashSet<>());
         for (GroupSet gs : groups) {
             GroupSet dbGS = entityManager.find(GroupSet.class, gs.getId());
+
+            if(dbGS == null)
+                throw new IllegalArgumentException("Gruppe '" + gs.getId() + "' nicht gefunden.");
+
             dbGS.addAnalyzer(analyzer);
         }
 
@@ -69,10 +75,9 @@ public class AdminService {
         //Füge alle Gruppen -> Analyzer Zuordnungen hinzu die noch nicht existieren
         List<Integer> existing = dbAn.getGroupSets().stream().map(GroupSet::getId).collect(Collectors.toList());
         List<Integer> toAdd = groups.stream().filter(i -> !existing.contains(i)).collect(Collectors.toList());
-        for(Integer gId: toAdd)
-        {
+        for (Integer gId : toAdd) {
             GroupSet gs = getGroupSet(gId);
-            if(gs == null)
+            if (gs == null)
                 throw new IllegalArgumentException("Gruppe existiert nicht!");
 
             gs.addAnalyzer(dbAn);
@@ -91,7 +96,7 @@ public class AdminService {
             throw new IllegalArgumentException("Parameter analyzer darf nicht null sein");
 
         List<GroupSet> toRemove = analyzer.getGroupSets().stream().collect(Collectors.toList());
-        for(GroupSet gs : toRemove)
+        for (GroupSet gs : toRemove)
             gs.removeAnalyzer(analyzer);
 
         entityManager.remove(analyzer);

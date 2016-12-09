@@ -5,6 +5,7 @@ import de.fhbielefeld.scl.KINewsBoard.WebService.Backend.ViewModels.ViewVM;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -29,14 +30,14 @@ public class ViewResource {
 
     @POST
     @RolesAllowed({})
-    public Response create(@NotNull ViewVM model) {
+    public Response create(@NotNull @Valid ViewVM model) {
         adminService.createView(model.getView());
         return Response.ok().build();
     }
 
     @PUT
     @RolesAllowed({})
-    public Response update(@NotNull ViewVM model) {
+    public Response update(@NotNull @Valid ViewVM model) {
         adminService.updateView(model.getView());
         return Response.ok().build();
     }
