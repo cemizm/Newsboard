@@ -20,19 +20,19 @@ angular.module('nwbadmin')
 
         service.create = function (entity) {
             return $http.post(api, entity).then(function (response) {
-                return true;
+                return response.status == 200;
             });
         }
 
         service.update = function (entity) {
             return $http.put(api, entity).then(function (response) {
-                return true;
+                return response.status == 200;
             });
         }
 
         service.delete = function (id) {
             return $http.delete(api + id).then(function (response) {
-                return true;
+                return response.status == 200;
             });
         }
 

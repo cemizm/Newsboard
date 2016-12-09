@@ -19,6 +19,7 @@ angular.module('nwbadmin.crawler', ['ui.router'])
         ['$scope', '$location', 'CrawlerService', 'TokenService',
             function ($scope, $location, CrawlerService, TokenService) {
 
+                $scope.inProgress = false;
 
                 $scope.update = function () {
                     CrawlerService.getAll().then(function (data) {
@@ -42,17 +43,19 @@ angular.module('nwbadmin.crawler', ['ui.router'])
                 $scope.save = function () {
                     if (!$scope.active) return;
 
-                    if (!$scope.active.id) {
-                        CrawlerService.create($scope.active).then(function (result) {
-                            $scope.update();
-                        });
+                    $scope.inProgress = true;
 
-                    }
-                    else {
-                        CrawlerService.update($scope.active).then(function (result) {
+                    var done = function (result) {
+                        if (result)
                             $scope.update();
-                        });
+
+                        $scope.inProgress = false;
                     }
+
+                    if (!$scope.active.id)
+                        CrawlerService.create($scope.active).then(done);
+                    else
+                        CrawlerService.update($scope.active).then(done);
                 };
 
                 $scope.create = function () {

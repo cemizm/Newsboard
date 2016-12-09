@@ -19,8 +19,10 @@ angular.module('nwbadmin.analyzer', ['ui.router'])
         ['$scope', '$location', 'AnalyzerService', 'GroupSetService', 'TokenService',
             function ($scope, $location, AnalyzerService, GroupSetService, TokenService) {
 
+                $scope.inProgress = false;
+
                 $scope.update = function () {
-                    GroupSetService.getAll().then(function(data){
+                    GroupSetService.getAll().then(function (data) {
                         $scope.groups = data;
                     });
                     AnalyzerService.getAll().then(function (data) {
@@ -44,17 +46,19 @@ angular.module('nwbadmin.analyzer', ['ui.router'])
                 $scope.save = function () {
                     if (!$scope.active) return;
 
-                    if (!$scope.active.id) {
-                        AnalyzerService.create($scope.active).then(function (result) {
-                            $scope.update();
-                        });
+                    $scope.inProgress = true;
 
-                    }
-                    else {
-                        AnalyzerService.update($scope.active).then(function (result) {
+                    var done = function (result) {
+                        if (result)
                             $scope.update();
-                        });
+
+                        $scope.inProgress = false;
                     }
+
+                    if (!$scope.active.id)
+                        AnalyzerService.create($scope.active).then(done);
+                    else
+                        AnalyzerService.update($scope.active).then(done);
                 };
 
                 $scope.create = function () {
@@ -66,7 +70,7 @@ angular.module('nwbadmin.analyzer', ['ui.router'])
                     };
                 };
 
-                $scope.toggle = function(group) {
+                $scope.toggle = function (group) {
                     var idx = $scope.active.groups.indexOf(group);
 
                     if (idx > -1) {
