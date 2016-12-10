@@ -7,8 +7,8 @@ var app = angular.module('nwb', [
     'monospaced.qrcode',
     'LocalStorageModule',
     'nwb.frontend',
-    'nwb.public'
+    'nwb.public',
+    'nwb.placeholder'
 ]).config(function ($urlRouterProvider) {
     $urlRouterProvider.otherwise("/frontend");
-
 });
