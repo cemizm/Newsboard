@@ -10,7 +10,10 @@ import java.util.Set;
  * Created by cem on 03.11.16.
  */
 @Entity
-@NamedQuery(name = "AnalyzerResult.findAll", query = "select n from AnalyzerResult n")
+@NamedQueries({
+        @NamedQuery(name = "AnalyzerResult.findAll", query = "select n from AnalyzerResult n"),
+        @NamedQuery(name = "AnalyzerResult.findByNewsToken", query = "select n from AnalyzerResult n where n.analyzer.id = :analyzerId and n.newsEntry.id = :newsId")
+})
 public class AnalyzerResult implements Serializable {
     private Analyzer analyzer;
     private NewsEntry newsEntry;

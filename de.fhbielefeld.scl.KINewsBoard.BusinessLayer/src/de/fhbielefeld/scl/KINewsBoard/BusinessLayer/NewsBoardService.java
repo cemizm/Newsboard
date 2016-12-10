@@ -77,7 +77,7 @@ public class NewsBoardService {
 
         NewsEntry existing = entityManager.find(NewsEntry.class, newsEntry.getId());
 
-        if(existing != null)
+        if (existing != null)
             throw new IllegalArgumentException("News Eintrag mit Id schon vorhanden!");
 
         newsEntry.setCrawler(crawler);
@@ -116,12 +116,25 @@ public class NewsBoardService {
         Analyzer analyzer = getAnalyzerByToken(token);
         NewsEntry newsEntry = getNewsEntryDetails(newsId);
 
+        AnalyzerResult exisiting = getAnalyzerResult(analyzer.getId(), newsEntry.getId());
+        if (exisiting != null)
+            throw new IllegalArgumentException("Für diesen News Eintrag existiert bereits ein Analyse Ergebnis");
+
         analyzerResult.setAnalyzer(analyzer);
         analyzerResult.setNewsEntry(newsEntry);
 
         entityManager.persist(analyzerResult);
 
         return analyzerResult;
+    }
+
+    private AnalyzerResult getAnalyzerResult(int analyzerId, String newsId) {
+        Optional<AnalyzerResult> o = entityManager.createNamedQuery("AnalyzerResult.findByNewsToken", AnalyzerResult.class)
+                .setParameter("newsId", newsId)
+                .setParameter("analyzerId", analyzerId)
+                .getResultList().stream().findFirst();
+
+        return o.isPresent() ? o.get() : null;
     }
 
     private Analyzer getAnalyzerByToken(String token) throws AuthenticationException {

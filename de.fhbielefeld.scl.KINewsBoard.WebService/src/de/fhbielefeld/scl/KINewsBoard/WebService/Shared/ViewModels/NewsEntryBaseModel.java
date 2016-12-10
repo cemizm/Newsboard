@@ -33,8 +33,8 @@ public class NewsEntryBaseModel {
         date = entry.getDate();
     }
 
-    @Size(min = 3, max = 255)
     @NotNull
+    @Size(min = 3, max = 255)
     public String getId() {
         return id;
     }
@@ -62,7 +62,7 @@ public class NewsEntryBaseModel {
     }
 
     @NotNull
-    @Size(max = 10485760)
+    @Size(min = 10, max = 10485760)
     public String getContent() {
         return content;
     }
@@ -72,7 +72,7 @@ public class NewsEntryBaseModel {
     }
 
     @NotNull
-    @Size(max = 255)
+    @Size(min = 3, max = 255)
     public String getSource() {
         return source;
     }
@@ -82,7 +82,7 @@ public class NewsEntryBaseModel {
     }
 
     @NotNull
-    @Size(max = 512)
+    @Size(min = 10, max = 512)
     public String getUrl() {
         return url;
     }
