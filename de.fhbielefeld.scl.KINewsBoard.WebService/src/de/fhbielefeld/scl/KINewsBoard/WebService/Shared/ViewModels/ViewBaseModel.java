@@ -42,6 +42,7 @@ public class ViewBaseModel {
         this.name = name;
     }
 
+    @Size(max = 1024)
     public String getDescription() {
         return description;
     }

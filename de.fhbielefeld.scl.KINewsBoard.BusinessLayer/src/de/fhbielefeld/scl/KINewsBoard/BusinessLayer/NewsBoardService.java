@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.naming.AuthenticationException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,7 +75,15 @@ public class NewsBoardService {
         if (newsEntry == null)
             throw new IllegalArgumentException("Parameter newsEntry darf nicht null sein");
 
+        NewsEntry existing = entityManager.find(NewsEntry.class, newsEntry.getId());
+
+        if(existing != null)
+            throw new IllegalArgumentException("News Eintrag mit Id schon vorhanden!");
+
         newsEntry.setCrawler(crawler);
+
+        if (newsEntry.getDate() == null)
+            newsEntry.setDate(new Date());
 
         entityManager.persist(newsEntry);
 

@@ -2,7 +2,9 @@ package de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels;
 
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -31,6 +33,7 @@ public class NewsEntryBaseModel {
         date = entry.getDate();
     }
 
+    @Size(min = 3, max = 255)
     @NotNull
     public String getId() {
         return id;
@@ -40,6 +43,8 @@ public class NewsEntryBaseModel {
         this.id = id;
     }
 
+
+    @Size(max = 1024)
     public String getTitle() {
         return title;
     }
@@ -56,6 +61,8 @@ public class NewsEntryBaseModel {
         this.image = image;
     }
 
+    @NotNull
+    @Size(max = 10485760)
     public String getContent() {
         return content;
     }
@@ -65,6 +72,7 @@ public class NewsEntryBaseModel {
     }
 
     @NotNull
+    @Size(max = 255)
     public String getSource() {
         return source;
     }
@@ -74,6 +82,7 @@ public class NewsEntryBaseModel {
     }
 
     @NotNull
+    @Size(max = 512)
     public String getUrl() {
         return url;
     }

@@ -86,7 +86,7 @@ public class View {
     }
 
     public void removeCrawler(Crawler crawler){
-        groupSets.remove(crawler);
+        crawlers.remove(crawler);
         crawler.getViews().remove(this);
     }
 }

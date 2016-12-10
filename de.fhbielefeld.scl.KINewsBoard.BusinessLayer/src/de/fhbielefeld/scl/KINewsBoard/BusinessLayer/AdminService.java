@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -25,19 +26,12 @@ public class AdminService {
         return entityManager.find(Analyzer.class, id);
     }
 
-    public Analyzer getAnalyzerByToken(String token) {
-        return entityManager.createNamedQuery("Analyzer.findByToken", Analyzer.class)
-                .setParameter("token", token)
-                .getSingleResult();
-    }
-
     public List<Analyzer> getAllAnalyzer() {
         return entityManager.createNamedQuery("Analyzer.findAll", Analyzer.class).getResultList();
     }
 
     public void createAnalyzer(Analyzer analyzer) {
-        if (analyzer == null)
-            throw new IllegalArgumentException("Parameter analyzer darf nicht null sein");
+        checkAnalyzer(analyzer);
 
         List<Integer> groups = analyzer.getGroupSets().stream().map(GroupSet::getId).collect(Collectors.toList());
 
@@ -48,13 +42,13 @@ public class AdminService {
     }
 
     public Analyzer updateAnalyzer(Analyzer analyzer) {
-        if (analyzer == null)
-            throw new IllegalArgumentException("Parameter analyzer darf nicht null sein");
+        checkAnalyzer(analyzer);
 
         Analyzer dbAnalyzer = entityManager.find(Analyzer.class, analyzer.getId());
 
         if (dbAnalyzer == null)
             throw new IllegalArgumentException("Analyzer mit Id '" + analyzer.getId() + "' ist nicht vorhanden!");
+
 
         List<Integer> groups = analyzer.getGroupSets().stream().map(GroupSet::getId).collect(Collectors.toList());
         analyzer.setGroupSets(new HashSet<>());
@@ -95,6 +89,26 @@ public class AdminService {
         }
     }
 
+    private void checkAnalyzer(Analyzer analyzer) {
+        if (analyzer == null)
+            throw new IllegalArgumentException("Parameter analyzer darf nicht null sein");
+
+        Analyzer exisiting = getAnalyzerByToken(analyzer.getToken());
+
+        if (exisiting != null && exisiting.getId() != analyzer.getId())
+            throw new IllegalArgumentException("Analyzer mit dem Token exisitiert bereits!");
+    }
+
+    private Analyzer getAnalyzerByToken(String token) {
+        if (token == null || token.isEmpty())
+            throw new IllegalArgumentException("Token darf nicht leer sein!");
+
+        Optional<Analyzer> o = entityManager.createNamedQuery("Analyzer.findByToken", Analyzer.class)
+                .setParameter("token", token).getResultList().stream().findFirst();
+
+        return o.isPresent() ? o.get() : null;
+    }
+
     //endregion
 
     //region AnalyzerResult
@@ -132,26 +146,19 @@ public class AdminService {
         return entityManager.find(Crawler.class, id);
     }
 
-    public Crawler getCrawlerByToken(String token) {
-        return entityManager.createNamedQuery("Crawler.findByToken", Crawler.class)
-                .setParameter("token", token)
-                .getSingleResult();
-    }
-
     public List<Crawler> getAllCrawler() {
         return entityManager.createNamedQuery("Crawler.findAll", Crawler.class).getResultList();
     }
 
     public void createCrawler(Crawler crawler) {
-        if (crawler == null)
-            throw new IllegalArgumentException("Parameter crawler darf nicht null sein");
+        checkCrawler(crawler);
 
         entityManager.persist(crawler);
     }
 
     public Crawler updateCrawler(Crawler crawler) {
-        if (crawler == null)
-            throw new IllegalArgumentException("Parameter crawler darf nicht null sein");
+        checkCrawler(crawler);
+
         return entityManager.merge(crawler);
     }
 
@@ -164,7 +171,31 @@ public class AdminService {
         if (crawler == null)
             throw new IllegalArgumentException("Parameter crawler darf nicht null sein");
 
+        List<View> toRemove = crawler.getViews().stream().collect(Collectors.toList());
+        for (View v : toRemove)
+            v.removeCrawler(crawler);
+
         entityManager.remove(crawler);
+    }
+
+    private void checkCrawler(Crawler crawler) {
+        if (crawler == null)
+            throw new IllegalArgumentException("Parameter crawler darf nicht null sein");
+
+        Crawler exisiting = getCrawlerByToken(crawler.getToken());
+
+        if (exisiting != null && exisiting.getId() != crawler.getId())
+            throw new IllegalArgumentException("Crawler mit dem Token exisitiert bereits!");
+    }
+
+    private Crawler getCrawlerByToken(String token) {
+        if (token == null || token.isEmpty())
+            throw new IllegalArgumentException("Token darf nicht leer sein!");
+
+        Optional<Crawler> o = entityManager.createNamedQuery("Crawler.findByToken", Crawler.class)
+                .setParameter("token", token).getResultList().stream().findFirst();
+
+        return o.isPresent() ? o.get() : null;
     }
 
     //endregion
@@ -228,6 +259,9 @@ public class AdminService {
         if (view == null)
             throw new IllegalArgumentException("Parameter view darf nicht null sein");
 
+        view.getGroupSets().stream().collect(Collectors.toList()).forEach(view::removeGroupSet);
+        view.getCrawlers().stream().collect(Collectors.toList()).forEach(view::removeCrawler);
+
         entityManager.remove(view);
     }
 
@@ -285,6 +319,10 @@ public class AdminService {
     public void deleteGroupSet(GroupSet groupSet) {
         if (groupSet == null)
             throw new IllegalArgumentException("Parameter groupSet darf nicht null sein");
+
+        List<View> toRemove = groupSet.getViews().stream().collect(Collectors.toList());
+        for (View v : toRemove)
+            v.removeGroupSet(groupSet);
 
         entityManager.remove(groupSet);
     }
