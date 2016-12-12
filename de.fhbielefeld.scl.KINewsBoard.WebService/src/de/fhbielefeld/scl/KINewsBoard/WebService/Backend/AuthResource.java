@@ -7,6 +7,7 @@ import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.ErrorModel;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
+import javax.naming.AuthenticationException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -25,18 +26,11 @@ public class AuthResource {
     @POST
     @Path("/login")
     public Response login(@HeaderParam("username") @NotNull String username,
-                          @HeaderParam("password") @NotNull String password) {
-        User user = null;
-        try {
-            user = service.login(username, password);
-        } catch (Exception ex) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity(new ErrorModel(ex)).build();
-        }
+                          @HeaderParam("password") @NotNull String password) throws AuthenticationException {
 
-        if (user == null)
-            return Response.status(Response.Status.UNAUTHORIZED).entity(new ErrorModel("Authentifizierung fehlgeschlagen.")).build();
-        else
-            return Response.ok(user).build();
+        User user = service.login(username, password);
+
+        return Response.ok(user).build();
     }
 
     @POST
@@ -56,11 +50,11 @@ public class AuthResource {
     public Response get(@Context SecurityContext securityContext) {
         User u = null;
         if (securityContext != null && securityContext.getUserPrincipal() != null) {
-            if(securityContext.getUserPrincipal() instanceof User)
+            if (securityContext.getUserPrincipal() instanceof User)
                 u = (User) securityContext.getUserPrincipal();
         }
 
-        if(u == null)
+        if (u == null)
             return Response.status(Response.Status.UNAUTHORIZED).entity(new ErrorModel("Authentifizierung fehlgeschlagen.")).build();
 
         return Response.ok(u).build();

@@ -25,7 +25,6 @@ public class DashboardResource {
     private AdminService adminService;
 
     @GET
-    @Path("/")
     @RolesAllowed({})
     public DashboardVM get() {
         DashboardVM model = new DashboardVM();

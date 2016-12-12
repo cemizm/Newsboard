@@ -30,7 +30,7 @@
             <div class="card">
                 <!--a href="{{entry.url}}"-->
                 <div class="image">
-                    <img ng-controller="ModalDemoCtrl as $ctrl" ng-click="$ctrl.open('lg', entry)" ng-src="{{entry.image}}">
+                    <img ng-controller="ModalDemoCtrl as $ctrl" ng-click="$ctrl.open('lg', entry)" nwb-src="{{entry.image}}">
                     <div class="image-overlay">
                         <div class="date">
                             {{entry.source}} @ {{entry.date | date:'dd.MM.yyyy HH:mm'}}

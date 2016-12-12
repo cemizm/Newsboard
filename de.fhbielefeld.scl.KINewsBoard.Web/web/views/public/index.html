@@ -3,7 +3,7 @@
         <slick class="slider" settings="slickConfig">
             <div class="slide shadow" ng-repeat="entry in view.newsEntries">
                 <div class="col-md-3 image">
-                    <img ng-src="{{entry.image}}">
+                    <img nwb-src="{{entry.image}}">
                 </div>
                 <div class="col-md-9 content">
                     <h4>{{entry.title}}</h4>
@@ -25,7 +25,7 @@
         </div>
         <div class="pane shadow" class="col-md-12">
             <div class="image">
-                <img ng-src="{{view.newsEntries[currentIndex].image}}">
+                <img nwb-src="{{view.newsEntries[currentIndex].image}}">
                 <div class="image-overlay">
                     <p class="meta">{{view.newsEntries[currentIndex].source}} @ {{view.newsEntries[currentIndex].date |
                         date:'dd.MM.yyyy HH:mm'}}</p>

@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -20,14 +20,10 @@ public class AdminService {
     @PersistenceContext(name = "NewsBoardPU")
     private EntityManager entityManager;
 
+    //region Analyzer
+
     public Analyzer getAnalyzer(int id) {
         return entityManager.find(Analyzer.class, id);
-    }
-
-    public Analyzer getAnalyzerByToken(String token) {
-        return entityManager.createNamedQuery("Analyzer.findByToken", Analyzer.class)
-                .setParameter("token", token)
-                .getSingleResult();
     }
 
     public List<Analyzer> getAllAnalyzer() {
@@ -35,48 +31,33 @@ public class AdminService {
     }
 
     public void createAnalyzer(Analyzer analyzer) {
-        if (analyzer == null)
-            throw new IllegalArgumentException("Parameter analyzer darf nicht null sein");
+        checkAnalyzer(analyzer);
 
-        Set<GroupSet> groups = analyzer.getGroupSets();
+        List<Integer> groups = analyzer.getGroupSets().stream().map(GroupSet::getId).collect(Collectors.toList());
+
         analyzer.setGroupSets(new HashSet<>());
-        for (GroupSet gs : groups) {
-            GroupSet dbGS = entityManager.find(GroupSet.class, gs.getId());
-            dbGS.addAnalyzer(analyzer);
-        }
+        syncAnalyzer(analyzer, groups);
 
         entityManager.persist(analyzer);
     }
 
     public Analyzer updateAnalyzer(Analyzer analyzer) {
-        if (analyzer == null)
-            throw new IllegalArgumentException("Parameter analyzer darf nicht null sein");
+        checkAnalyzer(analyzer);
 
-        Analyzer dbAn = getAnalyzer(analyzer.getId());
+        Analyzer dbAnalyzer = entityManager.find(Analyzer.class, analyzer.getId());
 
-        if (dbAn == null)
-            throw new IllegalArgumentException("Analyzer existiert nicht!");
+        if (dbAnalyzer == null)
+            throw new IllegalArgumentException("Analyzer mit Id '" + analyzer.getId() + "' ist nicht vorhanden!");
+
 
         List<Integer> groups = analyzer.getGroupSets().stream().map(GroupSet::getId).collect(Collectors.toList());
-
         analyzer.setGroupSets(new HashSet<>());
 
-        //entferne alle Gruppen -> Analyzer Zuordnungen die nicht mehr existieren
-        List<GroupSet> toRemove = dbAn.getGroupSets().stream().filter(gs -> !groups.contains(gs.getId())).collect(Collectors.toList());
-        for (GroupSet gs : toRemove)
-            gs.removeAnalyzer(dbAn);
+        dbAnalyzer.getGroupSets().stream().collect(Collectors.toList()).forEach(g -> g.removeAnalyzer(dbAnalyzer));
 
-        //Füge alle Gruppen -> Analyzer Zuordnungen hinzu die noch nicht existieren
-        List<Integer> existing = dbAn.getGroupSets().stream().map(GroupSet::getId).collect(Collectors.toList());
-        List<Integer> toAdd = groups.stream().filter(i -> !existing.contains(i)).collect(Collectors.toList());
-        for(Integer gId: toAdd)
-        {
-            GroupSet gs = getGroupSet(gId);
-            if(gs == null)
-                throw new IllegalArgumentException("Gruppe existiert nicht!");
+        analyzer = entityManager.merge(analyzer);
 
-            gs.addAnalyzer(dbAn);
-        }
+        syncAnalyzer(analyzer, groups);
 
         return entityManager.merge(analyzer);
     }
@@ -91,11 +72,46 @@ public class AdminService {
             throw new IllegalArgumentException("Parameter analyzer darf nicht null sein");
 
         List<GroupSet> toRemove = analyzer.getGroupSets().stream().collect(Collectors.toList());
-        for(GroupSet gs : toRemove)
+        for (GroupSet gs : toRemove)
             gs.removeAnalyzer(analyzer);
 
         entityManager.remove(analyzer);
     }
+
+    private void syncAnalyzer(Analyzer analyzer, List<Integer> groups) {
+        for (Integer gsId : groups) {
+            GroupSet dbGS = entityManager.find(GroupSet.class, gsId);
+
+            if (dbGS == null)
+                throw new IllegalArgumentException("Gruppe '" + gsId + "' nicht gefunden.");
+
+            dbGS.addAnalyzer(analyzer);
+        }
+    }
+
+    private void checkAnalyzer(Analyzer analyzer) {
+        if (analyzer == null)
+            throw new IllegalArgumentException("Parameter analyzer darf nicht null sein");
+
+        Analyzer exisiting = getAnalyzerByToken(analyzer.getToken());
+
+        if (exisiting != null && exisiting.getId() != analyzer.getId())
+            throw new IllegalArgumentException("Analyzer mit dem Token exisitiert bereits!");
+    }
+
+    private Analyzer getAnalyzerByToken(String token) {
+        if (token == null || token.isEmpty())
+            throw new IllegalArgumentException("Token darf nicht leer sein!");
+
+        Optional<Analyzer> o = entityManager.createNamedQuery("Analyzer.findByToken", Analyzer.class)
+                .setParameter("token", token).getResultList().stream().findFirst();
+
+        return o.isPresent() ? o.get() : null;
+    }
+
+    //endregion
+
+    //region AnalyzerResult
 
     public List<AnalyzerResult> getAllAnalyzerResult() {
         return entityManager.createNamedQuery("AnalyzerResult.findAll", AnalyzerResult.class).getResultList();
@@ -122,14 +138,12 @@ public class AdminService {
         entityManager.remove(analyzerResult);
     }
 
+    //endregion
+
+    //region Crawler
+
     public Crawler getCrawler(int id) {
         return entityManager.find(Crawler.class, id);
-    }
-
-    public Crawler getCrawlerByToken(String token) {
-        return entityManager.createNamedQuery("Crawler.findByToken", Crawler.class)
-                .setParameter("token", token)
-                .getSingleResult();
     }
 
     public List<Crawler> getAllCrawler() {
@@ -137,15 +151,14 @@ public class AdminService {
     }
 
     public void createCrawler(Crawler crawler) {
-        if (crawler == null)
-            throw new IllegalArgumentException("Parameter crawler darf nicht null sein");
+        checkCrawler(crawler);
 
         entityManager.persist(crawler);
     }
 
     public Crawler updateCrawler(Crawler crawler) {
-        if (crawler == null)
-            throw new IllegalArgumentException("Parameter crawler darf nicht null sein");
+        checkCrawler(crawler);
+
         return entityManager.merge(crawler);
     }
 
@@ -158,8 +171,36 @@ public class AdminService {
         if (crawler == null)
             throw new IllegalArgumentException("Parameter crawler darf nicht null sein");
 
+        List<View> toRemove = crawler.getViews().stream().collect(Collectors.toList());
+        for (View v : toRemove)
+            v.removeCrawler(crawler);
+
         entityManager.remove(crawler);
     }
+
+    private void checkCrawler(Crawler crawler) {
+        if (crawler == null)
+            throw new IllegalArgumentException("Parameter crawler darf nicht null sein");
+
+        Crawler exisiting = getCrawlerByToken(crawler.getToken());
+
+        if (exisiting != null && exisiting.getId() != crawler.getId())
+            throw new IllegalArgumentException("Crawler mit dem Token exisitiert bereits!");
+    }
+
+    private Crawler getCrawlerByToken(String token) {
+        if (token == null || token.isEmpty())
+            throw new IllegalArgumentException("Token darf nicht leer sein!");
+
+        Optional<Crawler> o = entityManager.createNamedQuery("Crawler.findByToken", Crawler.class)
+                .setParameter("token", token).getResultList().stream().findFirst();
+
+        return o.isPresent() ? o.get() : null;
+    }
+
+    //endregion
+
+    //region View
 
     public View getView(int id) {
         return entityManager.find(View.class, id);
@@ -173,12 +214,38 @@ public class AdminService {
         if (view == null)
             throw new IllegalArgumentException("Parameter view darf nicht null sein");
 
+        List<Integer> groups = view.getGroupSets().stream().map(GroupSet::getId).collect(Collectors.toList());
+        List<Integer> crawlers = view.getCrawlers().stream().map(Crawler::getId).collect(Collectors.toList());
+
+        view.setGroupSets(new HashSet<>());
+        view.setCrawlers(new HashSet<>());
+
+        syncView(view, groups, crawlers);
+
         entityManager.persist(view);
     }
 
     public View updateView(View view) {
         if (view == null)
             throw new IllegalArgumentException("Parameter view darf nicht null sein");
+
+        View dbView = entityManager.find(View.class, view.getId());
+
+        if (dbView == null)
+            throw new IllegalArgumentException("View mit Id '" + view.getId() + "' ist nicht vorhanden!");
+
+        List<Integer> groups = view.getGroupSets().stream().map(GroupSet::getId).collect(Collectors.toList());
+        List<Integer> crawlers = view.getCrawlers().stream().map(Crawler::getId).collect(Collectors.toList());
+
+        view.setGroupSets(new HashSet<>());
+        view.setCrawlers(new HashSet<>());
+
+        dbView.getGroupSets().stream().collect(Collectors.toList()).forEach(g -> dbView.removeGroupSet(g));
+        dbView.getCrawlers().stream().collect(Collectors.toList()).forEach(c -> dbView.removeCrawler(c));
+
+        view = entityManager.merge(view);
+
+        syncView(view, groups, crawlers);
 
         return entityManager.merge(view);
     }
@@ -192,15 +259,38 @@ public class AdminService {
         if (view == null)
             throw new IllegalArgumentException("Parameter view darf nicht null sein");
 
+        view.getGroupSets().stream().collect(Collectors.toList()).forEach(view::removeGroupSet);
+        view.getCrawlers().stream().collect(Collectors.toList()).forEach(view::removeCrawler);
+
         entityManager.remove(view);
     }
 
-    public GroupSet getGroupSet(int id) {
-        return entityManager.find(GroupSet.class, id);
+    private void syncView(View view, List<Integer> groups, List<Integer> crawlers) {
+        for (Integer gsId : groups) {
+            GroupSet dbGS = entityManager.find(GroupSet.class, gsId);
+
+            if (dbGS == null)
+                throw new IllegalArgumentException("Gruppe '" + gsId + "' nicht gefunden.");
+
+            view.addGroupSet(dbGS);
+        }
+
+        for (Integer cId : crawlers) {
+            Crawler dbC = entityManager.find(Crawler.class, cId);
+
+            if (dbC == null)
+                throw new IllegalArgumentException("Gruppe '" + cId + "' nicht gefunden.");
+
+            view.addCrawler(dbC);
+        }
     }
 
-    public List<GroupSet> getGroupSets(List<Integer> ids) {
-        return entityManager.createNamedQuery("GroupSet.findByIds", GroupSet.class).setParameter("ids", ids).getResultList();
+    //endregion
+
+    //region Group
+
+    public GroupSet getGroupSet(int id) {
+        return entityManager.find(GroupSet.class, id);
     }
 
     public List<GroupSet> getAllGroupSets() {
@@ -230,8 +320,16 @@ public class AdminService {
         if (groupSet == null)
             throw new IllegalArgumentException("Parameter groupSet darf nicht null sein");
 
+        List<View> toRemove = groupSet.getViews().stream().collect(Collectors.toList());
+        for (View v : toRemove)
+            v.removeGroupSet(groupSet);
+
         entityManager.remove(groupSet);
     }
+
+    //endregion
+
+    //region NewsEntry
 
     public NewsEntry getNewsEntry(String id) {
         if (id == null || id.isEmpty())
@@ -272,4 +370,7 @@ public class AdminService {
 
         entityManager.remove(newsEntry);
     }
+
+    //endregion
+
 }

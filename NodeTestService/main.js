@@ -41,7 +41,7 @@ var sources = [
                 id: md5(item.link),
                 date: item.pubdate,
                 content: item.summary,
-                image: item.enclosures[0].url,
+                image: item.enclosures.length > 0 ? item.enclosures[0].url : null,
                 title: item.title,
                 source: "Mindener Tageblatt",
                 url: item.link
@@ -55,7 +55,7 @@ var sources = [
                 id: md5(item.link),
                 date: item.pubdate,
                 content: item.summary,
-                image: item.enclosures[0].url,
+                image: item.enclosures.length > 0 ? item.enclosures[0].url : null,
                 title: item.title,
                 source: "Mindener Tageblatt - Regionales",
                 url: item.link
@@ -73,7 +73,6 @@ var analyzers = [
     },
 ];
 
-console.log("Publishing News Entries:");
 sources.forEach(function (source) {
     var reader = new RSSReader();
     reader.read(source, function (item) {
@@ -87,14 +86,13 @@ sources.forEach(function (source) {
         CrawlerCient.publish('da39a3ee5e6b4b0d5255bfef95601890afd80709',
             entry,
             function (data, response) {
-                if (response.statusCode != 200) return console.log("Error: " + response.statusCode);
+                if (response.statusCode != 200) return console.log("Crawler Error (" + response.statusCode + "): " + data.message);
 
-                console.log("published: " + item.title)
+                console.log("Crawler published: " + item.title)
             });
     });
 });
 
-console.log("Publishing Analyzer Results:");
 analyzers.forEach(function (analyzer) {
     AnalyzerClient.getNewsEntries(analyzer.token, function (items) {
         items.forEach(function (entry) {
@@ -117,9 +115,9 @@ analyzers.forEach(function (analyzer) {
                 start += sentence.length + 1;
             });
             AnalyzerClient.publish(analyzer.token, entry.id, result, function (data, response) {
-                if (response.statusCode != 200) return console.log("Error: " + response.statusCode);
+                if (response.statusCode != 200) return console.log("Analyzer Result Error (" + response.statusCode + "): " + data.message);
 
-                console.log("published: " + result.newsId);
+                console.log("Analyzer Result published: " + entry.title);
             });
         });
     });

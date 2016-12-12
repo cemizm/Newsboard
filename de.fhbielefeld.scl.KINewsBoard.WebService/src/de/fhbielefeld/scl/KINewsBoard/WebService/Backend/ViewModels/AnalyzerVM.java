@@ -4,6 +4,8 @@ import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.Analyzer;
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.GroupSet;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.AnalyzerBaseModel;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -30,6 +32,8 @@ public class AnalyzerVM extends AnalyzerBaseModel {
         groups = analyzer.getGroupSets().stream().map(GroupSet::getId).collect(Collectors.toList());
     }
 
+    @Size(min = 10, max = 256)
+    @NotNull
     public String getToken() {
         return token;
     }

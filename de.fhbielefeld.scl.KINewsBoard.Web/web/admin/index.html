@@ -67,6 +67,9 @@
     <div id="page-wrapper">
 
         <div class="container-fluid">
+
+            <div uib-alert ng-repeat="alert in alerts" class="alert-danger" close="closeAlert($index)">{{alert.message}}</div>
+
             <ui-view></ui-view>
 
         </div>
@@ -89,6 +92,7 @@
 <script src="js/controller.groups.js"></script>
 <script src="js/controller.views.js"></script>
 <script src="js/interceptor.auth.js"></script>
+<script src="js/interceptor.error.js"></script>
 <script src="js/service.dashboard.js"></script>
 <script src="js/service.crawler.js"></script>
 <script src="js/service.analyzer.js"></script>

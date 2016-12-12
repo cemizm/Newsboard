@@ -1,11 +1,12 @@
 package de.fhbielefeld.scl.KINewsBoard.WebService.Crawler;
 
 import de.fhbielefeld.scl.KINewsBoard.BusinessLayer.NewsBoardService;
-import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.ErrorModel;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.NewsEntryBaseModel;
 
 import javax.ejb.EJB;
 import javax.naming.AuthenticationException;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -25,20 +26,13 @@ public class NewsResource {
     private NewsBoardService newsBoardService;
 
     @POST
-    @Path("/")
     public Response publish(
             @HeaderParam("token") String token,
-            NewsEntryBaseModel model
-    ) {
-        try {
-            newsBoardService.publishNewsEntry(token, model.getNewsEntryModel());
-        } catch (AuthenticationException ex) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity(new ErrorModel(ex)).build();
-        } catch (IllegalArgumentException ex) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorModel(ex)).build();
-        } catch (Exception ex) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorModel(ex)).build();
-        }
+            @Valid @NotNull NewsEntryBaseModel model
+    ) throws AuthenticationException {
+
+        newsBoardService.publishNewsEntry(token, model.getNewsEntryModel());
+
         return Response.ok().build();
     }
 }

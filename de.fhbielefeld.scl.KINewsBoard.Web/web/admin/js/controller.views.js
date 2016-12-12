@@ -28,6 +28,8 @@ angular.module('nwbadmin.views', ['ui.router'])
     ['$scope', '$location', 'ViewService', 'GroupSetService',
         function ($scope, $location, ViewService, GroupSetService) {
 
+            $scope.inProgress = false;
+
             $scope.update = function () {
                 GroupSetService.getAll().then(function (data) {
                     $scope.groups = data;
@@ -53,17 +55,20 @@ angular.module('nwbadmin.views', ['ui.router'])
             $scope.save = function () {
                 if (!$scope.active) return;
 
-                if (!$scope.active.id) {
-                    ViewService.create($scope.active).then(function (result) {
-                        $scope.update();
-                    });
+                $scope.inProgress = true;
 
-                }
-                else {
-                    ViewService.update($scope.active).then(function (result) {
+                var done = function (result) {
+                    if (result)
                         $scope.update();
-                    });
+
+                    $scope.inProgress = false;
                 }
+
+                if (!$scope.active.id)
+                    ViewService.create($scope.active).then(done);
+                else
+                    ViewService.update($scope.active).then(done);
+
             };
 
 

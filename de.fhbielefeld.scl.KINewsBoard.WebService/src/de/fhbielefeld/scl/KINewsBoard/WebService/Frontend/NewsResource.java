@@ -7,7 +7,6 @@ import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.View;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Frontend.ViewModels.NewsEntryDetailVM;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Frontend.ViewModels.NewsEntryVM;
 import de.fhbielefeld.scl.KINewsBoard.WebService.Frontend.ViewModels.ViewVM;
-import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.ErrorModel;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -28,7 +27,6 @@ public class NewsResource {
     private NewsBoardService newsBoardService;
 
     @GET
-    @Path("/")
     public Response getPublicNewsEntries(
             @DefaultValue("1") @QueryParam("page") int page,
             @QueryParam("keyword") String keyword
@@ -46,17 +44,8 @@ public class NewsResource {
     public Response getNewsEntryDetails(
             @NotNull @PathParam("newsId") String newsId
     ) {
-        NewsEntry newsEntry = null;
-        try {
 
-
-            newsEntry = newsBoardService.getNewsEntryDetails(newsId);
-
-        } catch (IllegalArgumentException ex) {
-            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorModel(ex)).build();
-        } catch (Exception ex) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorModel(ex)).build();
-        }
+        NewsEntry newsEntry = newsBoardService.getNewsEntryDetails(newsId);
 
         NewsEntryDetailVM detail = new NewsEntryDetailVM(newsEntry);
 
@@ -69,16 +58,8 @@ public class NewsResource {
             @NotNull @PathParam("newsId") String newsId,
             @QueryParam("up") boolean up
     ) {
-        NewsEntry newsEntry = null;
-        try {
-            newsEntry = newsBoardService.rateNewsEntry(newsId, up);
 
-        } catch (IllegalArgumentException ex) {
-            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorModel(ex)).build();
-        } catch (Exception ex) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorModel(ex)).build();
-        }
-
+        NewsEntry newsEntry = newsBoardService.rateNewsEntry(newsId, up);
 
         return Response.ok(new NewsEntryVM(newsEntry)).build();
     }
@@ -86,17 +67,10 @@ public class NewsResource {
     @GET
     @Path("/findByView/{viewId}")
     public Response getViewEntries(
-            @PathParam("viewId") int viewId
+            @NotNull @PathParam("viewId") int viewId
     ) {
 
-        View view = null;
-        try {
-            view = newsBoardService.getView(viewId);
-        } catch (IllegalArgumentException ex) {
-            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorModel(ex)).build();
-        } catch (Exception ex) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorModel(ex)).build();
-        }
+        View view = newsBoardService.getView(viewId);
 
         List<NewsEntryVM> entries = newsBoardService.getViewNewsEntries(viewId)
                 .stream()

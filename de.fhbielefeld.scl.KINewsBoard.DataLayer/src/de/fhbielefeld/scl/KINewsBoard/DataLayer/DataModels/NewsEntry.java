@@ -17,8 +17,6 @@ import java.util.Set;
         @NamedQuery(name = "NewsEntry.findAll", query = "select n from NewsEntry n order by n.date desc"),
         @NamedQuery(name = "NewsEntry.getNotAnalyzedNewsEntries", query = "select n from NewsEntry n left join n.analyzerResults ar on ar.analyzer.id = :analyzer where ar.newsEntry.id is null order by n.date desc"),
         @NamedQuery(name = "NewsEntry.getNewsEntriesByViewId", query = "select n from NewsEntry n left join n.crawler c left join c.views cv where cv.id = :viewId order by n.date desc")
-//        @NamedQuery(name = "NewsEntry.getNotAnalyzedNewsEntries", query = "select n from NewsEntry n left join n.analyzerResults ar on n.id = ar.newsEntry.id and ar.analyzer.id = :analyzer where ar.newsEntry.id is null order by n.date desc"),
-//        @NamedQuery(name = "NewsEntry.getNewsEntriesByViewId", query = "select n from NewsEntry n left join n.crawler c on n.crawler.id = c.id left join c.views cv where cv.id = :viewId order by n.date desc")
 })
 public class NewsEntry {
     private String id;
@@ -73,7 +71,7 @@ public class NewsEntry {
         this.image = image;
     }
 
-    @Column(length = 10485760)
+    @Column(length = 10485760, nullable = false)
     public String getContent() {
         return content;
     }

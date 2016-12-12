@@ -20,7 +20,10 @@ public class ErrorModel {
 
             this.message = ex.getMessage();
 
-            ex = ex.getCause();
+            if (ex.getCause() == ex)
+                ex = null;
+            else
+                ex = ex.getCause();
         } while ((this.message == null || this.message.isEmpty()) && ex != null);
     }
 

@@ -2,6 +2,9 @@ package de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels;
 
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.View;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * Created by cem on 21.11.16.
  */
@@ -29,6 +32,8 @@ public class ViewBaseModel {
         this.id = id;
     }
 
+    @Size(min = 3, max = 50)
+    @NotNull
     public String getName() {
         return name;
     }
@@ -37,6 +42,7 @@ public class ViewBaseModel {
         this.name = name;
     }
 
+    @Size(max = 1024)
     public String getDescription() {
         return description;
     }

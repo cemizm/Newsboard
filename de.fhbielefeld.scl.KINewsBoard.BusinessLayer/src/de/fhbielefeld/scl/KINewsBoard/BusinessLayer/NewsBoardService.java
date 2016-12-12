@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.naming.AuthenticationException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,7 +75,15 @@ public class NewsBoardService {
         if (newsEntry == null)
             throw new IllegalArgumentException("Parameter newsEntry darf nicht null sein");
 
+        NewsEntry existing = entityManager.find(NewsEntry.class, newsEntry.getId());
+
+        if (existing != null)
+            throw new IllegalArgumentException("News Eintrag mit Id schon vorhanden!");
+
         newsEntry.setCrawler(crawler);
+
+        if (newsEntry.getDate() == null)
+            newsEntry.setDate(new Date());
 
         entityManager.persist(newsEntry);
 
@@ -107,12 +116,25 @@ public class NewsBoardService {
         Analyzer analyzer = getAnalyzerByToken(token);
         NewsEntry newsEntry = getNewsEntryDetails(newsId);
 
+        AnalyzerResult exisiting = getAnalyzerResult(analyzer.getId(), newsEntry.getId());
+        if (exisiting != null)
+            throw new IllegalArgumentException("Für diesen News Eintrag existiert bereits ein Analyse Ergebnis");
+
         analyzerResult.setAnalyzer(analyzer);
         analyzerResult.setNewsEntry(newsEntry);
 
         entityManager.persist(analyzerResult);
 
         return analyzerResult;
+    }
+
+    private AnalyzerResult getAnalyzerResult(int analyzerId, String newsId) {
+        Optional<AnalyzerResult> o = entityManager.createNamedQuery("AnalyzerResult.findByNewsToken", AnalyzerResult.class)
+                .setParameter("newsId", newsId)
+                .setParameter("analyzerId", analyzerId)
+                .getResultList().stream().findFirst();
+
+        return o.isPresent() ? o.get() : null;
     }
 
     private Analyzer getAnalyzerByToken(String token) throws AuthenticationException {

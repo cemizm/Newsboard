@@ -5,6 +5,8 @@ import de.fhbielefeld.scl.KINewsBoard.WebService.Backend.ViewModels.AnalyzerVM;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -21,24 +23,21 @@ public class AnalyzerResource {
     private AdminService adminService;
 
     @GET
-    @Path("/")
     @RolesAllowed({})
     public List<AnalyzerVM> get() {
         return adminService.getAllAnalyzer().stream().map(AnalyzerVM::new).collect(Collectors.toList());
     }
 
     @POST
-    @Path("/")
     @RolesAllowed({})
-    public Response create(AnalyzerVM model) {
+    public Response create(@NotNull @Valid AnalyzerVM model) {
         adminService.createAnalyzer(model.getAnalyzer());
         return Response.ok().build();
     }
 
     @PUT
-    @Path("/")
     @RolesAllowed({})
-    public Response update(AnalyzerVM model) {
+    public Response update(@NotNull @Valid AnalyzerVM model) {
         adminService.updateAnalyzer(model.getAnalyzer());
         return Response.ok().build();
     }

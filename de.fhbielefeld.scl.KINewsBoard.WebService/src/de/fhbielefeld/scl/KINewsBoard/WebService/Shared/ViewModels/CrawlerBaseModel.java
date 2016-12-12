@@ -2,6 +2,9 @@ package de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels;
 
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.Crawler;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * Created by cem on 21.11.16.
  */
@@ -26,6 +29,8 @@ public class CrawlerBaseModel {
         this.id = id;
     }
 
+    @Size(min = 3, max = 50)
+    @NotNull
     public String getName() {
         return name;
     }

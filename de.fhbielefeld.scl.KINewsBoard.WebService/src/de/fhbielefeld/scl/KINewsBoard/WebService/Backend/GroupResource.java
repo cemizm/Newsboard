@@ -5,6 +5,8 @@ import de.fhbielefeld.scl.KINewsBoard.WebService.Backend.ViewModels.GroupSetVM;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -21,24 +23,21 @@ public class GroupResource {
     private AdminService adminService;
 
     @GET
-    @Path("/")
     @RolesAllowed({})
     public List<GroupSetVM> get() {
         return adminService.getAllGroupSets().stream().map(GroupSetVM::new).collect(Collectors.toList());
     }
 
     @POST
-    @Path("/")
     @RolesAllowed({})
-    public Response create(GroupSetVM model) {
+    public Response create(@NotNull @Valid GroupSetVM model) {
         adminService.createGroupSet(model.getGroupSet());
         return Response.ok().build();
     }
 
     @PUT
-    @Path("/")
     @RolesAllowed({})
-    public Response update(GroupSetVM model) {
+    public Response update(@NotNull @Valid GroupSetVM model) {
         adminService.updateGroupSet(model.getGroupSet());
         return Response.ok().build();
     }

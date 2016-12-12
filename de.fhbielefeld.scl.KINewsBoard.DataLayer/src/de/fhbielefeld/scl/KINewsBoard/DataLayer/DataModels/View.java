@@ -10,8 +10,7 @@ import java.util.Set;
 @Entity
 @NamedQueries
         ({
-                @NamedQuery(name = "View.findAll", query = "select n from View n"),
-                @NamedQuery(name = "View.getNewsEntries", query = "select n from View n where n.crawlers=:crawler")
+                @NamedQuery(name = "View.findAll", query = "select n from View n")
         })
 public class View {
     private int id;
@@ -53,7 +52,7 @@ public class View {
         this.description = description;
     }
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     public Set<GroupSet> getGroupSets() {
         return groupSets;
     }
@@ -62,12 +61,32 @@ public class View {
         this.groupSets = groupSets;
     }
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     public Set<Crawler> getCrawlers() {
         return crawlers;
     }
 
     public void setCrawlers(Set<Crawler> crawlers) {
         this.crawlers = crawlers;
+    }
+
+    public void addGroupSet(GroupSet groupSet) {
+        groupSets.add(groupSet);
+        groupSet.getViews().add(this);
+    }
+
+    public void removeGroupSet(GroupSet groupSet){
+        groupSets.remove(groupSet);
+        groupSet.getViews().remove(this);
+    }
+
+    public void addCrawler(Crawler crawler) {
+        crawlers.add(crawler);
+        crawler.getViews().add(this);
+    }
+
+    public void removeCrawler(Crawler crawler){
+        crawlers.remove(crawler);
+        crawler.getViews().remove(this);
     }
 }

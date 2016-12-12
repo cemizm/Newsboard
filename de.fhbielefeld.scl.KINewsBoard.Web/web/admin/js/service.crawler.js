@@ -17,19 +17,19 @@ angular.module('nwbadmin')
 
         service.create = function (crawler) {
             return $http.post(api + "crawler", crawler).then(function (response) {
-                return true;
+                return response.status == 200;
             });
         }
 
         service.update = function (crawler) {
             return $http.put(api + "crawler", crawler).then(function (response) {
-                return true;
+                return response.status == 200;
             });
         }
 
         service.delete = function (crawlerId) {
             return $http.delete(api + "crawler/" + crawlerId).then(function (response) {
-                return true;
+                return response.status == 200;
             });
         }
 

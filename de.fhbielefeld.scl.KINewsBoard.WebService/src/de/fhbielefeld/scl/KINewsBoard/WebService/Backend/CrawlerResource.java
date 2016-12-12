@@ -5,6 +5,8 @@ import de.fhbielefeld.scl.KINewsBoard.WebService.Backend.ViewModels.CrawlerVM;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -22,24 +24,21 @@ public class CrawlerResource {
     private AdminService adminService;
 
     @GET
-    @Path("/")
     @RolesAllowed({})
     public List<CrawlerVM> get() {
         return adminService.getAllCrawler().stream().map(CrawlerVM::new).collect(Collectors.toList());
     }
 
     @POST
-    @Path("/")
     @RolesAllowed({})
-    public Response create(CrawlerVM model) {
+    public Response create(@NotNull @Valid CrawlerVM model) {
         adminService.createCrawler(model.getCrawler());
         return Response.ok().build();
     }
 
     @PUT
-    @Path("/")
     @RolesAllowed({})
-    public Response update(CrawlerVM model) {
+    public Response update(@NotNull @Valid CrawlerVM model) {
         adminService.updateCrawler(model.getCrawler());
         return Response.ok().build();
     }
