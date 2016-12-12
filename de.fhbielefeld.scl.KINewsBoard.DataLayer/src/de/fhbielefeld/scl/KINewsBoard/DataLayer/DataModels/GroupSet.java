@@ -50,7 +50,7 @@ public class GroupSet {
         this.views = views;
     }
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     public Set<Analyzer> getAnalyzers() {
         return analyzers;
     }
