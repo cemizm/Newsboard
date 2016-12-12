@@ -19,7 +19,7 @@ angular.module('nwb.frontend', ['ui.router'])
     }])
     .controller('FrontendViewController',
         ['$scope', '$location', '$stateParams', 'FrontendService', 'localStorageService',
-            function ($scope, $location, $stateParams, FrontendService, localStorageService) {
+            function ($scope, $location, $stateParams, FrontendService, localStorageService, spinnerService) {
 
                 $scope.page = 1;
                 $scope.keyword = "";
@@ -28,6 +28,13 @@ angular.module('nwb.frontend', ['ui.router'])
                 $scope.updateView = function () {
                     FrontendService.getNewsEntries($scope.page, $scope.keyword).then(function (entries) {
                         $scope.entries = entries;
+                    });
+                };
+
+                $scope.loadMoreNews = function () {
+                    $scope.page += 1;
+                    FrontendService.getNewsEntries($scope.page, $scope.keyword).then(function (entries) {
+                        $scope.entries = $scope.entries.concat(entries);
                     });
                 };
 

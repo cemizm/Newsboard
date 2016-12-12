@@ -6,9 +6,12 @@ var app = angular.module('nwb', [
     'ngPopover',
     'monospaced.qrcode',
     'LocalStorageModule',
+    'infinite-scroll',
     'nwb.frontend',
     'nwb.public',
     'nwb.placeholder'
 ]).config(function ($urlRouterProvider) {
     $urlRouterProvider.otherwise("/frontend");
 });
+
+

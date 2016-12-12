@@ -24,11 +24,10 @@
     </div>
 </nav>
 
-<div class="row">
+<div class="row" infinite-scroll="loadMoreNews()" infinite-scroll-distance="0">
     <div ng-repeat="entry in entries">
         <div class="col-md-4 col-sm-6 card-container">
             <div class="card" ng-controller="ModalDemoCtrl as $ctrl" ng-click="$ctrl.open('lg', entry)">
-                <!--a href="{{entry.url}}"-->
                 <div class="image">
                     <img nwb-src="{{entry.image}}">
                     <div class="image-overlay">
@@ -63,7 +62,6 @@
                            ng-class="{isRate: isCurrentVote(entry, false)}"></i>
                     </div>
                 </div>
-                <!--/a-->
             </div>
         </div>
     </div>
@@ -109,3 +107,5 @@
         </div>
     </script>
 </div>
+
+
