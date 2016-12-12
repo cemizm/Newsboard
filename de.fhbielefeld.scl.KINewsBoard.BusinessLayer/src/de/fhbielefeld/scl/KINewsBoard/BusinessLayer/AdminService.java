@@ -279,7 +279,7 @@ public class AdminService {
             Crawler dbC = entityManager.find(Crawler.class, cId);
 
             if (dbC == null)
-                throw new IllegalArgumentException("Gruppe '" + cId + "' nicht gefunden.");
+                throw new IllegalArgumentException("Crawler '" + cId + "' nicht gefunden.");
 
             view.addCrawler(dbC);
         }

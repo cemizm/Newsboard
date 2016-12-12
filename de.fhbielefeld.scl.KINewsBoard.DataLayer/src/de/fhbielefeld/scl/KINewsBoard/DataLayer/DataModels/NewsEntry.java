@@ -1,7 +1,12 @@
 package de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels;
 
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
+import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
 import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Parameter;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,8 +21,16 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(name = "NewsEntry.findAll", query = "select n from NewsEntry n order by n.date desc"),
         @NamedQuery(name = "NewsEntry.getNotAnalyzedNewsEntries", query = "select n from NewsEntry n left join n.analyzerResults ar on ar.analyzer.id = :analyzer where ar.newsEntry.id is null order by n.date desc"),
-        @NamedQuery(name = "NewsEntry.getNewsEntriesByViewId", query = "select n from NewsEntry n left join n.crawler c left join c.views cv where cv.id = :viewId order by n.date desc")
+        @NamedQuery(name = "NewsEntry.getNewsEntriesByViewId", query = "select n from NewsEntry n left join n.crawler c left join c.views v where v.id = :viewId order by n.date desc")
 })
+@AnalyzerDef(name = "newsanalyzer",
+        tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+        filters = {
+                @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+                @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
+                        @Parameter(name = "language", value = "German")
+                }),
+        })
 public class NewsEntry {
     private String id;
     private Crawler crawler;
@@ -43,6 +56,7 @@ public class NewsEntry {
         this.id = id;
     }
 
+    @IndexedEmbedded
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER, optional = false)
     public Crawler getCrawler() {
         return crawler;
@@ -52,8 +66,9 @@ public class NewsEntry {
         this.crawler = crawler;
     }
 
-    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     @Column(length = 1024)
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
+    @Analyzer(definition = "newsanalyzer")
     public String getTitle() {
         return title;
     }
@@ -72,6 +87,8 @@ public class NewsEntry {
     }
 
     @Column(length = 10485760, nullable = false)
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
+    @Analyzer(definition = "newsanalyzer")
     public String getContent() {
         return content;
     }
@@ -98,6 +115,8 @@ public class NewsEntry {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Field(index = Index.YES, analyze = Analyze.NO, store = Store.YES)
+    @DateBridge(resolution = Resolution.MINUTE)
     public Date getDate() {
         return date;
     }
@@ -106,6 +125,7 @@ public class NewsEntry {
         this.date = date;
     }
 
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
     public int getRating() {
         return rating;
     }

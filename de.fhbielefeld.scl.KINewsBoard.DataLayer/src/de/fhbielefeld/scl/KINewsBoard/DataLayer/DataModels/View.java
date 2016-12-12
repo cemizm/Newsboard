@@ -1,5 +1,8 @@
 package de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels;
 
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Index;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,6 +10,7 @@ import java.util.Set;
 /**
  * Created by cem on 03.11.16.
  */
+@Indexed
 @Entity
 @NamedQueries
         ({
@@ -26,6 +30,8 @@ public class View {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Field(name = "viewId", store = Store.YES, index = Index.YES)
+    @NumericField
     public int getId() {
         return id;
     }
@@ -62,6 +68,7 @@ public class View {
     }
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ContainedIn
     public Set<Crawler> getCrawlers() {
         return crawlers;
     }

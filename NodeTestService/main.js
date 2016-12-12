@@ -76,7 +76,7 @@ var analyzers = [
 sources.forEach(function (source) {
     var reader = new RSSReader();
     reader.read(source, function (item) {
-        const regex = /&#...;/g;
+        const regex = /&....;/g;
 
         var entry = source.getEntry(item);
 

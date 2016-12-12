@@ -42,12 +42,17 @@ public class NewsResource {
     @GET
     @Path("/{newsId}")
     public Response getNewsEntryDetails(
-            @NotNull @PathParam("newsId") String newsId
+            @NotNull @PathParam("newsId") String newsId,
+            @DefaultValue("0") @QueryParam("view") int viewId
     ) {
 
         NewsEntry newsEntry = newsBoardService.getNewsEntryDetails(newsId);
 
-        NewsEntryDetailVM detail = new NewsEntryDetailVM(newsEntry);
+        View view = null;
+        if(viewId != 0)
+            view = newsBoardService.getView(viewId);
+
+        NewsEntryDetailVM detail = new NewsEntryDetailVM(newsEntry, view);
 
         return Response.ok(detail).build();
     }
@@ -74,7 +79,7 @@ public class NewsResource {
 
         List<NewsEntryVM> entries = newsBoardService.getViewNewsEntries(viewId)
                 .stream()
-                .map(NewsEntryVM::new)
+                .map(n -> new NewsEntryVM(n, view))
                 .collect(Collectors.toList());
 
         ViewVM res = new ViewVM(view, entries);
