@@ -15,7 +15,7 @@
             <th>#</th>
             <th>Bezeichnung</th>
             </thead>
-            <tr ng-repeat="group in groups" ng-click="select(group)" ng-class="{active: group == active}">
+            <tr ng-repeat="group in groups" ng-click="select(group)" ng-class="{active: active ? active.id == group.id : false}">
                 <td>{{group.id}}</td>
                 <td>{{group.name}}</td>
             </tr>

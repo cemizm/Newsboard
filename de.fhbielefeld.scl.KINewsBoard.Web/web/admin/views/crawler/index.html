@@ -17,7 +17,7 @@
             <th>Status</th>
             <th>Analyzer</th>
             </thead>
-            <tr ng-repeat="crawler in crawlers" ng-click="select(crawler)" ng-class="{active: crawler == active}">
+            <tr ng-repeat="crawler in crawlers" ng-click="select(crawler)" ng-class="{active: active ? active.id == crawler.id : false}">
                 <td>{{crawler.id}}</td>
                 <td>{{crawler.name}}</td>
                 <td>{{crawler.disabled ? 'Inaktiv' : 'Aktiv'}}</td>

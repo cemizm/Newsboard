@@ -15,7 +15,7 @@
             <th>Bezeichnung</th>
             <th>Status</th>
             </thead>
-            <tr ng-repeat="analyzer in analyzers" ng-click="select(analyzer)" ng-class="{active: analyzer == active}">
+            <tr ng-repeat="analyzer in analyzers" ng-click="select(analyzer)" ng-class="{active: active ? active.id == analyzer.id : false}">
                 <td>{{analyzer.id}}</td>
                 <td>{{analyzer.name}}</td>
                 <td>{{analyzer.disabled ? 'Inaktiv' : 'Aktiv'}}</td>
