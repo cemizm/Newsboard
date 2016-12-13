@@ -3,6 +3,8 @@ package de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
 import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Index;
@@ -56,7 +58,6 @@ public class NewsEntry {
         this.id = id;
     }
 
-    @IndexedEmbedded
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER, optional = false)
     public Crawler getCrawler() {
         return crawler;
@@ -116,7 +117,7 @@ public class NewsEntry {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Field(index = Index.YES, analyze = Analyze.NO, store = Store.YES)
-    @DateBridge(resolution = Resolution.MINUTE)
+    @DateBridge(resolution = Resolution.DAY)
     public Date getDate() {
         return date;
     }
@@ -135,6 +136,7 @@ public class NewsEntry {
     }
 
     @OneToMany(mappedBy = "newsEntry", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     public Set<AnalyzerResult> getAnalyzerResults() {
         return analyzerResults;
     }

@@ -1,8 +1,5 @@
 package de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels;
 
-import org.hibernate.search.annotations.ContainedIn;
-import org.hibernate.search.annotations.IndexedEmbedded;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -75,7 +72,6 @@ public class Crawler {
     }
 
     @OneToMany(mappedBy = "crawler", cascade = {CascadeType.ALL})
-    @ContainedIn
     public Set<NewsEntry> getEntries() {
         return entries;
     }
@@ -85,7 +81,6 @@ public class Crawler {
     }
 
     @ManyToMany(mappedBy = "crawlers", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @IndexedEmbedded
     public Set<View> getViews() {
         return views;
     }
