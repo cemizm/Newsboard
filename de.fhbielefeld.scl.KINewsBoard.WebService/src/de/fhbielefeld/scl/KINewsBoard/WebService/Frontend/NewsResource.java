@@ -9,6 +9,7 @@ import de.fhbielefeld.scl.KINewsBoard.WebService.Frontend.ViewModels.NewsEntryVM
 import de.fhbielefeld.scl.KINewsBoard.WebService.Frontend.ViewModels.ViewVM;
 
 import javax.ejb.EJB;
+import javax.validation.constraints.Min;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -28,12 +29,16 @@ public class NewsResource {
 
     @GET
     public Response getPublicNewsEntries(
-            @DefaultValue("1") @QueryParam("page") int page,
-            @QueryParam("keyword") String keyword
+            @DefaultValue("1") @Min(1) @QueryParam("page") int page,
+            @QueryParam("keyword") String keyword,
+            @DefaultValue("0") @QueryParam("view") int viewId
     ) {
-        List<NewsEntryVM> res = newsBoardService.getPublicNewsEntries(page, keyword)
+
+        View view = viewId > 0 ? newsBoardService.getView(viewId) : null;
+
+        List<NewsEntryVM> res = newsBoardService.getNewsEntries(page, keyword, viewId)
                 .stream()
-                .map(NewsEntryVM::new)
+                .map(n -> new NewsEntryVM(n, view))
                 .collect(Collectors.toList());
 
         return Response.ok(res.toArray(new NewsEntryVM[0])).build();
@@ -49,7 +54,7 @@ public class NewsResource {
         NewsEntry newsEntry = newsBoardService.getNewsEntryDetails(newsId);
 
         View view = null;
-        if(viewId != 0)
+        if (viewId != 0)
             view = newsBoardService.getView(viewId);
 
         NewsEntryDetailVM detail = new NewsEntryDetailVM(newsEntry, view);
@@ -77,7 +82,7 @@ public class NewsResource {
 
         View view = newsBoardService.getView(viewId);
 
-        List<NewsEntryVM> entries = newsBoardService.getViewNewsEntries(viewId)
+        List<NewsEntryVM> entries = newsBoardService.getNewsEntries(1, null, viewId)
                 .stream()
                 .map(n -> new NewsEntryVM(n, view))
                 .collect(Collectors.toList());

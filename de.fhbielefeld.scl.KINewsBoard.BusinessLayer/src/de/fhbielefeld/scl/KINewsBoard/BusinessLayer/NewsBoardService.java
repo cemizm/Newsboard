@@ -1,11 +1,23 @@
 package de.fhbielefeld.scl.KINewsBoard.BusinessLayer;
 
 import de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels.*;
+import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.SortField;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.FullTextQuery;
+import org.hibernate.search.jpa.Search;
+import org.hibernate.search.query.dsl.BooleanJunction;
+import org.hibernate.search.query.dsl.QueryBuilder;
+import org.hibernate.sql.JoinType;
 
 import javax.ejb.Stateless;
 import javax.naming.AuthenticationException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -16,29 +28,65 @@ import java.util.Optional;
 @Stateless
 public class NewsBoardService {
 
+    private final int MAX_RESULTS = 20;
+
     @PersistenceContext(name = "NewsBoardPU")
     private EntityManager entityManager;
 
     /**
-     * Ermitellt <code>limit</code> definierten Anzahl von News Einträge die in der Web/Mobile Ansicht angezeit werden können, beginnend mit der <code>start</code> angegeben Seite.
+     * Ermitellt <code>limit</code> definierten Anzahl von News Einträge die in der Web/Mobile Ansicht angezeit
+     * werden können, beginnend mit der <code>start</code> angegeben Seite.
      *
      * @param start   Die Seite ab der die nächsten <code>limit</code> News Einträge ermitellt werden sollen.
      * @param keyword Das Keyword nach dem die News Einträge gefilter werden sollen.
      * @return Liste der News Einträge die in der Web/Mobile Ansicht angezeigt werden.
      */
-    public List<NewsEntry> getPublicNewsEntries(int start, String keyword) {
-        return entityManager.createNamedQuery("NewsEntry.findAll", NewsEntry.class).getResultList();
-    }
+    public List<NewsEntry> getNewsEntries(int start, String keyword, int viewId) {
+        FullTextEntityManager ftem = Search.getFullTextEntityManager(entityManager);
+        Session session = entityManager.unwrap(Session.class);
 
-    /**
-     * Ermitellt ab Seite <code>start</code>, die in der mit <code>viewId</code> angegeben View definierte Anzahl von News Einträge.
-     *
-     * @param viewId die Id der View zu dem die News Einträge ermitellt werden sollen.
-     * @return Liste der News Einträge die der View zugeordnet sind.
-     * @throws IllegalArgumentException wenn View mit <code>viewId</code> nicht existiert.
-     */
-    public List<NewsEntry> getViewNewsEntries(int viewId) {
-        return entityManager.createNamedQuery("NewsEntry.findAll", NewsEntry.class).getResultList();
+        QueryBuilder qb = ftem.getSearchFactory().buildQueryBuilder().forEntity(NewsEntry.class).get();
+
+        BooleanJunction bj = qb.bool();
+
+        if (keyword != null && !keyword.isEmpty())
+            bj.must(qb.keyword().onFields("title", "content").matching(keyword).createQuery());
+
+        if (bj.isEmpty())
+            bj.must(qb.all().createQuery());
+
+        FullTextQuery ftq = ftem.createFullTextQuery(bj.createQuery(), NewsEntry.class);
+
+        ftq.setSort(new Sort(new SortField("date", SortField.Type.LONG, true),
+                new SortField("rating", SortField.Type.INT, true)));
+
+        Criteria c = session.createCriteria(NewsEntry.class);
+        if (viewId > 0) {
+            c.createAlias("crawler", "crawler", JoinType.LEFT_OUTER_JOIN);
+            c.createAlias("crawler.views", "view", JoinType.LEFT_OUTER_JOIN);
+            c.add(Restrictions.eq("view.id", viewId));
+        }
+
+        //BUG: setting max results changes sort order of entities
+        // and does not work on joins (only limits the total results not the count of news entries)
+
+//        c.setMaxResults(MAX_RESULTS);
+//        c.setFirstResult(MAX_RESULTS * (start - 1));
+
+        //following has really bad perfomance, but is the last option to go
+
+        List<NewsEntry> list = ftq.setCriteriaQuery(c).getResultList();
+
+        int startIndex = MAX_RESULTS * (start - 1);
+        int endIndex = MAX_RESULTS * start;
+
+        if (list.size() <= startIndex)
+            return new ArrayList<>();
+
+        if (list.size() < endIndex)
+            endIndex = list.size();
+
+        return list.subList(startIndex, endIndex);
     }
 
     /**
@@ -61,6 +109,17 @@ public class NewsBoardService {
         newsEntry.setRating(newsEntry.getRating() + (up ? 1 : -1));
         return entityManager.merge(newsEntry);
     }
+
+    public View getView(int viewId) {
+        View view = entityManager.find(View.class, viewId);
+
+        if (view == null)
+            throw new IllegalArgumentException("View nicht gefunden!");
+
+        return view;
+    }
+
+    //region Crawler Methods
 
     /**
      * Veröffentlicht einen News Eintrag.
@@ -90,6 +149,10 @@ public class NewsBoardService {
         return newsEntry;
     }
 
+    //endregion
+
+    //region Analyzer Methods
+
     /**
      * Liefert alle noch nicht analysierten News Einträge für einen Ananlyzer.
      *
@@ -101,6 +164,7 @@ public class NewsBoardService {
 
         return entityManager.createNamedQuery("NewsEntry.getNotAnalyzedNewsEntries", NewsEntry.class)
                 .setParameter("analyzer", analyzer.getId())
+                .setMaxResults(MAX_RESULTS)
                 .getResultList();
     }
 
@@ -127,6 +191,10 @@ public class NewsBoardService {
 
         return analyzerResult;
     }
+
+    //endregion
+
+    //region Helper Methods
 
     private AnalyzerResult getAnalyzerResult(int analyzerId, String newsId) {
         Optional<AnalyzerResult> o = entityManager.createNamedQuery("AnalyzerResult.findByNewsToken", AnalyzerResult.class)
@@ -157,14 +225,7 @@ public class NewsBoardService {
         return o.get();
     }
 
-    public View getView(int viewId) {
-        View view = entityManager.find(View.class, viewId);
 
-        if (view == null)
-            throw new IllegalArgumentException("View nicht gefunden!");
-
-        return view;
-    }
-
+    //endregion
 
 }

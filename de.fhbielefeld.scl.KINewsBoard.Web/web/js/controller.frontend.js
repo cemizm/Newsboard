@@ -26,16 +26,22 @@ angular.module('nwb.frontend', ['ui.router'])
                 $scope.contentsize = 200;
 
                 $scope.updateView = function () {
-                    FrontendService.getNewsEntries($scope.page, $scope.keyword).then(function (entries) {
-                        $scope.entries = entries;
+                    FrontendService.getNewsEntries($scope.page, $scope.keyword, $stateParams.viewId).then(function (entries) {
+                        if ($scope.page == 1)
+                            $scope.entries = entries;
+                        else
+                            $scope.entries = $scope.entries.concat(entries);
                     });
+                };
+
+                $scope.search = function () {
+                    $scope.page = 1;
+                    $scope.updateView();
                 };
 
                 $scope.loadMoreNews = function () {
                     $scope.page += 1;
-                    FrontendService.getNewsEntries($scope.page, $scope.keyword).then(function (entries) {
-                        $scope.entries = $scope.entries.concat(entries);
-                    });
+                    $scope.updateView();
                 };
 
                 $scope.rate = function (entry, up) {
@@ -47,12 +53,12 @@ angular.module('nwb.frontend', ['ui.router'])
                     });
                 };
 
-                $scope.isRated = function(entry) {
+                $scope.isRated = function (entry) {
                     return localStorageService.get(entry.id) !== null;
                 };
 
-                $scope.isCurrentVote = function(entry, up) {
-                    if(!$scope.isRated(entry))
+                $scope.isCurrentVote = function (entry, up) {
+                    if (!$scope.isRated(entry))
                         return false;
 
                     return localStorageService.get(entry.id) === up;

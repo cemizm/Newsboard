@@ -136,7 +136,6 @@ public class NewsEntry {
     }
 
     @OneToMany(mappedBy = "newsEntry", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
     public Set<AnalyzerResult> getAnalyzerResults() {
         return analyzerResults;
     }

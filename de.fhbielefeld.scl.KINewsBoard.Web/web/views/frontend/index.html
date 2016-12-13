@@ -13,10 +13,10 @@
             <form class="navbar-form navbar-right">
                 <div class="search">
 
-                    <input type="text" ng-model="keyword" ng-keyup="$event.keyCode == 13 ? updateView() : null"
+                    <input type="text" ng-model="keyword" ng-keyup="$event.keyCode == 13 ? search() : null"
                            id="popover-trigger" class="ng-popover-trigger searchbox">
                     </input>
-                    <span ng-click="updateView()" class="fa fa-search"></span>
+                    <span ng-click="search()" class="fa fa-search"></span>
 
                 </div>
             </form>

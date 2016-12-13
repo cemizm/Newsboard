@@ -3,12 +3,13 @@ angular.module('nwb')
         var api = "/WebService/frontend/";
         var service = {};
 
-        service.getNewsEntries = function (page, keyword) {
+        service.getNewsEntries = function (page, keyword, view) {
 
             return $http.get(api + "news", {
                 params: {
                     page: page,
-                    keyword: keyword
+                    keyword: keyword,
+                    view: view
                 }
             }).then(function (response) {
                 return response.data;
