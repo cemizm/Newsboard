@@ -24,17 +24,16 @@ angular.module('nwb.frontend', ['ui.router'])
                 $scope.page = 1;
                 $scope.keyword = "";
                 $scope.contentsize = 200;
+                $scope.entries = [];
 
                 $scope.updateView = function () {
                     FrontendService.getNewsEntries($scope.page, $scope.keyword, $stateParams.viewId).then(function (entries) {
-                        if ($scope.page == 1)
-                            $scope.entries = entries;
-                        else
-                            $scope.entries = $scope.entries.concat(entries);
+                        $scope.entries = $scope.entries.concat(entries);
                     });
                 };
 
                 $scope.search = function () {
+                    $scope.entries = [];
                     $scope.page = 1;
                     $scope.updateView();
                 };
