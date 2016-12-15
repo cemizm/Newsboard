@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * Created by cem on 08.12.16.
+ * Die Klasse <i>LuceneStartupService</i> startet den initialen Indizierungsvorgang.
  */
 @Singleton
 @Startup
@@ -19,6 +19,9 @@ public class LuceneStartupService {
     @PersistenceContext(name = "NewsBoardPU")
     private EntityManager em;
 
+    /**
+     * Initialisiert den Indizierungsvorgang.
+     */
     @PostConstruct
     public void initialize() {
         System.out.println("--------------------------> Service Starting");
@@ -29,7 +32,6 @@ public class LuceneStartupService {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
 
         System.out.println("<-------------------------- Service Started");
     }

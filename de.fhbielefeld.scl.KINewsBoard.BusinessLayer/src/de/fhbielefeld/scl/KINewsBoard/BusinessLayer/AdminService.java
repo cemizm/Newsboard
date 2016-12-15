@@ -11,25 +11,40 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Created by azad- on 17.11.2016.
+ * Die Klasse <i>AdminService</i> dient dem Abruf, dem Erstellen, dem Aktualisieren und dem Löschen von Daten aus dem DataLayer.
  */
 @Stateless
 public class AdminService {
-
 
     @PersistenceContext(name = "NewsBoardPU")
     private EntityManager entityManager;
 
     //region Analyzer
 
+    /**
+     * Ruft einen Analyzer mit entsprechender Id ab.
+     *
+     * @param id Id des Analyzers, der abgerufen werden soll
+     * @return Ein Analyzer mit der entsprechenden Id, sonst <i>null</i>
+     */
     public Analyzer getAnalyzer(int id) {
         return entityManager.find(Analyzer.class, id);
     }
 
+    /**
+     * Ruft alle vorhandenen Analyzer ab.
+     *
+     * @return Liste aller gefundenen Analyzer
+     */
     public List<Analyzer> getAllAnalyzer() {
         return entityManager.createNamedQuery("Analyzer.findAll", Analyzer.class).getResultList();
     }
 
+    /**
+     * Erstellt einen neuen Analyzer.
+     *
+     * @param analyzer Der zu erstellende Analyzer
+     */
     public void createAnalyzer(Analyzer analyzer) {
         checkAnalyzer(analyzer);
 
@@ -41,6 +56,12 @@ public class AdminService {
         entityManager.persist(analyzer);
     }
 
+    /**
+     * Aktualisiert einen vorhandenen Analyzer.
+     *
+     * @param analyzer Der zu aktualisierende Analyzer
+     * @return Der aktualisierte Analyzer
+     */
     public Analyzer updateAnalyzer(Analyzer analyzer) {
         checkAnalyzer(analyzer);
 
@@ -48,7 +69,6 @@ public class AdminService {
 
         if (dbAnalyzer == null)
             throw new IllegalArgumentException("Analyzer mit Id '" + analyzer.getId() + "' ist nicht vorhanden!");
-
 
         List<Integer> groups = analyzer.getGroupSets().stream().map(GroupSet::getId).collect(Collectors.toList());
         analyzer.setGroupSets(new HashSet<>());
@@ -62,11 +82,21 @@ public class AdminService {
         return entityManager.merge(analyzer);
     }
 
+    /**
+     * Löscht einen Analyzer mit entsprechender Id.
+     *
+     * @param id Die Id des Analyzers, der gelöscht werden soll
+     */
     public void deleteAnalyzer(int id) {
         Analyzer analyzer = getAnalyzer(id);
         deleteAnalyzer(analyzer);
     }
 
+    /**
+     * Löscht einen vorhandenen Analyzer.
+     *
+     * @param analyzer Der zu löschende Analyzer
+     */
     public void deleteAnalyzer(Analyzer analyzer) {
         if (analyzer == null)
             throw new IllegalArgumentException("Parameter analyzer darf nicht null sein");
@@ -113,10 +143,21 @@ public class AdminService {
 
     //region AnalyzerResult
 
+    /**
+     * Ruft alle vorhandenen Analyseergebnisse ab.
+     *
+     * @return Liste aller gefundenen Analyseergebnissen
+     */
     public List<AnalyzerResult> getAllAnalyzerResult() {
         return entityManager.createNamedQuery("AnalyzerResult.findAll", AnalyzerResult.class).getResultList();
     }
 
+    /**
+     * Aktualisiert ein vorhandenes Analyseergebnis.
+     *
+     * @param analyzerResult Das zu aktualisierende Analyseergebnis
+     * @return Das aktualisierte Analyseergebnis
+     */
     public AnalyzerResult updateAnalyzerResult(AnalyzerResult analyzerResult) {
         if (analyzerResult == null)
             throw new IllegalArgumentException("Parameter analyzerResult darf nicht null sein");
@@ -124,6 +165,11 @@ public class AdminService {
         return entityManager.merge(analyzerResult);
     }
 
+    /**
+     * Erstellt ein neues Analyseergebnis.
+     *
+     * @param analyzerResult Das zu erstellende Analyseergebnis
+     */
     public void createAnalyzerResult(AnalyzerResult analyzerResult) {
         if (analyzerResult == null)
             throw new IllegalArgumentException("Parameter analyzerResult darf nicht null sein");
@@ -131,6 +177,11 @@ public class AdminService {
         entityManager.persist(analyzerResult);
     }
 
+    /**
+     * Löscht ein vorhandenes Analyseergebnis.
+     *
+     * @param analyzerResult Das zu löschende Analyseergebnis.
+     */
     public void deleteAnalyzerResult(AnalyzerResult analyzerResult) {
         if (analyzerResult == null)
             throw new IllegalArgumentException("Parameter analyzerResult darf nicht null sein");
@@ -142,31 +193,63 @@ public class AdminService {
 
     //region Crawler
 
+    /**
+     * Ruft einen Crawler mit der entsprechenden Id ab.
+     *
+     * @param id Die Id des Crawlers, der abgerufen werden soll
+     * @return Der gefundene Crawler mit entsprechender Id
+     */
     public Crawler getCrawler(int id) {
         return entityManager.find(Crawler.class, id);
     }
 
+    /**
+     * Ruft alle vorhandenen Crawler ab.
+     *
+     * @return Liste aller gefundenen Crawler
+     */
     public List<Crawler> getAllCrawler() {
         return entityManager.createNamedQuery("Crawler.findAll", Crawler.class).getResultList();
     }
 
+    /**
+     * Erstellt einen neuen Crawler.
+     *
+     * @param crawler Der zu erstellende Crawler
+     */
     public void createCrawler(Crawler crawler) {
         checkCrawler(crawler);
 
         entityManager.persist(crawler);
     }
 
+    /**
+     * Aktualisiert einen vorhandenen Crawler.
+     *
+     * @param crawler Der zu aktualisierende Crawler
+     * @return Der aktualisierte Crawler
+     */
     public Crawler updateCrawler(Crawler crawler) {
         checkCrawler(crawler);
 
         return entityManager.merge(crawler);
     }
 
+    /**
+     * Löscht einen Crawler mit entsprechender Id.
+     *
+     * @param id Id des zu löschenden Crawlers
+     */
     public void deleteCrawler(int id) {
         Crawler crawler = getCrawler(id);
         deleteCrawler(crawler);
     }
 
+    /**
+     * Löscht einen vorhandenen Crawler.
+     *
+     * @param crawler Der zu löschende Crawler
+     */
     public void deleteCrawler(Crawler crawler) {
         if (crawler == null)
             throw new IllegalArgumentException("Parameter crawler darf nicht null sein");
@@ -202,14 +285,30 @@ public class AdminService {
 
     //region View
 
+    /**
+     * Ruft eine Ansicht mit entsprechender Id ab.
+     *
+     * @param id Die Id der Ansicht, die abgerufen werden soll
+     * @return Die Ansicht mit entsprechender Id, sonst <i>null</i>
+     */
     public View getView(int id) {
         return entityManager.find(View.class, id);
     }
 
+    /**
+     * Ruft alle vorhandenen Ansichten ab.
+     *
+     * @return Liste aller gefundenen Ansichten
+     */
     public List<View> getAllView() {
         return entityManager.createNamedQuery("View.findAll", View.class).getResultList();
     }
 
+    /**
+     * Erstellt eine neue Ansicht.
+     *
+     * @param view Die zu erstellende Ansicht
+     */
     public void createView(View view) {
         if (view == null)
             throw new IllegalArgumentException("Parameter view darf nicht null sein");
@@ -225,6 +324,12 @@ public class AdminService {
         entityManager.persist(view);
     }
 
+    /**
+     * Aktualisiert eine vorhandene Ansicht.
+     *
+     * @param view Die zu aktualisierende Ansicht
+     * @return Die aktualisierte Ansicht
+     */
     public View updateView(View view) {
         if (view == null)
             throw new IllegalArgumentException("Parameter view darf nicht null sein");
@@ -250,11 +355,21 @@ public class AdminService {
         return entityManager.merge(view);
     }
 
+    /**
+     * Löscht eine Ansicht anhand einer Id.
+     *
+     * @param id Die Id der zu löschenden Ansicht
+     */
     public void deleteView(int id) {
         View view = getView(id);
         deleteView(view);
     }
 
+    /**
+     * Löscht eine vorhandene Ansicht.
+     *
+     * @param view Die zu löschende Ansicht
+     */
     public void deleteView(View view) {
         if (view == null)
             throw new IllegalArgumentException("Parameter view darf nicht null sein");
@@ -289,14 +404,30 @@ public class AdminService {
 
     //region Group
 
+    /**
+     * Ruft eine Gruppe anhand der Id ab.
+     *
+     * @param id Die Id der Gruppe, die abgeruft werden soll
+     * @return Die Gruppe mit der entsprechenden Id
+     */
     public GroupSet getGroupSet(int id) {
         return entityManager.find(GroupSet.class, id);
     }
 
+    /**
+     * Ruft alle vorhandenen Gruppen ab.
+     *
+     * @return Liste aller gefundenen Gruppen
+     */
     public List<GroupSet> getAllGroupSets() {
         return entityManager.createNamedQuery("GroupSet.findAll", GroupSet.class).getResultList();
     }
 
+    /**
+     * Erstellt eine neue Gruppe.
+     *
+     * @param groupSet Die zu erstellende Gruppe
+     */
     public void createGroupSet(GroupSet groupSet) {
         if (groupSet == null)
             throw new IllegalArgumentException("Parameter groupSet darf nicht null sein");
@@ -304,6 +435,12 @@ public class AdminService {
         entityManager.persist(groupSet);
     }
 
+    /**
+     * Aktualisiert eine bestehende Gruppe.
+     *
+     * @param groupSet Die zu aktualisierende Gruppe
+     * @return Die aktualisierte Gruppe
+     */
     public GroupSet updateGroupSet(GroupSet groupSet) {
         if (groupSet == null)
             throw new IllegalArgumentException("Parameter groupSet darf nicht null sein");
@@ -311,11 +448,21 @@ public class AdminService {
         return entityManager.merge(groupSet);
     }
 
+    /**
+     * Löscht eine Gruppe anhand der Id.
+     *
+     * @param id Die Id der zu löschenden Gruppe
+     */
     public void deleteGroupSet(int id) {
         GroupSet groupSet = getGroupSet(id);
         deleteGroupSet(groupSet);
     }
 
+    /**
+     * Löscht eine vorhandene Gruppe.
+     *
+     * @param groupSet Die zu löschende Gruppe
+     */
     public void deleteGroupSet(GroupSet groupSet) {
         if (groupSet == null)
             throw new IllegalArgumentException("Parameter groupSet darf nicht null sein");
@@ -331,6 +478,12 @@ public class AdminService {
 
     //region NewsEntry
 
+    /**
+     * Ruft einen Nachrichteneintrag anhand der Id ab.
+     *
+     * @param id Die Id des Nachrichteneintrags, der abgeruft werden soll
+     * @return Nachrichteneintrag mit entsprechender Id, sonst <i>null</i>
+     */
     public NewsEntry getNewsEntry(String id) {
         if (id == null || id.isEmpty())
             throw new IllegalArgumentException("Parameter id darf nicht null oder leer sein");
@@ -338,10 +491,20 @@ public class AdminService {
         return entityManager.find(NewsEntry.class, id);
     }
 
+    /**
+     * Ruft alle vorhandenen Nachrichteneinträge ab.
+     *
+     * @return Alle gefundenen Nachrichteneinträge
+     */
     public List<NewsEntry> getAllNewsEntry() {
         return entityManager.createNamedQuery("NewsEntry.findAll", NewsEntry.class).getResultList();
     }
 
+    /**
+     * Erstellt einen neuen Nachrichteneintrag.
+     *
+     * @param newsEntry Der zu erstellende Nachrichteneintrag
+     */
     public void createNewsEntry(NewsEntry newsEntry) {
         if (newsEntry == null)
             throw new IllegalArgumentException("Parameter newsEntry darf nicht null sein");
@@ -349,6 +512,12 @@ public class AdminService {
         entityManager.persist(newsEntry);
     }
 
+    /**
+     * Aktualisiert einen bestehenden Nachrichteneintrag.
+     *
+     * @param newsEntry Der zu aktualisierende Nachrichteneintrag
+     * @return Der aktualisierte Nachrichteneintrag
+     */
     public NewsEntry updateNewsEntry(NewsEntry newsEntry) {
         if (newsEntry == null)
             throw new IllegalArgumentException("Parameter newsEntry darf nicht null sein");
@@ -356,6 +525,11 @@ public class AdminService {
         return entityManager.merge(newsEntry);
     }
 
+    /**
+     * Löscht einen Nachrichteneintrag anhand der Id.
+     *
+     * @param id Die Id des zu löschenden Nachrichteneintrages
+     */
     public void deleteNewsEntry(String id) {
         if (id == null || id.isEmpty())
             throw new IllegalArgumentException("Parameter id darf nicht null oder leer sein");
@@ -364,6 +538,11 @@ public class AdminService {
         deleteNewsEntry(entry);
     }
 
+    /**
+     * Löscht einen vorhandenen Nachrichteneintrag.
+     *
+     * @param newsEntry Der zu löschende Nachrichteneintrag
+     */
     public void deleteNewsEntry(NewsEntry newsEntry) {
         if (newsEntry == null)
             throw new IllegalArgumentException("Parameter newsEntry darf nicht null sein");

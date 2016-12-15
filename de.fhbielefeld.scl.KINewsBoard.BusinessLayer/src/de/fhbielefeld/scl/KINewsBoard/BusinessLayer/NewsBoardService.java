@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Klasse für den Zugriff auf die Daten in der News Board Datenbank.
+ * Die Klasse <i>NewsBoardService</i> dient dem Zugriff auf die Daten in der NewsBoard-Datenbank.
  */
 @Stateless
 public class NewsBoardService {
@@ -34,12 +34,13 @@ public class NewsBoardService {
     private EntityManager entityManager;
 
     /**
-     * Ermitellt <code>limit</code> definierten Anzahl von News Einträge die in der Web/Mobile Ansicht angezeit
-     * werden können, beginnend mit der <code>start</code> angegeben Seite.
+     * Ermitellt, beginnend mit der in <i>start</i> angegebenen Seite, die nächsten 20 Nachrichteneinträgen, die in der Web-/Mobile-Ansicht angezeigt
+     * werden können.
      *
-     * @param start   Die Seite ab der die nächsten <code>limit</code> News Einträge ermitellt werden sollen.
-     * @param keyword Das Keyword nach dem die News Einträge gefilter werden sollen.
-     * @return Liste der News Einträge die in der Web/Mobile Ansicht angezeigt werden.
+     * @param start   Die Seite, ab der die nächsten 20 Nachrichteneinträge ermitellt werden sollen
+     * @param keyword Das Schlüsselwort, nach dem die Nachrichteneinträge gefiltert werden sollen
+     * @param viewId  Die Ansicht, in der die Nachrichteneinträge gezeigt werden sollen
+     * @return Liste der Nachrichteneinträge, die in der Web-/Mobile-Ansicht angezeigt werden
      */
     public List<NewsEntry> getNewsEntries(int start, String keyword, int viewId) {
         FullTextEntityManager ftem = Search.getFullTextEntityManager(entityManager);
@@ -91,10 +92,10 @@ public class NewsBoardService {
     }
 
     /**
-     * Lädt die Details zu der angebgen News Id.
+     * Lädt die Details einer Nachricht anhand der angegebenen Id.
      *
-     * @param newsId Die Id der News dessen Details geladen werden sollen.
-     * @return Die Detail Ansicht zu der News.
+     * @param newsId Die Id der Nachricht, dessen Details geladen werden sollen
+     * @return Die Details zu der Nachricht
      */
     public NewsEntry getNewsEntryDetails(String newsId) {
         NewsEntry entry = entityManager.find(NewsEntry.class, newsId);
@@ -105,12 +106,25 @@ public class NewsBoardService {
         return entry;
     }
 
+    /**
+     * Bewertet einen Nachrichteneintrag anhand der angegebenen Id.
+     *
+     * @param newsEntryId Die Id des Nachrichteneintrages, der bewertet werden soll
+     * @param up          <i>true</i>, wenn der nachrichteneintrag positiv bewertet werden soll
+     * @return Die bewertete Nachricht
+     */
     public NewsEntry rateNewsEntry(String newsEntryId, boolean up) {
         NewsEntry newsEntry = getNewsEntryDetails(newsEntryId);
         newsEntry.setRating(newsEntry.getRating() + (up ? 1 : -1));
         return entityManager.merge(newsEntry);
     }
 
+    /**
+     * Ruft die Ansicht anhand der angegebenen Id ab.
+     *
+     * @param viewId Die Id der Ansicht, die abgeruft werden soll
+     * @return Eine Ansicht mit der angegebenen Id
+     */
     public View getView(int viewId) {
         View view = entityManager.find(View.class, viewId);
 
@@ -123,11 +137,12 @@ public class NewsBoardService {
     //region Crawler Methods
 
     /**
-     * Veröffentlicht einen News Eintrag.
+     * Veröffentlicht einen Nachrichteneintrag.
      *
-     * @param token     Der Authentifizierungs-Token für einen Crawler.
-     * @param newsEntry Der News Eintrag der veröffentlicht werden soll.
-     * @return Der veröffentlichte News Eintrag
+     * @param token     Der Authentifizierungstoken für einen Crawler
+     * @param newsEntry Der Nachrichteneintrag, der veröffentlicht werden soll
+     * @return Der veröffentlichte Nachrichteneintrag
+     * @throws AuthenticationException Wenn der Authentifizierungstoken des Crawlers nicht gültig ist
      */
     public NewsEntry publishNewsEntry(String token, NewsEntry newsEntry) throws AuthenticationException {
         Crawler crawler = getCrawlerByToken(token);
@@ -155,10 +170,11 @@ public class NewsBoardService {
     //region Analyzer Methods
 
     /**
-     * Liefert alle noch nicht analysierten News Einträge für einen Ananlyzer.
+     * Liefert alle noch nicht analysierten Nachrichteneinträge für einen Analyzer.
      *
-     * @param token der Auth-Token für einen AnalyzerModel.
-     * @return Liste der News Einträge.
+     * @param token Der Authentifizierungstoken für einen AnalyzerModel
+     * @return Liste der Nachrichteneinträge
+     * @throws AuthenticationException Wenn der Authentifizierungstoken des Analyzers ungültig ist
      */
     public List<NewsEntry> getAnalyzerNewsEntries(String token) throws AuthenticationException {
         Analyzer analyzer = getAnalyzerByToken(token);
@@ -170,11 +186,13 @@ public class NewsBoardService {
     }
 
     /**
-     * Veröffentlicht ein Analyse Ergebnis zu einem News Eintrag.
+     * Veröffentlicht ein Analyseergebnis zu einem Nachrichteneintrag.
      *
-     * @param token          der Auth-Token für einen AnalyzerModel.
-     * @param analyzerResult das Analyse Ergebnis.
-     * @return Das veröffentlichte Analyse Ergebnis.
+     * @param token          Der Authentifizierungstoken für einen AnalyzerModel.
+     * @param newsId         Die Id zu einem Nachrichteneintrag
+     * @param analyzerResult Das Analyseergebnis
+     * @return Das veröffentlichte Analyseergebnis.
+     * @throws AuthenticationException Wenn der Authentifizierungstoken des Analyzers ungültig ist
      */
     public AnalyzerResult publishAnalyzerResult(String token, String newsId, AnalyzerResult analyzerResult) throws AuthenticationException {
 
@@ -225,7 +243,6 @@ public class NewsBoardService {
 
         return o.get();
     }
-
 
     //endregion
 

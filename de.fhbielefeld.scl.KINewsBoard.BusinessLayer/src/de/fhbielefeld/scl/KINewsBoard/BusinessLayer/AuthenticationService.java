@@ -13,15 +13,18 @@ import java.io.StringReader;
 import java.util.Hashtable;
 
 /**
- * Created by cem on 01.12.16.
+ * Die Klasse <i>AuthenticationService</i> dient der Authentifizierung im System.
  */
 @Singleton
 public class AuthenticationService {
 
     private Hashtable<String, User> users = new Hashtable<>();
 
+    /**
+     * Initialisiert den Authenfizierungsservice.
+     */
     @PostConstruct
-    public void init(){
+    public void init() {
         User user = new User();
         user.setAuthtoken("f1ac2c84a417f043c08af24e25c232b1");
         user.setUsername("hwurst");
@@ -35,6 +38,13 @@ public class AuthenticationService {
         users.put(user.getAuthtoken(), user);
     }
 
+    /**
+     * Meldet den Benutzer anhand Benutzername und Passwort an.
+     *
+     * @param username Der Benutzername des Benuters, der angemeldet werden soll
+     * @param password Das Passwort des Benutzers, der angemeldet werden soll
+     * @return Der angemeldete Benutzer
+     */
     public User login(String username, String password) {
         if (username == null || username.isEmpty())
             throw new IllegalArgumentException("Parameter 'user' darf nicht null oder leer sein!");
@@ -43,7 +53,6 @@ public class AuthenticationService {
             throw new IllegalArgumentException("Parameter 'password' darf nicht null oder leer sein!");
 
         username = username.replaceAll("@[\\w.\\-]+\\.\\w+", "");
-
 
         UserWebService_Service svc = new UserWebService_Service();
         UserWebService s = svc.getUserWebServicePort();
@@ -77,10 +86,21 @@ public class AuthenticationService {
         return user;
     }
 
+    /**
+     * Meldet einen Benutzer anhand des Authentifizierungstoken ab.
+     *
+     * @param token Der Token zur Authentifizierung
+     */
     public void logout(String token) {
         users.remove(token);
     }
 
+    /**
+     * Ruft den Benutzer anhand des Authentifizierungstoken ab.
+     *
+     * @param token Der Token zur Authentifizierung
+     * @return Der Benutzer mit dem entsprechenden Authentifizierungstoken
+     */
     public User getUser(String token) {
         return users.get(token);
     }
