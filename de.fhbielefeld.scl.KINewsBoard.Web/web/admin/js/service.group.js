@@ -1,6 +1,6 @@
 angular.module('nwbadmin')
     .factory('GroupSetService', ['$http', '$q', function ($http, $q) {
-        var api = "/WebService/backend/group/"
+        var api = "../../WebService/backend/group/"
         var service = {};
 
         service.getAll = function () {

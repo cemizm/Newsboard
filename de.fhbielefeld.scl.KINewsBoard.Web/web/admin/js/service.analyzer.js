@@ -1,6 +1,6 @@
 angular.module('nwbadmin')
     .factory('AnalyzerService', ['$http', '$q', function ($http, $q) {
-        var api = "/WebService/backend/analyzer/"
+        var api = "../../WebService/backend/analyzer/"
         var service = {};
 
         service.getAll = function () {
