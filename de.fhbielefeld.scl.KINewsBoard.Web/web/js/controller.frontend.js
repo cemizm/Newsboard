@@ -30,6 +30,7 @@ angular.module('nwb.frontend', ['ui.router'])
 
                 $scope.updateView = function () {
                     $scope.isLoading = true;
+                    ngPopoverFactory.closeAll();
 
                     FrontendService.getNewsEntries($scope.page, $scope.keyword, $stateParams.viewId).then(function (entries) {
                         $scope.entries = $scope.entries.concat(entries);
@@ -39,7 +40,6 @@ angular.module('nwb.frontend', ['ui.router'])
                 };
 
                 $scope.search = function () {
-                    ngPopoverFactory.closeAll();
                     $scope.entries = [];
                     $scope.page = 1;
                     $scope.moreEntries = true;

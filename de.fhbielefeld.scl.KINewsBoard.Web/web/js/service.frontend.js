@@ -5,15 +5,16 @@ angular.module('nwb')
 
         service.getNewsEntries = function (page, keyword, view) {
 
-            return $http.get(api + "news", {
-                params: {
-                    page: page,
-                    keyword: keyword,
-                    view: view
-                }
-            }).then(function (response) {
-                return response.data;
-            });
+            var params = {};
+
+            if (page) params.page = page;
+            if (keyword) params.keyword = keyword;
+            if (view) params.view = view;
+
+            return $http.get(api + "news", {params: params})
+                .then(function (response) {
+                    return response.data;
+                });
         };
 
         service.getNewsEntriesByViewId = function (viewId) {
@@ -24,8 +25,13 @@ angular.module('nwb')
             });
         };
 
-        service.getNewsEntryDetails = function (newsId) {
-            return $http.get(api + "news/" + newsId).then(function (response) {
+        service.getNewsEntryDetails = function (newsId, viewId) {
+
+            var params = {};
+
+            if (viewId) params.view = viewId;
+
+            return $http.get(api + "news/" + newsId, {params: params}).then(function (response) {
                 return response.data;
             });
         };
