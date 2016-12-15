@@ -1,51 +1,55 @@
-<div class="row public">
-    <div class="col-md-6">
-        <slick class="slider" settings="slickConfig">
-            <div class="slide shadow" ng-repeat="entry in view.newsEntries">
-                <div class="col-md-3 image">
-                    <img nwb-src="{{entry.image}}">
+<div class="container-fluid">
+    <div class="row public">
+        <div class="col-md-6">
+            <slick class="slider" settings="slickConfig">
+                <div class="slide shadow" ng-repeat="entry in view.newsEntries">
+                    <div class="col-md-3 image">
+                        <img nwb-src="{{entry.image}}">
+                    </div>
+                    <div class="col-md-9 content">
+                        <h4>{{entry.title}}</h4>
+                        <p>{{entry.content}}</p>
+                    </div>
                 </div>
-                <div class="col-md-9 content">
-                    <h4>{{entry.title}}</h4>
-                    <p>{{entry.content}}</p>
-                </div>
-            </div>
-        </slick>
-    </div>
-    <div class="col-md-6">
-        <div class="header shadow" class="col-md-12">
-            <div class="col-md-9">
-                <h4>{{view.name}}</h4>
-                <p>{{view.description}}</p>
-                <uib-progressbar class="progress-striped active" value="remaining" type="info"></uib-progressbar>
-            </div>
-            <div class="col-md-3" style="padding: 0px;">
-                <qrcode version="4" error-correction-level="M" size="160" class="pull-right" data="{{ getViewUrl(); }}"></qrcode>
-            </div>
+            </slick>
         </div>
-        <div class="pane shadow" class="col-md-12">
-            <div class="image">
-                <img nwb-src="{{view.newsEntries[currentIndex].image}}">
-                <div class="image-overlay">
-                    <p class="meta">{{view.newsEntries[currentIndex].source}} @ {{view.newsEntries[currentIndex].date |
-                        date:'dd.MM.yyyy HH:mm'}}</p>
-                    <h4>{{view.newsEntries[currentIndex].title}}</h4>
+        <div class="col-md-6">
+            <div class="header shadow" class="col-md-12">
+                <div class="col-md-9">
+                    <h4>{{view.name}}</h4>
+                    <p>{{view.description}}</p>
+                    <uib-progressbar class="progress-striped active" value="remaining" type="info"></uib-progressbar>
+                </div>
+                <div class="col-md-3" style="padding: 0px;">
+                    <qrcode version="4" error-correction-level="M" size="160" class="pull-right"
+                            data="{{ getViewUrl(); }}"></qrcode>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 progress-container">
-                    <uib-progressbar class="progress-rtl"
-                                     value="view.newsEntries[currentIndex].analyzerResult > 0 ? 0 :view.newsEntries[currentIndex].analyzerResult * -1"
-                                     type="danger"></uib-progressbar>
+            <div class="pane shadow" class="col-md-12">
+                <div class="image">
+                    <img nwb-src="{{view.newsEntries[currentIndex].image}}">
+                    <div class="image-overlay">
+                        <p class="meta">{{view.newsEntries[currentIndex].source}} @
+                            {{view.newsEntries[currentIndex].date |
+                            date:'dd.MM.yyyy HH:mm'}}</p>
+                        <h4>{{view.newsEntries[currentIndex].title}}</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 progress-container">
+                        <uib-progressbar class="progress-rtl"
+                                         value="view.newsEntries[currentIndex].analyzerResult > 0 ? 0 :view.newsEntries[currentIndex].analyzerResult * -1"
+                                         type="danger"></uib-progressbar>
 
+                    </div>
+                    <div class="col-md-6 progress-container">
+                        <uib-progressbar
+                                value="view.newsEntries[currentIndex].analyzerResult < 0 ? 0 :view.newsEntries[currentIndex].analyzerResult"
+                                type="success"></uib-progressbar>
+                    </div>
                 </div>
-                <div class="col-md-6 progress-container">
-                    <uib-progressbar
-                            value="view.newsEntries[currentIndex].analyzerResult < 0 ? 0 :view.newsEntries[currentIndex].analyzerResult"
-                            type="success"></uib-progressbar>
-                </div>
+                <p>{{view.newsEntries[currentIndex].content}}</p>
             </div>
-            <p>{{view.newsEntries[currentIndex].content}}</p>
         </div>
     </div>
 </div>

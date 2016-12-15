@@ -6,7 +6,7 @@ var app = angular.module('nwb', [
     'ngPopover',
     'monospaced.qrcode',
     'LocalStorageModule',
-    'infinite-scroll',
+    'angular-inview',
     'nwb.frontend',
     'nwb.public',
     'nwb.placeholder'

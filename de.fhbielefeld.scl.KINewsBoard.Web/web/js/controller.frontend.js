@@ -18,27 +18,38 @@ angular.module('nwb.frontend', ['ui.router'])
 
     }])
     .controller('FrontendViewController',
-        ['$scope', '$location', '$stateParams', 'FrontendService', 'localStorageService',
-            function ($scope, $location, $stateParams, FrontendService, localStorageService, spinnerService) {
+        ['$scope', '$location', '$stateParams', 'FrontendService', 'localStorageService', 'ngPopoverFactory',
+            function ($scope, $location, $stateParams, FrontendService, localStorageService, ngPopoverFactory) {
 
                 $scope.page = 1;
                 $scope.keyword = "";
                 $scope.contentsize = 200;
+                $scope.isLoading = true;
+                $scope.moreEntries = true;
                 $scope.entries = [];
 
                 $scope.updateView = function () {
+                    $scope.isLoading = true;
+
                     FrontendService.getNewsEntries($scope.page, $scope.keyword, $stateParams.viewId).then(function (entries) {
                         $scope.entries = $scope.entries.concat(entries);
+                        $scope.isLoading = false;
+                        $scope.moreEntries = entries != null && entries.length > 0;
                     });
                 };
 
                 $scope.search = function () {
+                    ngPopoverFactory.closeAll();
                     $scope.entries = [];
                     $scope.page = 1;
+                    $scope.moreEntries = true;
                     $scope.updateView();
                 };
 
                 $scope.loadMoreNews = function () {
+                    if(!$scope.moreEntries || $scope.isLoading)
+                        return;
+
                     $scope.page += 1;
                     $scope.updateView();
                 };
