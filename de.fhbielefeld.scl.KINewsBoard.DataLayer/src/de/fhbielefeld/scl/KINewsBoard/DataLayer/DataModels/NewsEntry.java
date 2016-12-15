@@ -3,8 +3,6 @@ package de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
 import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Index;
@@ -117,6 +115,7 @@ public class NewsEntry {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Field(index = Index.YES, analyze = Analyze.NO, store = Store.YES)
+    @SortableField
     @DateBridge(resolution = Resolution.DAY)
     public Date getDate() {
         return date;
@@ -126,7 +125,8 @@ public class NewsEntry {
         this.date = date;
     }
 
-    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
+    @Field(index = Index.YES, analyze = Analyze.NO, store = Store.YES)
+    @SortableField
     public int getRating() {
         return rating;
     }

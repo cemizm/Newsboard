@@ -58,7 +58,8 @@ public class NewsBoardService {
         FullTextQuery ftq = ftem.createFullTextQuery(bj.createQuery(), NewsEntry.class);
 
         ftq.setSort(new Sort(new SortField("date", SortField.Type.LONG, true),
-                new SortField("rating", SortField.Type.INT, true)));
+                new SortField("rating", SortField.Type.INT, true),
+                SortField.FIELD_SCORE));
 
         Criteria c = session.createCriteria(NewsEntry.class);
         if (viewId > 0) {
@@ -68,12 +69,12 @@ public class NewsBoardService {
         }
 
         //BUG: setting max results changes sort order of entities
-        // and does not work on joins (only limits the total results not the count of news entries)
+        //and does not work on joins (only limits the total results not the count of news entries)
 
-//        c.setMaxResults(MAX_RESULTS);
-//        c.setFirstResult(MAX_RESULTS * (start - 1));
+        //c.setMaxResults(MAX_RESULTS);
+        //c.setFirstResult(MAX_RESULTS * (start - 1));
 
-        //following has really bad perfomance, but is the last option to go
+        //following has really bad performance, but is the last option to go
 
         List<NewsEntry> list = ftq.setCriteriaQuery(c).getResultList();
 
