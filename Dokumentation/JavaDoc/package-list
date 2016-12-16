@@ -1,8 +1,0 @@
-de.fhbielefeld.scl.KINewsBoard.BusinessLayer
-de.fhbielefeld.scl.KINewsBoard.BusinessLayer.Models
-de.fhbielefeld.scl.KINewsBoard.DataLayer
-de.fhbielefeld.scl.KINewsBoard.DataLayer.DataModels
-de.fhbielefeld.scl.KINewsBoard.WebService.Analyzer
-de.fhbielefeld.scl.KINewsBoard.WebService.Backend
-de.fhbielefeld.scl.KINewsBoard.WebService.Crawler
-de.fhbielefeld.scl.KINewsBoard.WebService.Frontend
