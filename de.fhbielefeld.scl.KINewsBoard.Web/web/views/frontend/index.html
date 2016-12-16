@@ -12,16 +12,28 @@
 
         <div class="collapse navbar-collapse" uib-collapse="menuCol">
             <form class="navbar-form navbar-right">
-                <div class="search">
-                    <div class="input-group col-md-12">
-                        <input type="text" class="form-control ng-popover-trigger" placeholder="Suchen..."
-                               ng-model="keyword" ng-keyup="$event.keyCode == 13 ? search() : null"
-                               id="popover-trigger" style="height: 28px;">
-                        <span class="input-group-btn">
-                            <button class="btn" type="button" ng-click="search()" style="">
-                                <i class="glyphicon glyphicon-search"></i>
-                            </button>
-                        </span>
+                <div class="col-md-12">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Suchen..."
+                               ng-model="keyword" ng-keyup="$event.keyCode == 13 ? search() : null">
+                        <div class="input-group-btn">
+                            <div class="btn-group" style="height: 100%"><!--uib-dropdown>-->
+                                <button class="btn" type="button" ng-click="search()" style="height: 100%">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                                <!--<button type="button" class="btn btn-info" uib-dropdown-toggle>-->
+                                    <!--<span class="caret"></span>-->
+                                <!--</button>-->
+                                <!--<ul class="dropdown-menu" uib-dropdown-menu role="menu"-->
+                                    <!--aria-labelledby="single-button">-->
+                                    <!--<li role="menuitem"><a href="#">Action</a></li>-->
+                                    <!--<li role="menuitem"><a href="#">Another action</a></li>-->
+                                    <!--<li role="menuitem"><a href="#">Something else here</a></li>-->
+                                    <!--<li class="divider"></li>-->
+                                    <!--<li role="menuitem"><a href="#">Separated link</a></li>-->
+                                <!--</ul>-->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -72,31 +84,11 @@
         </div>
     </div>
     <div class="row" ng-show="moreEntries">
-        <div class="col-xs-4 col-xs-offset-4 text-center" in-view="$inview&&loadMoreNews()">
+        <div class="col-xs-12 text-center" in-view="$inview&&loadMoreNews()">
             <i class="fa fa-circle-o-notch fa-spin fa-fw fa-4x" style="margin: 20px; color: darkgrey;"></i>
         </div>
     </div>
 </div>
-
-<ng-popover trigger="popover-trigger" popover-class="searchPopover" on-open="openCallback()"
-            on-close="closeCallback()">
-    <div class="checkbox">
-        <label><input type="checkbox" value="">Option 1</label>
-    </div>
-    <div class="checkbox">
-        <label><input type="checkbox" value="">Option 2</label>
-    </div>
-    <div class="checkbox">
-        <label><input type="checkbox" value="">Option 3</label>
-    </div>
-    <div class="checkbox">
-        <label><input type="checkbox" value="">Option 4</label>
-    </div>
-    <div class="checkbox">
-        <label><input type="checkbox" value="">Option 5</label>
-    </div>
-
-</ng-popover>
 
 <div ng-controller="ModalDemoCtrl as $ctrl" class="modal-demo">
     <script type="text/ng-template" id="myModalContent.html">
