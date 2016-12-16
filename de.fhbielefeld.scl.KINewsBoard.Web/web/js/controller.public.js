@@ -19,7 +19,7 @@ angular.module('nwb.public', ['ui.router'])
                 var stop;
 
                 FrontendService.getNewsEntriesByViewId($stateParams.viewId, 0).then(function (view) {
-                    if(view == null)
+                    if (view == null)
                         $state.go("frontend");
 
                     $scope.view = view;
@@ -51,11 +51,11 @@ angular.module('nwb.public', ['ui.router'])
                     };
                 });
 
-                $scope.getViewUrl = function(){
-                    if(!$scope.view)
+                $scope.getViewUrl = function () {
+                    if (!$scope.view)
                         return "";
 
-                    return $location.absUrl('/').replace($state.href($state.current.name, $state.params), "") + $state.href('view', { viewId: $scope.view.id });
+                    return $state.href('frontend', {view: $scope.view.id}, {absolute: true});
                 };
 
                 $scope.getAnalyzerResult = function () {
@@ -67,7 +67,7 @@ angular.module('nwb.public', ['ui.router'])
                     return tmp;
                 };
 
-                $scope.getAnalyzerResultType = function() {
+                $scope.getAnalyzerResultType = function () {
                     return $scope.getAnalyzerResult() < 0 ? "danger" : "success"
                 };
 

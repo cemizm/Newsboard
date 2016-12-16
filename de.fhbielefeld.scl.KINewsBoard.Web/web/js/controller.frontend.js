@@ -6,23 +6,18 @@ angular.module('nwb.frontend', ['ui.router'])
 
         $stateProvider
             .state('frontend', {
-                url: '/frontend',
-                templateUrl: 'views/frontend/index.html',
-                controller: 'FrontendViewController'
-            })
-            .state('view', {
-                url: '/frontend/{viewId}',
+                url: '/?keyword&view',
                 templateUrl: 'views/frontend/index.html',
                 controller: 'FrontendViewController'
             });
 
     }])
     .controller('FrontendViewController',
-        ['$scope', '$location', '$stateParams', 'FrontendService', 'localStorageService', 'ngPopoverFactory',
-            function ($scope, $location, $stateParams, FrontendService, localStorageService, ngPopoverFactory) {
+        ['$scope', '$location', '$stateParams', 'FrontendService', 'localStorageService', '$state',
+            function ($scope, $location, $stateParams, FrontendService, localStorageService, $state) {
 
                 $scope.page = 1;
-                $scope.keyword = "";
+                $scope.keyword = $stateParams.keyword;
                 $scope.contentsize = 200;
                 $scope.isLoading = true;
                 $scope.moreEntries = true;
@@ -30,24 +25,20 @@ angular.module('nwb.frontend', ['ui.router'])
 
                 $scope.updateView = function () {
                     $scope.isLoading = true;
-                    ngPopoverFactory.closeAll();
 
-                    FrontendService.getNewsEntries($scope.page, $scope.keyword, $stateParams.viewId).then(function (entries) {
+                    FrontendService.getNewsEntries($scope.page, $stateParams.keyword, $stateParams.view).then(function (entries) {
                         $scope.entries = $scope.entries.concat(entries);
                         $scope.isLoading = false;
-                        $scope.moreEntries = entries != null && entries.length > 0;
+                        $scope.moreEntries = entries != null && entries.length == 20;
                     });
                 };
 
                 $scope.search = function () {
-                    $scope.entries = [];
-                    $scope.page = 1;
-                    $scope.moreEntries = true;
-                    $scope.updateView();
+                    $state.go('frontend', {keyword: $scope.keyword, view: $stateParams.view})
                 };
 
                 $scope.loadMoreNews = function () {
-                    if(!$scope.moreEntries || $scope.isLoading)
+                    if (!$scope.moreEntries || $scope.isLoading)
                         return;
 
                     $scope.page += 1;

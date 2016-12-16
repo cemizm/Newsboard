@@ -11,7 +11,7 @@ var app = angular.module('nwb', [
     'nwb.public',
     'nwb.placeholder'
 ]).config(function ($urlRouterProvider) {
-    $urlRouterProvider.otherwise("/frontend");
+    $urlRouterProvider.otherwise("/");
 });
 
 
