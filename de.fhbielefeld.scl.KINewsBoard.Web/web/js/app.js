@@ -10,8 +10,10 @@ var app = angular.module('nwb', [
     'nwb.frontend',
     'nwb.public',
     'nwb.placeholder'
-]).config(function ($urlRouterProvider) {
+]).config(function ($urlRouterProvider, $locationProvider) {
     $urlRouterProvider.otherwise("/");
+    $locationProvider.html5Mode(true);
+
 });
 
 
