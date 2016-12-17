@@ -36,7 +36,7 @@ public class NewsResource {
 
         View view = viewId > 0 ? newsBoardService.getView(viewId) : null;
 
-        List<NewsEntryVM> res = newsBoardService.getNewsEntries(page, keyword, viewId)
+        List<NewsEntryVM> res = newsBoardService.getNewsEntries(page, keyword, view)
                 .stream()
                 .map(n -> new NewsEntryVM(n, view))
                 .collect(Collectors.toList());
@@ -82,7 +82,7 @@ public class NewsResource {
 
         View view = newsBoardService.getView(viewId);
 
-        List<NewsEntryVM> entries = newsBoardService.getNewsEntries(1, null, viewId)
+        List<NewsEntryVM> entries = newsBoardService.getNewsEntries(1, null, view)
                 .stream()
                 .map(n -> new NewsEntryVM(n, view))
                 .collect(Collectors.toList());

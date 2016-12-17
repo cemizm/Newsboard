@@ -39,10 +39,10 @@ public class NewsBoardService {
      *
      * @param start   Die Seite, ab der die nächsten 20 Nachrichteneinträge ermitellt werden sollen
      * @param keyword Das Schlüsselwort, nach dem die Nachrichteneinträge gefiltert werden sollen
-     * @param viewId  Die Ansicht, in der die Nachrichteneinträge gezeigt werden sollen
+     * @param view  Die Ansicht, in der die Nachrichteneinträge gezeigt werden sollen
      * @return Liste der Nachrichteneinträge, die in der Web-/Mobile-Ansicht angezeigt werden
      */
-    public List<NewsEntry> getNewsEntries(int start, String keyword, int viewId) {
+    public List<NewsEntry> getNewsEntries(int start, String keyword, View view) {
         FullTextEntityManager ftem = Search.getFullTextEntityManager(entityManager);
         Session session = entityManager.unwrap(Session.class);
 
@@ -63,10 +63,10 @@ public class NewsBoardService {
                 SortField.FIELD_SCORE));
 
         Criteria c = session.createCriteria(NewsEntry.class);
-        if (viewId > 0) {
+        if (view != null && view.getCrawlers().size() > 0) {
             c.createAlias("crawler", "crawler", JoinType.LEFT_OUTER_JOIN);
             c.createAlias("crawler.views", "view", JoinType.LEFT_OUTER_JOIN);
-            c.add(Restrictions.eq("view.id", viewId));
+            c.add(Restrictions.eq("view.id", view.getId()));
         }
 
         //BUG: setting max results changes sort order of entities
