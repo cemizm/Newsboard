@@ -83,22 +83,23 @@
 </div>
 
 <div ng-controller="ModalDemoCtrl as $ctrl" class="modal-demo">
-    <script type="text/ng-template" id="myModalContent.html">
+    <script type="text/ng-template" id="myModalContent">
         <div class="modal-body" id="modal-body">
             <div class="image">
-                <img ng-src="{{$ctrl.entry.image}}" style="float: right;margin: 10px">
-                <h2>{{$ctrl.entry.title}}</h2>
-                <div class="date">
-                    {{$ctrl.entry.source}} @ {{$ctrl.entry.date | date:'dd.MM.yyyy HH:mm'}}
-                </div>
-                <p>{{$ctrl.entry.content}}</p>
+                <img nwb-src="{{$ctrl.entry.image}}">
             </div>
+            <h2>{{$ctrl.entry.title}}</h2>
+            <select ng-model="selectedCar" ng-options="x.name for x in $ctrl.analyzerArr"></select>
+            <div class="date">
+                {{$ctrl.entry.source}} @ {{$ctrl.entry.date | date:'dd.MM.yyyy HH:mm'}}
+            </div>
+            Link: <a href="{{$ctrl.entry.url}}">{{$ctrl.entry.url}}</a>
+            <p ng-bind-html="$ctrl.colored"></p>
+
         </div>
         <div class="modal-footer">
-            <!--
-            <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
-            -->
+
+
         </div>
     </script>
 </div>
