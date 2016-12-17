@@ -102,7 +102,7 @@ i:hover {
 }
 
 .public p {
-    font-size: 22px;
+    font-size: 18px;
 }
 
 .searchPopover {
@@ -177,8 +177,9 @@ i:hover {
 }
 
 .slide h4 {
-    height: 52px;
-    max-height: 52px;
+    font-size: 21px;
+    height: 46px;
+    max-height: 46px;
 }
 
 .slide .content {
@@ -195,7 +196,7 @@ i:hover {
     height: 160px;
     margin-top: 35px;
     margin-bottom: 20px;
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: rgba(0, 0, 0, 0.03);
     overflow: hidden;
 }
 
@@ -253,8 +254,8 @@ i:hover {
 }
 
 .pane p {
-    margin: 10px 15px;
-    font-size: 22px;
+    margin: 5px 15px;
+    font-size: 21px;
 }
 
 .pane .progress {
