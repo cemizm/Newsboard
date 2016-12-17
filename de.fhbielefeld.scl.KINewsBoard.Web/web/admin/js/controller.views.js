@@ -35,24 +35,16 @@ angular.module('nwbadmin.views', ['ui.router'])
                     });
                 };
 
-                $scope.select = function (view) {
-                    $scope.active = view;
-                };
-
                 $scope.create = function () {
                     $state.go("views.edit");
                 };
 
-                $scope.edit = function () {
-                    if (!$scope.active) return;
-
-                    $state.go("views.edit", {view: $scope.active});
+                $scope.edit = function (view) {
+                    $state.go("views.edit", {view: view});
                 };
 
-                $scope.delete = function () {
-                    if (!$scope.active) return;
-
-                    ViewService.delete($scope.active.id).then(function (result) {
+                $scope.delete = function (view) {
+                    ViewService.delete(view.id).then(function (result) {
                         $scope.update();
                     });
                 };
