@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-md-12">
+        <button type="button" class="btn btn-success" ng-click="create()">Erstellen</button>
+        <button type="button" class="btn btn-info" ng-click="edit()" ng-disabled="active == null">Bearbeiten</button>
+        <button type="button" class="btn btn-danger" ng-click="delete()" ng-disabled="active == null">Löschen</button>
+        <table class="table table-hover">
+            <thead>
+            <th>#</th>
+            <th>Bezeichnung</th>
+            <th width="100px">Altionen</th>
+            </thead>
+            <tr ng-repeat="view in views" ng-click="select(view)" ng-class="{active: view == active}">
+                <td>{{view.id}}</td>
+                <td>
+                    <b>{{view.name}}</b>
+                    <br>{{view.description}}
+                </td>
+                <td><a href="../?view={{view.id}}" target="_blank"><i class="fa fa-fw fa-external-link"></i></a> | <a
+                        href="../public/{{view.id}}" target="_blank"><i
+                        class="fa fa-fw fa-tv"></i></a></td>
+            </tr>
+        </table>
+    </div>
+</div>

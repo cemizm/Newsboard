@@ -6,20 +6,4 @@
         </h1>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-8">
-        <a ui-sref="editview">
-        <button type="button" class="btn btn-success" >Neue View einlegen oder bearbeiten
-        </button></a>
-        <table class="table table-hover">
-            <thead>
-            <th>#</th>
-            <th>Bezeichnung</th>
-            </thead>
-            <tr ng-repeat="view in views" ng-click="select(view)" ng-class="{active: view == active}">
-                <td>{{view.id}}</td>
-                <td>{{view.name}}</td>
-            </tr>
-        </table>
-    </div>
-</div>
+<ui-view></ui-view>
