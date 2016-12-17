@@ -41,7 +41,7 @@ public class NewsEntryDetailVM extends NewsEntryVM {
 
         analyzerResults = newsEntry.getAnalyzerResults()
                 .stream()
-                .filter(a -> filters.isEmpty() || filters.contains(a.getAnalyzer().getId()))
+                .filter(a -> view == null || view.getGroupSets().size() == 0 || filters.contains(a.getAnalyzer().getId()))
                 .map(AnalyzerResultVM::new)
                 .collect(Collectors.toList());
     }
