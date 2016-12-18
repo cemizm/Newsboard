@@ -1,3 +1,10 @@
+.analyzerTextNeg {
+    color: red;
+}
+
+.analyzerTextPos {
+    color: green;
+}
 
 .card {
     overflow: hidden;
@@ -91,6 +98,12 @@ a:active {
 
 i:hover {
     color: darkgrey;
+}
+
+.modal-body img {
+    margin:10px;
+    height:200px;
+    float: right;
 }
 
 .public h4 {

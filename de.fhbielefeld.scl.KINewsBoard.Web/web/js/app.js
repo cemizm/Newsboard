@@ -9,11 +9,13 @@ var app = angular.module('nwb', [
     'angular-inview',
     'nwb.frontend',
     'nwb.public',
-    'nwb.placeholder'
+    'nwb.placeholder',
+    'ngSanitize'
 ]).config(function ($urlRouterProvider, $locationProvider) {
     $urlRouterProvider.otherwise("/");
     $locationProvider.html5Mode(true);
-
 });
+
+
 
 

@@ -40,7 +40,7 @@ angular.module('nwb')
             return $http.post(api + "news/" + newsEntry.id + "/rate?up=" + rate, null).then(function (response) {
                 return response.data;
             });
-        }
+        };
 
         return service;
     }]);

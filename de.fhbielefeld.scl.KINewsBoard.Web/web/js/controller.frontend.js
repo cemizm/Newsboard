@@ -22,6 +22,7 @@ angular.module('nwb.frontend', ['ui.router'])
                 $scope.isLoading = true;
                 $scope.moreEntries = true;
                 $scope.entries = [];
+                $scope.busy = false;
 
                 $scope.updateView = function () {
                     $scope.isLoading = true;
@@ -43,6 +44,8 @@ angular.module('nwb.frontend', ['ui.router'])
 
                     $scope.page += 1;
                     $scope.updateView();
+
+                    $scope.busy = false;
                 };
 
                 $scope.rate = function (entry, up) {
@@ -69,53 +72,111 @@ angular.module('nwb.frontend', ['ui.router'])
 
             }]);
 
-angular.module('nwb.frontend').controller('ModalDemoCtrl', function ($uibModal, $log, $document) {
+angular.module('nwb.frontend').controller('ModalDemoCtrl', function ($uibModal, $log, $document, $sce, FrontendService) {
     var $ctrl = this;
     $ctrl.items = ['item1', 'item2', 'item3'];
 
     $ctrl.animationsEnabled = true;
+    $ctrl.colored = "";
+
+    $ctrl.getAnalyzerList = function () {
+        var analyzerArr = [];
+        $ctrl.entry.analyzerResults.forEach(function (analyzerResult) {
+            analyzerArr.push({
+                "id" : analyzerResult.analyzer.id,
+                "name" : analyzerResult.analyzer.name
+            });
+        });
+        return analyzerArr;
+    };
+
+    $ctrl.colorText = function (entry, analyzerIndex) {
+        var colored = "";
+
+        String.prototype.replaceBetween = function(start, end, what) {
+            return this.substring(0, start) + what + this.substring(end);
+        };
+
+        var currAnalyzer = -1;
+        var contentArr = entry.content.split('');
+        var contentArrIndex = 0;
+
+        contentArr.forEach(function (charIndex) {
+            if (currAnalyzer < 0) {
+
+            }
+            else {
+
+            }
+                contentArrIndex++;
+        });
+
+        entry.analyzerResults[analyzerIndex].sentenceResults.forEach(function (sentenceResult) {
+            var cssAttr = sentenceResult.value >= 0 ? "analyzerTextPos" : "analyzerTextNeg";
+            colored = entry.content.replaceBetween(sentenceResult.charStart, sentenceResult.charEnd, '<span class="' + cssAttr + '">' + entry.content.substring(sentenceResult.charStart, sentenceResult.charEnd) + '</span>');
+        });
+
+        return colored;
+
+    };
+
 
     $ctrl.open = function (size, entry, parentSelector) {
         var parentElem = parentSelector ?
             angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
 
-        $ctrl.entry = entry;
+        FrontendService.getNewsEntryDetails(entry.id).then(function (details) {
+            $ctrl.entry = details;
+            $ctrl.analyzerIndex = 0;
+            $ctrl.analyzerArr = $ctrl.getAnalyzerList();
 
-        var modalInstance = $uibModal.open({
-            animation: $ctrl.animationsEnabled,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: 'myModalContent.html',
-            controller: 'ModalInstanceCtrl',
-            controllerAs: '$ctrl',
-            size: size,
-            appendTo: parentElem,
-            resolve: {
-                items: function () {
-                    return $ctrl.items;
-                },
-                entry: function () {
-                    return $ctrl.entry;
+            $ctrl.colored = $ctrl.colorText(details, $ctrl.analyzerIndex);
 
+
+
+            var modalInstance = $uibModal.open({
+                animation: $ctrl.animationsEnabled,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'myModalContent',
+                controller: 'ModalInstanceCtrl',
+                controllerAs: '$ctrl',
+                size: size,
+                appendTo: parentElem,
+                resolve: {
+                    items: function () {
+                        return $ctrl.items;
+                    },
+                    entry: function () {
+                        return $ctrl.entry;
+
+                    },
+                    colored: function () {
+                        return $ctrl.colored;
+                    }
                 }
-            }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                $ctrl.selected = selectedItem;
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
         });
 
-        modalInstance.result.then(function (selectedItem) {
-            $ctrl.selected = selectedItem;
-        }, function () {
-            $log.info('Modal dismissed at: ' + new Date());
-        });
+
+
     };
 });
 
 // Please note that $uibModalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
 
-angular.module('nwb.frontend').controller('ModalInstanceCtrl', function ($uibModalInstance, items, entry) {
+angular.module('nwb.frontend').controller('ModalInstanceCtrl', function ($uibModalInstance, items, entry, colored) {
     var $ctrl = this;
     $ctrl.items = items;
     $ctrl.entry = entry;
+    $ctrl.colored = colored;
     $ctrl.selected = {
         item: $ctrl.items[0]
     };
@@ -132,7 +193,7 @@ angular.module('nwb.frontend').controller('ModalInstanceCtrl', function ($uibMod
 // Please note that the close and dismiss bindings are from $uibModalInstance.
 
 angular.module('nwb.frontend').component('modalComponent', {
-    templateUrl: 'myModalContent.html',
+    templateUrl: 'myModalContent',
     bindings: {
         resolve: '<',
         close: '&',
@@ -146,6 +207,7 @@ angular.module('nwb.frontend').component('modalComponent', {
             $ctrl.selected = {
                 item: $ctrl.items[0]
             };
+            $ctrl.colored = $ctrl.resolve.colored;
         };
 
         $ctrl.ok = function () {
