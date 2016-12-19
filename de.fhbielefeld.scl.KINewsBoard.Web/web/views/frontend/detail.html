@@ -1,18 +1,43 @@
 <div class="modal-body" id="modal-body">
-    <div class="image">
-        <img nwb-src="{{entry.image}}">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="image">
+                <img nwb-src="{{entry.image}}" class="img-thumbnail center-block">
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>{{entry.title}}</h2>
+                </div>
+                <div class="col-md-12" style="background-color: rgba(0, 0, 0, 0.05) ">
+                    <div style="margin: 5px">
+                        Erstellt: {{entry.date | date:'dd.MM.yyyy HH:mm'}} <br/>
+                        Externer Link: <a ng-href="{{entry.url}}" target="_blank"><i
+                            class="fa fa-fw fa-external-link"></i>
+                        {{entry.source}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <h2>{{entry.title}}</h2>
-    <select ng-options="result.analyzer.name for result in entry.analyzerResults"
-            ng-model="selectedResult"
-            ng-change="updateText()"></select>
-    <div class="date">
-        {{entry.source}} @ {{entry.date | date:'dd.MM.yyyy HH:mm'}}
+    <div class="row">
+        <div class="col-md-9">
+            <p ng-bind-html="colored"></p>
+        </div>
+        <div class="col-md-3">
+            <ul class="list-group">
+                <a class="list-group-item" ng-repeat="result in entry.analyzerResults" href
+                   ng-click="updateText(result)" ng-class="{'active': result == selectedResult}">
+                    <span class="badge"
+                          ng-class="{'badge-positive': result.value > 0, 'badge-negative': result.value < 0}">
+                        {{result.value > 0 ? result.value : result.value * -1}}
+                    </span>
+
+                    {{result.analyzer.name}}
+
+                </a>
+            </ul>
+        </div>
     </div>
-    Link: <a href="{{entry.url}}">{{entry.url}}</a>
-    <p ng-bind-html="colored"></p>
-
-</div>
-<div class="modal-footer">
-
 </div>

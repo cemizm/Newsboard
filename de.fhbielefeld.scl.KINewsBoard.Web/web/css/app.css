@@ -1,10 +1,4 @@
-.analyzerTextNeg {
-    color: red;
-}
 
-.analyzerTextPos {
-    color: green;
-}
 
 .card {
     overflow: hidden;
@@ -101,8 +95,8 @@ i:hover {
 }
 
 .modal-body img {
-    margin:10px;
-    height:200px;
+    margin: 10px;
+    height: 200px;
     float: right;
 }
 
@@ -296,4 +290,36 @@ i:hover {
 
 .voted i.isRate {
     color: darkgray;
+}
+
+.modal-body img {
+    float: none;
+    width: 100%;
+    margin: auto;
+    height: auto
+}
+
+.modal-body .analyzerTextNeg {
+    color: #b52b27;
+}
+
+.modal-body .analyzerTextPos {
+    color: #4cae4c;
+}
+
+.modal-body .badge-negative {
+    background-color: #b52b27;
+}
+
+.modal-body .badge-positive {
+    background-color: #4cae4c;
+}
+
+.modal-body .row p {
+    margin: 5px;
+    font-size: 18px;
+}
+
+.modal-body ul {
+    margin: 5px;
 }

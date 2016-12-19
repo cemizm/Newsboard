@@ -20,7 +20,8 @@ angular.module('nwb.frontend', ['ui.router'])
                                 return FrontendService.getNewsEntryDetails($stateParams.news, $stateParams.view)
                             }
                         },
-                        controller: 'DetailViewController'
+                        controller: 'DetailViewController',
+                        size: 'lg'
                     }).result.finally(function () {
                         $state.go('^');
                     });
@@ -94,28 +95,52 @@ angular.module('nwb.frontend', ['ui.router'])
         function ($scope, news) {
 
             $scope.entry = news;
-            $scope.selectedResult = news.analyzerResults.length > 0 ? news.analyzerResults[0] : null;
+            $scope.selectedResult = null;
 
             $scope.dismiss = function () {
                 $scope.$dismiss();
             };
 
-            $scope.updateText = function () {
+            $scope.updateText = function (result) {
+                if(result == $scope.selectedResult)
+                    return;
+
+                $scope.selectedResult = result;
                 $scope.colored = $scope.entry.content;
 
-                if ($scope.selectedResult != null) {
-                    String.prototype.replaceBetween = function (start, end, what) {
-                        return this.substring(0, start) + what + this.substring(end);
-                    };
+                if (result != null) {
+                    $scope.colored = "";
 
-                    $scope.selectedResult.sentenceResults.forEach(function (sentenceResult) {
-                        var cssAttr = sentenceResult.value >= 0 ? "analyzerTextPos" : "analyzerTextNeg";
-                        var subStr = $scope.colored.substring(sentenceResult.charStart, sentenceResult.charEnd);
-                        $scope.colored = $scope.colored.replaceBetween(sentenceResult.charStart,
-                            sentenceResult.charEnd, '<span class="' + cssAttr + '">' + subStr + '</span>');
-                    });
+                    var copy = $scope.entry.content;
+                    var lastResult = null;
+
+                    for (var pos = 0; x < copy.length; pos++)
+                    {
+                        var c = copy.charAt(pos);
+
+                        if(lastResult && pos > lastResult.charEnd)
+                        {
+                            $scope.colored += '</span>';
+                            lastResult = null;
+                        }
+
+                        if(!lastResult)
+                        {
+                            lastResult = result.sentenceResults.find(function(sr){
+                               return (pos >= sr.charStart && pos <= sr.charEnd);
+                            });
+
+                            if(lastResult)
+                            {
+                                var cssAttr = lastResult.value >= 0 ? "analyzerTextPos" : "analyzerTextNeg";
+                                $scope.colored += '<span class="' + cssAttr + '">'
+                            }
+                        }
+
+                        $scope.colored += c;
+                    }
                 }
             };
 
-            $scope.updateText()
+            $scope.updateText(news.analyzerResults.length > 0 ? news.analyzerResults[0] : null);
         }]);
