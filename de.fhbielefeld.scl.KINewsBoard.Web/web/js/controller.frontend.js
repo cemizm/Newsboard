@@ -24,7 +24,10 @@ angular.module('nwb.frontend', ['ui.router'])
                     }).result.finally(function () {
                         $state.go('^');
                     });
-                }]
+                }],
+                onExit: ['$uibModalStack', function($uibModalStack) {
+                    $uibModalStack.dismissAll();
+                }],
             });
 
     }])
@@ -91,7 +94,7 @@ angular.module('nwb.frontend', ['ui.router'])
         function ($scope, news) {
 
             $scope.entry = news;
-            $scope.selectedResult = null;
+            $scope.selectedResult = news.analyzerResults.length > 0 ? news.analyzerResults[0] : null;
 
             $scope.dismiss = function () {
                 $scope.$dismiss();
