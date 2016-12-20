@@ -114,7 +114,7 @@ angular.module('nwb.frontend', ['ui.router'])
                     var copy = $scope.entry.content;
                     var lastResult = null;
 
-                    for (var pos = 0; x < copy.length; pos++)
+                    for (var pos = 0; pos < copy.length; pos++)
                     {
                         var c = copy.charAt(pos);
 
