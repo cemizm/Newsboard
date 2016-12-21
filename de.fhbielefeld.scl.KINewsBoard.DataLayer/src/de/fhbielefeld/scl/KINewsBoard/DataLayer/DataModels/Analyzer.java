@@ -139,4 +139,9 @@ public class Analyzer {
     public void setResults(Set<AnalyzerResult> results) {
         this.results = results;
     }
+
+    public void removeAnalyzerResult(AnalyzerResult result) {
+        this.results.remove(result);
+        result.setAnalyzer(null);
+    }
 }

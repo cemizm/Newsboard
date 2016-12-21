@@ -105,6 +105,10 @@ public class AdminService {
         for (GroupSet gs : toRemove)
             gs.removeAnalyzer(analyzer);
 
+        List<AnalyzerResult> toRemoveResults = analyzer.getResults().stream().collect(Collectors.toList());
+        for (AnalyzerResult ar : toRemoveResults)
+            analyzer.removeAnalyzerResult(ar);
+
         entityManager.remove(analyzer);
     }
 

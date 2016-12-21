@@ -96,6 +96,7 @@ angular.module('nwb.frontend', ['ui.router'])
 
             $scope.entry = news;
             $scope.selectedResult = null;
+            $scope.colored = $scope.entry.content;
 
             $scope.dismiss = function () {
                 $scope.$dismiss();
