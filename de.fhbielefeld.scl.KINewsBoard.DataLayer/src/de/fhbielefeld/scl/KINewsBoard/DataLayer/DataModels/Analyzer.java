@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by cem on 03.11.16.
+ * Die Klasse <i>Analyzer</i> repräsentiert einen Analyzer im NewsBoardService.
  */
 @Entity
 @NamedQueries

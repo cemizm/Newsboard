@@ -7,7 +7,7 @@ import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 /**
- * Created by azad- on 10.11.2016.
+ * Die Klasse <i>AnalyzerSentenceResult</i> repräsentiert ein Analyseergebnis eines einzelnen Satzes im NewsBoardService.
  */
 @Entity
 public class AnalyzerSentenceResult implements Serializable {

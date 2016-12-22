@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by cem on 03.11.16.
+ * Die Klasse <i>View</i> repräsentiert eine Ansicht im NewsBoardService.
  */
 @Entity
 @NamedQueries
