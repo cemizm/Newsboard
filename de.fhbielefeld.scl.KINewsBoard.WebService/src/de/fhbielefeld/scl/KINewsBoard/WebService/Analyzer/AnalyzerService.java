@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * * Die Klasse <i>AnalyzerService</i> regelt den Zugriff des Analyzer auf die registrierten Ressourcen.
+ * Die Klasse <i>AnalyzerService</i> regelt den Zugriff des Analyzer auf die registrierten Ressourcen.
  */
 @ApplicationPath("/analyzer")
 public class AnalyzerService extends Application {

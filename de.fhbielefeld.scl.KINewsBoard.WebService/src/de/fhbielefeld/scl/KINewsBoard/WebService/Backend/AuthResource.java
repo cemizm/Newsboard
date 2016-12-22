@@ -28,7 +28,7 @@ public class AuthResource {
      *
      * @param username Der Benutzername des Benutzers
      * @param password Das Benutzerpasswort des Benutzers
-     * @return Statuscode 200, wenn Anfrage erfolgreich bearbeitet wurde,
+     * @return Statuscode 200, wenn Anfrage erfolgreich bearbeitet wurde, <br>
      * Statuscode 401, wenn die Benutzerdaten ungültig sind
      * @throws AuthenticationException Wenn die Benutzerdaten ungültig sind
      */
