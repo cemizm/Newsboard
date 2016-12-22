@@ -16,6 +16,12 @@ import java.util.Set;
 
 @ApplicationPath("/crawler")
 public class CrawlerService extends Application {
+
+    /**
+     * Ruft die für den CrawlerService registrierten Klassen ab.
+     *
+     * @return Liste der registrierten Klassen für den Service
+     */
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> s = new HashSet<>();

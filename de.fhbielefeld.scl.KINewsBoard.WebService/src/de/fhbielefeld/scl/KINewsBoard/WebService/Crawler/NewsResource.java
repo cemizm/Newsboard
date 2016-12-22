@@ -25,6 +25,14 @@ public class NewsResource {
     @EJB
     private NewsBoardService newsBoardService;
 
+    /**
+     * Veröffentlicht den angegebenen Nachrichteneintrag, der vom angegebenen Crawler geliefert wurde.
+     *
+     * @param token Der Token des Crawlers
+     * @param model Model des Nachrichteneintrages, das nur aus den Basis-Informationen besteht
+     * @return HTTP-Response, dass die Anfrage bearbeitet und das Ergebnis übertragen wurde
+     * @throws AuthenticationException Wenn der Authentifizierungstoken des Crawlers ungültig ist
+     */
     @POST
     public Response publish(
             @HeaderParam("token") String token,
