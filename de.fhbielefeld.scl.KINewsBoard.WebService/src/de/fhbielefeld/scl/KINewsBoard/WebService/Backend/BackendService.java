@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * * Die Klasse <i>BackendService</i> regelt den Zugriff des Backends auf die registrierten Ressourcen.
+ * Die Klasse <i>BackendService</i> regelt den Zugriff des Backends auf die registrierten Ressourcen.
  */
 @ApplicationPath("/backend")
 public class BackendService extends Application {
