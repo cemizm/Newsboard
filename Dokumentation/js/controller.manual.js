@@ -5,7 +5,7 @@ angular.module('nwbdoku.manual', ['ui.router'])
 
         $urlRouterProvider.when('', '/frontend/web');
         $urlRouterProvider.when('/frontend', '/frontend/web');
-        $urlRouterProvider.when('/admin', '/admin/dashboard');
+        $urlRouterProvider.when('/admin', '/admin/login');
 
         $stateProvider.state('manual', {
             url: '',
@@ -22,6 +22,9 @@ angular.module('nwbdoku.manual', ['ui.router'])
         }).state('manual.admin', {
             url: '/admin',
             templateUrl: 'views/admin/index.html'
+        }).state('manual.admin.login', {
+            url: '/login',
+            templateUrl: 'views/admin/login.html'
         }).state('manual.admin.dashboard', {
             url: '/dashboard',
             templateUrl: 'views/admin/dashboard.html'
