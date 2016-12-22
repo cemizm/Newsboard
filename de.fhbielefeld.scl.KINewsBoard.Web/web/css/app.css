@@ -307,12 +307,16 @@ i:hover {
     color: #4cae4c;
 }
 
+.modal-body .list-group-item.active>.badge-negative,
 .modal-body .badge-negative {
     background-color: #b52b27;
+    color: #fff;
 }
 
+.modal-body .list-group-item.active>.badge-positive,
 .modal-body .badge-positive {
     background-color: #4cae4c;
+    color: #fff;
 }
 
 .modal-body .row p {
@@ -323,3 +327,4 @@ i:hover {
 .modal-body ul {
     margin: 5px;
 }
+
