@@ -1,1 +1,75 @@
-public
+<div class="row">
+    <div class="col-md-12">
+        <h2>Funktion</h2>
+        Die öffentliche Ansicht zeigt alle gecrawlten und analysierten Elemente der einer View.
+        Die View kann im Administrationsbereich unter <a ui-sref="manual.admin.view">Views</a> definiert werden.
+        Die öffentlich Ansicht ist auf den Präsentationsmodus d.h. ohne Benutzerinteraktion ausgelegt.
+
+        <h3>Nachrichtenliste</h3>
+        <div class="row">
+            <div class="col-md-3">
+                <img src="imgs/publiclist.png" class="img-thumbnail center-block">
+            </div>
+            <div class="col-md-9">
+                Die linke Liste zeigt eine Vorschau der vorangegangen und folgenden Nachrichteneinträge an. Der aktuelle
+                im Detail sichtbare Nachrichteneintrag wird dabei etwas hervorgehoben. Neben dem Vorschaubild wird die
+                Überschrift und ein ausschnitt des Inhalts angezeigt.
+            </div>
+        </div>
+
+        <h3>Detailansicht</h3>
+        <div class="row">
+            <div class="col-md-9">
+                Wird ein Nachrichteintrag in der Liste gewählt, so wird diese im Detail auf der rechten Seite angezeigt.
+                Hier wird nun zusätzlich die Quelle des Nachrichteneintrags, das Veröffentlichungsdatum und das
+                Analyseergebnis angezeigt.<br><br>
+
+                Da der Text bei der öffentlichen Ansicht auch aus größerer Entfernung gelesen werden muss, wurde die
+                Schriftgröße entsprechend gewählt. Da es zudem nicht möglich ist Inhalte zu scrollen, wird der Text
+                bei überschreiten des verfügbaren Anzeigebereichs abgeschnitten.
+            </div>
+            <div class="col-md-3">
+                <img src="imgs/publicdetail.png" class="img-thumbnail center-block">
+            </div>
+        </div>
+
+        <h3>Analyseergebnis</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <img src="imgs/analyzerresult.png" class="img-thumbnail center-block">
+            </div>
+            <div class="col-md-8">
+                Jedes Element zeigt das kummulierte Analyseergebnis in Form eines positiven/negativen
+                Fortschrittsbalken an. Dabei wird ist der negative Fortschrittsbalken rot und verläuft von der mitte
+                des Elements nach links. Ist das Element positiv analysiert worden so ist der Fortschrittsbalken
+                grün und verläuft von der mitte nach rechts.
+            </div>
+        </div>
+
+        <h3>Automatischer Wechsel</h3>
+        <div class="row">
+            <div class="col-md-8">
+                Die Nachrichteneinträge werden automatisch nach einer vorgegeben Zeit gewechselt. Somit ist es möglich ohne
+                Benutzerinteraktion die Nachrichten im Detail zu lesen. Der Fortschrittsbalken in der rechten oberen Ecke Zeit
+                dabei die verbleibende zeit des aktuellen Nachrichteneintrags an.
+            </div>
+            <div class="col-md-4">
+                <img src="imgs/publicslider.png" class="img-thumbnail center-block">
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-12">
+        <h3>Screenshots</h3>
+    </div>
+
+    <div class="col-md-12">
+        <h3>Öffentliche Ansicht</h3>
+        <img src="imgs/publicview.png" class="img-thumbnail">
+    </div>
+</div>
