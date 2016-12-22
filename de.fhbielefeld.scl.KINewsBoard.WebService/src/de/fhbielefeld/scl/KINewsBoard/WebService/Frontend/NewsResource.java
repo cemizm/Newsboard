@@ -27,6 +27,14 @@ public class NewsResource {
     @EJB
     private NewsBoardService newsBoardService;
 
+    /**
+     * Ruft die bereits veröffentlichen Nachrichteneinträge ab.
+     *
+     * @param page    Die Seite, ab der die Ergebnisse geliefert werden sollen; default: 1, minimum: 1
+     * @param keyword Der Suchbegriff, nach dem gefiltert werden soll
+     * @param viewId  Die Id der Ansicht; default: 0
+     * @return HTTP-Response, der aussagt, dass die Anfrage bearbeitet und das Ergebnis (Liste der Nachrichteneinträge) übertragen wurde
+     */
     @GET
     public Response getPublicNewsEntries(
             @DefaultValue("1") @Min(1) @QueryParam("page") int page,
@@ -44,6 +52,13 @@ public class NewsResource {
         return Response.ok(res.toArray(new NewsEntryVM[0])).build();
     }
 
+    /**
+     * Ruft die Details zu einem Nachrichteneintrag ab.
+     *
+     * @param newsId Die Id des Nachrichteneintrages
+     * @param viewId Die Id der Ansicht; default: 0
+     * @return HTTP-Response, der aussagt, dass die Anfrage bearbeitet und das Ergebnis (der Nachrichteneintrag) übertragen wurde
+     */
     @GET
     @Path("/{newsId}")
     public Response getNewsEntryDetails(
@@ -62,6 +77,13 @@ public class NewsResource {
         return Response.ok(detail).build();
     }
 
+    /**
+     * Bewertet einen Nachrichteneintrag anhand der angegebenen Id.
+     *
+     * @param newsId Die Id des Nachrichteneintrages
+     * @param up     <i>true</i>, wenn der Nachrichteneintrag positiv bewertet werden soll
+     * @return HTTP-Response, der aussagt, dass die Anfrage bearbeitet und das Ergebnis (der Nachrichteneintrag) übertragen wurde
+     */
     @POST
     @Path("/{newsId}/rate")
     public Response rateNewsEntry(
@@ -74,6 +96,12 @@ public class NewsResource {
         return Response.ok(new NewsEntryVM(newsEntry)).build();
     }
 
+    /**
+     * Ruft die Nachrichteneinträge zu der Ansicht mit der angegebenen Id ab.
+     *
+     * @param viewId Die Id der Ansicht
+     * @return HTTP-Response, der aussagt, dass die Anfrage bearbeitet und das Ergebnis (Liste der Nachrichteneinträge, die der Ansicht zugeordnet sind) übertragen wurde
+     */
     @GET
     @Path("/findByView/{viewId}")
     public Response getViewEntries(

@@ -46,10 +46,20 @@ public class NewsEntryDetailVM extends NewsEntryVM {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Ruft die Analyseergebnisse zu dem Nachrichteneintrag ab.
+     *
+     * @return Liste der Analyseergebnisse zu dem Nachrichteneintrag
+     */
     public List<AnalyzerResultVM> getAnalyzerResults() {
         return analyzerResults;
     }
 
+    /**
+     * Legt die Analyseergebnisse zu dem Nachrichteneintrag fest.
+     *
+     * @param analyzerResults Liste der festzulegenden Analyseergebnisse
+     */
     public void setAnalyzerResults(List<AnalyzerResultVM> analyzerResults) {
         this.analyzerResults = analyzerResults;
     }

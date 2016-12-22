@@ -17,7 +17,6 @@ public class NewsEntryVM extends NewsEntryBaseModel {
     private int analyzerResult;
     private int rating;
 
-
     public NewsEntryVM() {
 
     }
@@ -56,26 +55,56 @@ public class NewsEntryVM extends NewsEntryBaseModel {
         rating = newsEntry.getRating();
     }
 
+    /**
+     * Ruft den Crawler des Nachrichteneintrages ab.
+     *
+     * @return Der Crawler des Nachrichteneintrages
+     */
     public CrawlerBaseModel getCrawler() {
         return crawler;
     }
 
+    /**
+     * Legt den Crawler des Nachrichteneintrages fest.
+     *
+     * @param crawler Der festzulegende Crawler
+     */
     public void setCrawler(CrawlerBaseModel crawler) {
         this.crawler = crawler;
     }
 
+    /**
+     * Ruft das Analyseergebnis des Nachrichteneintrages ab.
+     *
+     * @return Das Analyseergebnis des Nachrichteneintrages
+     */
     public int getAnalyzerResult() {
         return analyzerResult;
     }
 
+    /**
+     * Legt das Analyseergebnis zu dem Nachrichteneintrag fest.
+     *
+     * @param analyzerResult Das festzulegende Analyseergebnis
+     */
     public void setAnalyzerResult(int analyzerResult) {
         this.analyzerResult = analyzerResult;
     }
 
+    /**
+     * Ruft die Bewertung des Nachrichteneintrages ab.
+     *
+     * @return Bewertung des Nachrichteneintrages
+     */
     public int getRating() {
         return rating;
     }
 
+    /**
+     * Legt die Bewertung zu diesem Nachrichteneintrag fest.
+     *
+     * @param rating Die festzulegende Bewertung
+     */
     public void setRating(int rating) {
         this.rating = rating;
     }

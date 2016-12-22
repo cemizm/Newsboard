@@ -20,10 +20,20 @@ public class AnalyzerResultVM extends AnalyzerResultBaseModel {
         analyzer = new AnalyzerBaseModel(result.getAnalyzer());
     }
 
+    /**
+     * Ruft den Analyzer zu dem Analyseergebnis ab.
+     *
+     * @return Der Analyzer zu dem Analyseergebnis
+     */
     public AnalyzerBaseModel getAnalyzer() {
         return analyzer;
     }
 
+    /**
+     * Legt den Analyzer des Analyseergebnisses fest.
+     *
+     * @param analyzer Der festzulegende Analyzer
+     */
     public void setAnalyzer(AnalyzerBaseModel analyzer) {
         this.analyzer = analyzer;
     }

@@ -16,6 +16,12 @@ import java.util.Set;
 
 @ApplicationPath("/frontend")
 public class FrontendService extends Application {
+
+    /**
+     * Ruft die für den FrontendService registrierten Klassen ab.
+     *
+     * @return Liste der registrierten Klassen für den Sevice
+     */
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> s = new HashSet<>();
