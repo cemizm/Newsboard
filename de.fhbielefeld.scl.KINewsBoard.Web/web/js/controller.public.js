@@ -11,8 +11,11 @@ angular.module('nwb.public', ['ui.router'])
         });
 
     }])
-    .controller('PublicViewController',
-        ['$scope', '$location', '$stateParams', 'FrontendService', '$interval', '$state',
+    /**
+     * @class nwb.PublicViewController
+     * @description Controller für die öffentliche Ansicht des Newsboards.
+     */
+    .controller('PublicViewController', ['$scope', '$location', '$stateParams', 'FrontendService', '$interval', '$state',
             function ($scope, $location, $stateParams, FrontendService, $interval, $state) {
 
                 var counter = 10000;
@@ -51,6 +54,14 @@ angular.module('nwb.public', ['ui.router'])
                     };
                 });
 
+                /**
+                 * @name $scope.getViewUrl
+                 * @instance
+                 * @function getViewUrl
+                 * @memberOf nwb.PublicViewController
+                 * @instance
+                 * @description Erzeugt eine Absolute URL zu der aktuellen Ansicht.
+                 */
                 $scope.getViewUrl = function () {
                     if (!$scope.view)
                         return "";
@@ -58,6 +69,14 @@ angular.module('nwb.public', ['ui.router'])
                     return $state.href('frontend', {view: $scope.view.id}, {absolute: true});
                 };
 
+                /**
+                 * @name $scope.getAnalyzerResult
+                 * @instance
+                 * @function getAnalyzerResult
+                 * @memberOf nwb.PublicViewController
+                 * @instance
+                 * @description Ermitellt das durchschnittliche Analyseergebnis.
+                 */
                 $scope.getAnalyzerResult = function () {
                     var tmp = $scope.view.newsEntries[$scope.currentIndex].analyzerResult;
 
@@ -67,10 +86,26 @@ angular.module('nwb.public', ['ui.router'])
                     return tmp;
                 };
 
+                /**
+                 * @name $scope.getAnalyzerResultType
+                 * @instance
+                 * @function getAnalyzerResultType
+                 * @memberOf nwb.PublicViewController
+                 * @instance
+                 * @description Ermitellt ob das Analyseergebnis positiv oder negativ ist.
+                 */
                 $scope.getAnalyzerResultType = function () {
                     return $scope.getAnalyzerResult() < 0 ? "danger" : "success"
                 };
 
+                /**
+                 * @name $scope.startTimer
+                 * @instance
+                 * @function startTimer
+                 * @memberOf nwb.PublicViewController
+                 * @instance
+                 * @description Startet den Timer für das Nachrichteneintrags-Karussel.
+                 */
                 $scope.startTimer = function () {
                     if (angular.isDefined(stop)) return;
 
@@ -79,6 +114,14 @@ angular.module('nwb.public', ['ui.router'])
                     }, counter / 100);
                 };
 
+                /**
+                 * @name $scope.stopTimer
+                 * @instance
+                 * @function stopTimer
+                 * @memberOf nwb.PublicViewController
+                 * @instance
+                 * @description Stopt den Timer für das Nachrichteneintrags-Karussel.
+                 */
                 $scope.stopTimer = function () {
                     if (angular.isDefined(stop)) {
                         $interval.cancel(stop);
@@ -86,6 +129,14 @@ angular.module('nwb.public', ['ui.router'])
                     }
                 };
 
+                /**
+                 * @name $scope.resetTimer
+                 * @instance
+                 * @function resetTimer
+                 * @memberOf nwb.PublicViewController
+                 * @instance
+                 * @description Setzt den Timer für das Nachrichteneintrags-Karussel zurück.
+                 */
                 $scope.resetTimer = function () {
                     $scope.remaining = 100;
                 };

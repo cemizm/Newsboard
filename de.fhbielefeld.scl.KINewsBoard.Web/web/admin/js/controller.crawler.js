@@ -15,58 +15,97 @@ angular.module('nwbadmin.crawler', ['ui.router'])
 
 
     }])
-    .controller('CrawlerViewController',
-        ['$scope', '$location', 'CrawlerService', 'TokenService',
-            function ($scope, $location, CrawlerService, TokenService) {
+    /**
+     * @class nwbadmin.CrawlerViewController
+     * @description Controller für die Administration der Crawler.
+     */
+    .controller('CrawlerViewController', ['$scope', '$location', 'CrawlerService', 'TokenService',
+        function ($scope, $location, CrawlerService, TokenService) {
 
-                $scope.inProgress = false;
+            $scope.inProgress = false;
 
-                $scope.update = function () {
-                    CrawlerService.getAll().then(function (data) {
-                        $scope.crawlers = data;
-                        $scope.active = null;
-                    });
-                };
+            /**
+             * @name $scope.update
+             * @function update
+             * @memberOf nwbadmin.CrawlerViewController
+             * @instance
+             * @description Aktualisiert die Auflistung der Crawler.
+             */
+            $scope.update = function () {
+                CrawlerService.getAll().then(function (data) {
+                    $scope.crawlers = data;
+                    $scope.active = null;
+                });
+            };
 
-                $scope.select = function (crawler) {
-                    $scope.active = angular.copy(crawler);
-                };
+            /**
+             * @name $scope.select
+             * @function select
+             * @memberOf nwbadmin.CrawlerViewController
+             * @instance
+             * @description Selektiert den angegeben Crawler.
+             * @param {object} crawler - Der Crawler der zur Bearbeitung selektiert werden soll.
+             */
+            $scope.select = function (crawler) {
+                $scope.active = angular.copy(crawler);
+            };
 
-                $scope.delete = function () {
-                    if (!$scope.active) return;
+            /**
+             * @name $scope.delete
+             * @function delete
+             * @memberOf nwbadmin.CrawlerViewController
+             * @instance
+             * @description Löscht den selektierten Crawler.
+             */
+            $scope.delete = function () {
+                if (!$scope.active) return;
 
-                    CrawlerService.delete($scope.active.id).then(function (result) {
+                CrawlerService.delete($scope.active.id).then(function (result) {
+                    $scope.update();
+                });
+            };
+
+            /**
+             * @name $scope.save
+             * @function save
+             * @memberOf nwbadmin.CrawlerViewController
+             * @instance
+             * @description Speichert den aktuell in Bearbeitung befindlichen Crawler.
+             */
+            $scope.save = function () {
+                if (!$scope.active) return;
+
+                $scope.inProgress = true;
+
+                var done = function (result) {
+                    if (result)
                         $scope.update();
-                    });
-                };
 
-                $scope.save = function () {
-                    if (!$scope.active) return;
-
-                    $scope.inProgress = true;
-
-                    var done = function (result) {
-                        if (result)
-                            $scope.update();
-
-                        $scope.inProgress = false;
-                    }
-
-                    if (!$scope.active.id)
-                        CrawlerService.create($scope.active).then(done);
-                    else
-                        CrawlerService.update($scope.active).then(done);
-                };
-
-                $scope.create = function () {
-                    $scope.active = {
-                        disabled: false,
-                        ignoreAnalyzer: false,
-                        name: "",
-                        token: TokenService.generate()
-                    };
+                    $scope.inProgress = false;
                 }
 
-                $scope.update();
+                if (!$scope.active.id)
+                    CrawlerService.create($scope.active).then(done);
+                else
+                    CrawlerService.update($scope.active).then(done);
+            };
+
+            /**
+             * @name $scope.create
+             * @function create
+             * @memberOf nwbadmin.CrawlerViewController
+             * @instance
+             * @description Erzeugt einen neuen Crawler zur Bearbeitung.
+             */
+            $scope.create = function () {
+                $scope.active = {
+                    disabled: false,
+                    ignoreAnalyzer: false,
+                    name: "",
+                    token: TokenService.generate()
+                };
             }
-        ]);
+
+            $scope.update();
+        }
+    ]);

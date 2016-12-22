@@ -1,3 +1,7 @@
+/**
+ * @namespace nwbadmin
+ * @description Newsboard Administration
+ */
 var app = angular.module('nwbadmin', [
     'ui.router',
     'ui.bootstrap',

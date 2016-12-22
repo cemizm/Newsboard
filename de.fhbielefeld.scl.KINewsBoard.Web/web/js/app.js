@@ -1,3 +1,7 @@
+/**
+ * @namespace nwb
+ * @description Newsboard Frontend
+ */
 var app = angular.module('nwb', [
     'ui.router',
     'ui.bootstrap',

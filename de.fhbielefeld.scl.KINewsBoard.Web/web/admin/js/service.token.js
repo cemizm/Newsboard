@@ -1,3 +1,7 @@
+/**
+ * @class nwbadmin.TokenService
+ * @description Service zum generieren von Tokens.
+ */
 angular.module('nwbadmin')
     .factory('TokenService', function () {
         var service = {};

@@ -1,5 +1,7 @@
+
 /**
- * Created by cem on 10.12.16.
+ * @class nwb.PlaceholderDirective
+ * @description Direktive für ein Standard Platzhalter Bild.
  */
 angular.module('nwb.placeholder', []).directive('nwbSrc', function () {
     return {

@@ -1,3 +1,7 @@
+/**
+ * @class nwbadmin.AuthInterceptor
+ * @description Interceptor der jeder Anfrage den Token aus dem SessionStorage hinzufügt, falls vorhanden.
+ */
 angular.module('nwbadmin').factory('AuthInterceptor', ['$rootScope', '$window', function ($rootScope, $window) {
     return {
         'request': function (config) {

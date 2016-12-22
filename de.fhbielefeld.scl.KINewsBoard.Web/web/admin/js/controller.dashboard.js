@@ -14,10 +14,13 @@ angular.module('nwbadmin.dashboard', ['ui.router'])
         });
 
     }])
-    .controller('DashboardViewController',
-        ['$scope', '$location', 'DashboardService',
-            function ($scope, $location, DashboardService) {
-                DashboardService.get().then(function (dashboard) {
-                    $scope.dashboard = dashboard;
-                })
-            }]);
+    /**
+     * @class nwbadmin.DashboardViewController
+     * @description Controller für die Übersicht des Newsboards.
+     */
+    .controller('DashboardViewController', ['$scope', '$location', 'DashboardService',
+        function ($scope, $location, DashboardService) {
+            DashboardService.get().then(function (dashboard) {
+                $scope.dashboard = dashboard;
+            })
+        }]);
