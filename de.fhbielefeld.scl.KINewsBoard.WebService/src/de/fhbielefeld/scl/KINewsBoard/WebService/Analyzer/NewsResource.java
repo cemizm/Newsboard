@@ -26,6 +26,12 @@ public class NewsResource {
     @EJB
     private NewsBoardService newsBoardService;
 
+    /**
+     * Ruft alle Nachrichteneinträge ab, die von dem Analyzer mit dem angegebenen Authentifizierungstoken analysiert wurden.
+     * @param token Der Authentifizierungstoken des Analyzers
+     * @return HTTP-Response, der aussagt, dass die Anfrage bearbeitet und das Ergebnis (Liste der Nachrichteneinträge) übertragen wurde
+     * @throws AuthenticationException Wenn der Authentifizierungstoken des Analyzers ungültig ist
+     */
     @GET
     public Response getNewsEntries(
             @HeaderParam("token") String token
@@ -37,6 +43,15 @@ public class NewsResource {
         return Response.ok(res.toArray(new NewsEntryBaseModel[0])).build();
     }
 
+    /**
+     * Veröffentlicht den Nachrichteneintrag mit der angegebenen Id als Analyseergebnis des Analyzers mit dem angegebenen Authentifizierungstoken.
+     *
+     * @param token Der Authentifizierungstoken des Analyzers
+     * @param newsId Die Id des Nachrichteneintrages
+     * @param model Model des AnalyzersResults, das nur aus den Basis-Informationen besteht
+     * @return HTTP-Response, der aussagt, dass die Anfrage bearbeitet und das Ergebnis übertragen wurde
+     * @throws AuthenticationException
+     */
     @POST
     @Path("/{newsId}")
     public Response publish(
