@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by cem on 02.11.16.
+ * Die Klasse <i>Crawler</i> repräsentiert einen Crawler im NewsBoardService.
  */
 @Entity
 @NamedQueries

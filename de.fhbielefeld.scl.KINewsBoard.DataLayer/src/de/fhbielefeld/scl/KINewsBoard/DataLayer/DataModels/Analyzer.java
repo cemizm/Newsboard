@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by cem on 03.11.16.
+ * Die Klasse <i>Analyzer</i> repräsentiert einen Analyzer im NewsBoardService.
  */
 @Entity
 @NamedQueries
@@ -138,5 +138,10 @@ public class Analyzer {
      */
     public void setResults(Set<AnalyzerResult> results) {
         this.results = results;
+    }
+
+    public void removeAnalyzerResult(AnalyzerResult result) {
+        this.results.remove(result);
+        result.setAnalyzer(null);
     }
 }

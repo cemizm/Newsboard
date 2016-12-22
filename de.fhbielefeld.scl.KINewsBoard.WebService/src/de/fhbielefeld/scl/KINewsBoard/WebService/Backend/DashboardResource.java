@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by cem on 27.11.16.
+ * Die Klasse <i>DashboardResource</i> stellt dem Backend den Zugriff auf das Dashboard bereit.
  */
 @Path("/dashboard")
 @Produces(MediaType.APPLICATION_JSON)
@@ -24,6 +24,11 @@ public class DashboardResource {
     @EJB
     private AdminService adminService;
 
+    /**
+     * Ruft maximal 15 Nachrichteneinträge und die Anzahl der Analyzer, Crawler und Analyseergebnisse im Dashboard ab.
+     *
+     * @return Dashboard mit Nachrichteneinträgen und Anzahl der Analyer, Crawler und Analyseergebnisse
+     */
     @GET
     @RolesAllowed({})
     public DashboardVM get() {

@@ -17,9 +17,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by cem on 10.11.16.
+ * Die Klasse <i>NewsResource</i> stellt dem Frontend den Zugriff auf Nachrichteneinträge bereit.
  */
-
 @Path("/news")
 @Produces(MediaType.APPLICATION_JSON)
 public class NewsResource {
@@ -27,6 +26,14 @@ public class NewsResource {
     @EJB
     private NewsBoardService newsBoardService;
 
+    /**
+     * Ruft die bereits veröffentlichen Nachrichteneinträge ab.
+     *
+     * @param page    Die Seite, ab der die Ergebnisse geliefert werden sollen; default: 1, minimum: 1
+     * @param keyword Der Suchbegriff, nach dem gefiltert werden soll
+     * @param viewId  Die Id der Ansicht; default: 0
+     * @return Statuscode 200, wenn die Anfrage erfolgreich bearbeitet wurde und die bereits veröffentlichten Nachrichteneinträge
+     */
     @GET
     public Response getPublicNewsEntries(
             @DefaultValue("1") @Min(1) @QueryParam("page") int page,
@@ -44,6 +51,13 @@ public class NewsResource {
         return Response.ok(res.toArray(new NewsEntryVM[0])).build();
     }
 
+    /**
+     * Ruft die Details zu einem Nachrichteneintrag ab.
+     *
+     * @param newsId Die Id des Nachrichteneintrages
+     * @param viewId Die Id der Ansicht; default: 0
+     * @return Statuscode 200, wenn die Anfrage erfolgreich bearbeitet wurde und die Details eines Nachrichteneintrages
+     */
     @GET
     @Path("/{newsId}")
     public Response getNewsEntryDetails(
@@ -62,6 +76,13 @@ public class NewsResource {
         return Response.ok(detail).build();
     }
 
+    /**
+     * Bewertet einen Nachrichteneintrag anhand der angegebenen Id.
+     *
+     * @param newsId Die Id des Nachrichteneintrages
+     * @param up     <i>true</i>, wenn der Nachrichteneintrag positiv bewertet werden soll
+     * @return Statuscode 200, wenn die Anfrage erfolgreich bearbeitet wurde und der bewertete Nachrichteneintrag
+     */
     @POST
     @Path("/{newsId}/rate")
     public Response rateNewsEntry(
@@ -74,6 +95,12 @@ public class NewsResource {
         return Response.ok(new NewsEntryVM(newsEntry)).build();
     }
 
+    /**
+     * Ruft die Nachrichteneinträge zu der Ansicht mit der angegebenen Id ab.
+     *
+     * @param viewId Die Id der Ansicht
+     * @return Statuscode 200, wenn die Anfrage erfolgreich bearbeitet wurde und die Nachrichteneinträge, die in der Ansicht angezeigt werden können
+     */
     @GET
     @Path("/findByView/{viewId}")
     public Response getViewEntries(

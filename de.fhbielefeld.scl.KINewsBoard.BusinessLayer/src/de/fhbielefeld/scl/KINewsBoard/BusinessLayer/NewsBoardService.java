@@ -39,7 +39,7 @@ public class NewsBoardService {
      *
      * @param start   Die Seite, ab der die nächsten 20 Nachrichteneinträge ermitellt werden sollen
      * @param keyword Das Schlüsselwort, nach dem die Nachrichteneinträge gefiltert werden sollen
-     * @param view  Die Ansicht, in der die Nachrichteneinträge gezeigt werden sollen
+     * @param view    Die Ansicht, in der die Nachrichteneinträge gezeigt werden sollen
      * @return Liste der Nachrichteneinträge, die in der Web-/Mobile-Ansicht angezeigt werden
      */
     public List<NewsEntry> getNewsEntries(int start, String keyword, View view) {

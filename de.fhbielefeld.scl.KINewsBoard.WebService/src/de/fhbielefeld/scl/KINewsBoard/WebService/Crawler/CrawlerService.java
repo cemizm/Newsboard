@@ -11,11 +11,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by cem on 10.11.16.
+ * Die Klasse <i>CrawlerService</i> regelt den Zugriff des Crawlers auf die registrierten Ressourcen.
  */
-
 @ApplicationPath("/crawler")
 public class CrawlerService extends Application {
+
+    /**
+     * Ruft die für den CrawlerService registrierten Klassen ab.
+     *
+     * @return Liste der registrierten Klassen für den Service
+     */
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> s = new HashSet<>();

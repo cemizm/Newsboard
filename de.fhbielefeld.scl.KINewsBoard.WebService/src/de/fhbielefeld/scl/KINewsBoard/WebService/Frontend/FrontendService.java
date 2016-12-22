@@ -11,11 +11,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by cem on 10.11.16.
+ * Die Klasse <i>FrontendService</i> regelt den Zugriff des Frontends auf die registrierten Ressourcen.
  */
-
 @ApplicationPath("/frontend")
 public class FrontendService extends Application {
+
+    /**
+     * Ruft die für den FrontendService registrierten Klassen ab.
+     *
+     * @return Liste der registrierten Klassen für den Sevice
+     */
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> s = new HashSet<>();

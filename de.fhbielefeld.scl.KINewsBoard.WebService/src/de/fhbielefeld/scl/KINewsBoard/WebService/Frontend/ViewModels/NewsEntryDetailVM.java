@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Created by cem on 21.11.16.
+ * Die Klasse <i>NewsEntryDetailVM</i> stellt ein Datentransferobjekt dar und ruft die Details zu den Analyseergebnissen eines Nachrichteneintrages aus der Datenbank ab.
  */
 public class NewsEntryDetailVM extends NewsEntryVM {
     private List<AnalyzerResultVM> analyzerResults;
@@ -46,10 +46,20 @@ public class NewsEntryDetailVM extends NewsEntryVM {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Ruft die Analyseergebnisse zu dem Nachrichteneintrag ab.
+     *
+     * @return Liste der Analyseergebnisse zu dem Nachrichteneintrag
+     */
     public List<AnalyzerResultVM> getAnalyzerResults() {
         return analyzerResults;
     }
 
+    /**
+     * Legt die Analyseergebnisse zu dem Nachrichteneintrag fest.
+     *
+     * @param analyzerResults Liste der festzulegenden Analyseergebnisse
+     */
     public void setAnalyzerResults(List<AnalyzerResultVM> analyzerResults) {
         this.analyzerResults = analyzerResults;
     }

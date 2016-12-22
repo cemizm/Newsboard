@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by cem on 03.11.16.
+ * Die Klasse <i>AnalyzerResult</i> repräsentiert einen AnalyzerResult im NewsBoardService.
  */
 @Entity
 @NamedQueries({

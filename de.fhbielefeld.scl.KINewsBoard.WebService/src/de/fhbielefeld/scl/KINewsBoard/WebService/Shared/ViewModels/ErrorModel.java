@@ -1,7 +1,7 @@
 package de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels;
 
 /**
- * Created by cem on 01.12.16.
+ * Die Klasse <i>ErrorModel</i> stellt eine Fehlermeldung dar.
  */
 public class ErrorModel {
     private String message;
@@ -27,10 +27,20 @@ public class ErrorModel {
         } while ((this.message == null || this.message.isEmpty()) && ex != null);
     }
 
+    /**
+     * Ruft die Fehlermeldung ab.
+     *
+     * @return Die Fehlermeldung
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     * Legt die Fehlermeldung fest.
+     *
+     * @param message Die festzulegende Fehlermeldung
+     */
     public void setMessage(String message) {
         this.message = message;
     }

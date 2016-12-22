@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by cem on 03.11.16.
+ * Die Klasse <i>GroupSet</i> repräsentiert eine Gruppe im NewsBoardService.
  */
 @Entity
 @NamedQueries({
