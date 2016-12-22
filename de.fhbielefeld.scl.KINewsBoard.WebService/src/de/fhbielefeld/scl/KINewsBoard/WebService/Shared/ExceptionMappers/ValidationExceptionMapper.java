@@ -9,11 +9,17 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 /**
- * Created by cem on 05.12.16.
+ * Die Klasse <i>ValidationExceptionMapper</i> ist für das Zuordnen der Ausnahme <i>ConstraintViolationException</i> zu einer HTTP-Antwort zuständig.
  */
 @Provider
 public class ValidationExceptionMapper implements ExceptionMapper<ConstraintViolationException> {
 
+    /**
+     * Ordnet eine Ausnahme einer HTTP-Antwort zu.
+     *
+     * @param e Die Ausnahme, die der HTTP-Antwort zuzuordnen ist
+     * @return HTTP-Antwort, dem die Ausnahme zugeordnet ist
+     */
     @Override
     public Response toResponse(ConstraintViolationException e) {
         String msg = "";

@@ -11,14 +11,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by cem on 10.11.16.
+ * * Die Klasse <i>AnalyzerService</i> regelt den Zugriff des Analyzer auf die registrierten Ressourcen.
  */
-
 @ApplicationPath("/analyzer")
 public class AnalyzerService extends Application {
 
     /**
-     * Ruft die für die AnalyzerService registrierten Klassen ab.
+     * Ruft die für den AnalyzerService registrierten Klassen ab.
      *
      * @return Liste der registrierten Klassen für den Service
      */

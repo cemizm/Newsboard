@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Created by cem on 21.11.16.
+ * Die Klasse <i>NewsEntryDetailVM</i> stellt ein Datentransferobjekt dar und ruft die Details zu den Analyseergebnissen eines Nachrichteneintrages aus der Datenbank ab.
  */
 public class NewsEntryDetailVM extends NewsEntryVM {
     private List<AnalyzerResultVM> analyzerResults;

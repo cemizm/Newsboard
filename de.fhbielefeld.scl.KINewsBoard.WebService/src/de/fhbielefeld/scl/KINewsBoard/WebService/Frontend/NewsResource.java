@@ -17,9 +17,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by cem on 10.11.16.
+ * Die Klasse <i>NewsResource</i> stellt dem Frontend den Zugriff auf Nachrichteneinträge bereit.
  */
-
 @Path("/news")
 @Produces(MediaType.APPLICATION_JSON)
 public class NewsResource {
@@ -33,7 +32,7 @@ public class NewsResource {
      * @param page    Die Seite, ab der die Ergebnisse geliefert werden sollen; default: 1, minimum: 1
      * @param keyword Der Suchbegriff, nach dem gefiltert werden soll
      * @param viewId  Die Id der Ansicht; default: 0
-     * @return HTTP-Response, der aussagt, dass die Anfrage bearbeitet und das Ergebnis (Liste der Nachrichteneinträge) übertragen wurde
+     * @return Statuscode 200, wenn die Anfrage erfolgreich bearbeitet wurde und die bereits veröffentlichten Nachrichteneinträge
      */
     @GET
     public Response getPublicNewsEntries(
@@ -57,7 +56,7 @@ public class NewsResource {
      *
      * @param newsId Die Id des Nachrichteneintrages
      * @param viewId Die Id der Ansicht; default: 0
-     * @return HTTP-Response, der aussagt, dass die Anfrage bearbeitet und das Ergebnis (der Nachrichteneintrag) übertragen wurde
+     * @return Statuscode 200, wenn die Anfrage erfolgreich bearbeitet wurde und die Details eines Nachrichteneintrages
      */
     @GET
     @Path("/{newsId}")
@@ -82,7 +81,7 @@ public class NewsResource {
      *
      * @param newsId Die Id des Nachrichteneintrages
      * @param up     <i>true</i>, wenn der Nachrichteneintrag positiv bewertet werden soll
-     * @return HTTP-Response, der aussagt, dass die Anfrage bearbeitet und das Ergebnis (der Nachrichteneintrag) übertragen wurde
+     * @return Statuscode 200, wenn die Anfrage erfolgreich bearbeitet wurde und der bewertete Nachrichteneintrag
      */
     @POST
     @Path("/{newsId}/rate")
@@ -100,7 +99,7 @@ public class NewsResource {
      * Ruft die Nachrichteneinträge zu der Ansicht mit der angegebenen Id ab.
      *
      * @param viewId Die Id der Ansicht
-     * @return HTTP-Response, der aussagt, dass die Anfrage bearbeitet und das Ergebnis (Liste der Nachrichteneinträge, die der Ansicht zugeordnet sind) übertragen wurde
+     * @return Statuscode 200, wenn die Anfrage erfolgreich bearbeitet wurde und die Nachrichteneinträge, die in der Ansicht angezeigt werden können
      */
     @GET
     @Path("/findByView/{viewId}")

@@ -18,19 +18,22 @@ import java.security.Principal;
 import java.util.List;
 
 /**
- * Created by cem on 01.12.16.
+ * Die Klasse <i>AuthenticationFilter</i> ist für die Filterung der Authentifizierung beim Ausführen eines Webservice-Aufrufes zuständig.
  */
 @Provider
 public class AuthenticationFilter implements ContainerRequestFilter {
 
+    private static final String AUTHENTICATION_SCHEME = "Basic";
     @EJB
     AuthenticationService service;
-
     @Context
     private ResourceInfo resourceInfo;
 
-    private static final String AUTHENTICATION_SCHEME = "Basic";
-
+    /**
+     * Die Methode wird vor jedem Webservice-Aufruf ausgeführt, um die Authentifizierung zu filtern.
+     *
+     * @param requestContext Der Anfragekontext
+     */
     @Override
     public void filter(ContainerRequestContext requestContext) {
         Method method = resourceInfo.getResourceMethod();

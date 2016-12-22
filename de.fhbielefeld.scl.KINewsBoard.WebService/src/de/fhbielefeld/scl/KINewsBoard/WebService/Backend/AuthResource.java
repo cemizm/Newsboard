@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
 /**
- * Created by cem on 01.12.16.
+ * Die Klasse <i>AuthResource</i> stellt dem Backend den Zugriff auf die Authentifizierung bereit.
  */
 @Path("/auth")
 @Produces(MediaType.APPLICATION_JSON)
@@ -23,6 +23,15 @@ public class AuthResource {
     @EJB
     private AuthenticationService service;
 
+    /**
+     * Meldet den Benutzer anhand seiner Benutzdaten im System an.
+     *
+     * @param username Der Benutzername des Benutzers
+     * @param password Das Benutzerpasswort des Benutzers
+     * @return Statuscode 200, wenn Anfrage erfolgreich bearbeitet wurde,
+     * Statuscode 401, wenn die Benutzerdaten ungültig sind
+     * @throws AuthenticationException Wenn die Benutzerdaten ungültig sind
+     */
     @POST
     @Path("/login")
     public Response login(@HeaderParam("username") @NotNull String username,
@@ -33,6 +42,12 @@ public class AuthResource {
         return Response.ok(user).build();
     }
 
+    /**
+     * Meldet den Benutzer vom System ab.
+     *
+     * @param securityContext Beinhaltet Informationen über den angemeldeten Benutzer
+     * @return Statuscode 200, wenn Anfrage erfolgreich bearbeitet wurde
+     */
     @POST
     @Path("/logout")
     @RolesAllowed({})
@@ -44,6 +59,12 @@ public class AuthResource {
         return Response.ok().build();
     }
 
+    /**
+     * Ruft Informationen über den angemeldeten Benutzer ab.
+     *
+     * @param securityContext Beinhaltet Informationen über den angemeldeten Benutzer
+     * @return Statuscode 200, wenn Anfrage erfolgreich bearbeitet wurde
+     */
     @GET
     @Path("/user")
     @RolesAllowed({})

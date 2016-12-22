@@ -16,9 +16,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by cem on 10.11.16.
+ * Die Klasse <i>NewsResource</i> stellt dem Analyzer den Zugriff auf Nachrichteneinträge bereit.
  */
-
 @Path("/news")
 @Produces(MediaType.APPLICATION_JSON)
 public class NewsResource {
@@ -28,8 +27,10 @@ public class NewsResource {
 
     /**
      * Ruft alle Nachrichteneinträge ab, die von dem Analyzer mit dem angegebenen Authentifizierungstoken analysiert wurden.
+     *
      * @param token Der Authentifizierungstoken des Analyzers
-     * @return HTTP-Response, der aussagt, dass die Anfrage bearbeitet und das Ergebnis (Liste der Nachrichteneinträge) übertragen wurde
+     * @return Statuscode 200, wenn Anfrage erfolgreich bearbeitet wurde, <br>
+     * Statuscode 401, wenn die Autorisierung fehlschlägt
      * @throws AuthenticationException Wenn der Authentifizierungstoken des Analyzers ungültig ist
      */
     @GET
@@ -46,11 +47,13 @@ public class NewsResource {
     /**
      * Veröffentlicht den Nachrichteneintrag mit der angegebenen Id als Analyseergebnis des Analyzers mit dem angegebenen Authentifizierungstoken.
      *
-     * @param token Der Authentifizierungstoken des Analyzers
+     * @param token  Der Authentifizierungstoken des Analyzers
      * @param newsId Die Id des Nachrichteneintrages
-     * @param model Model des AnalyzersResults, das nur aus den Basis-Informationen besteht
-     * @return HTTP-Response, der aussagt, dass die Anfrage bearbeitet und das Ergebnis übertragen wurde
-     * @throws AuthenticationException
+     * @param model  Model des AnalyzersResults, das nur aus den Basis-Informationen besteht
+     * @return Statuscode 200, wenn die Anfrage erfolgreich bearbeitet wurde, <br>
+     * Statuscode 400, wenn die Validierung des Analyseergebnisses fehlschlägt, <br>
+     * Statuscode 401, wenn die Autorisierung fehlschlägt
+     * @throws AuthenticationException Wenn der Authentifizierungstoken des Analyzers ungültig ist
      */
     @POST
     @Path("/{newsId}")

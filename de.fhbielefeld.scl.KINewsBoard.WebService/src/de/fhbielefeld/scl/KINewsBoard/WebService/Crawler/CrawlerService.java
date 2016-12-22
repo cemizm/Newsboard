@@ -11,9 +11,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by cem on 10.11.16.
+ * Die Klasse <i>CrawlerService</i> regelt den Zugriff des Crawlers auf die registrierten Ressourcen.
  */
-
 @ApplicationPath("/crawler")
 public class CrawlerService extends Application {
 

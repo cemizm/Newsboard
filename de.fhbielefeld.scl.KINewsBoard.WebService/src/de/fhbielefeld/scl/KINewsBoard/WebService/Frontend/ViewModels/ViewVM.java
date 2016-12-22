@@ -6,7 +6,7 @@ import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.ViewBaseModel
 import java.util.List;
 
 /**
- * Created by cem on 21.11.16.
+ * Die Klasse <i>ViewVM</i> stellt ein Datentransferobjekt dar und ruft die Daten ein Ansicht aus der Datenbank ab.
  */
 public class ViewVM extends ViewBaseModel {
 

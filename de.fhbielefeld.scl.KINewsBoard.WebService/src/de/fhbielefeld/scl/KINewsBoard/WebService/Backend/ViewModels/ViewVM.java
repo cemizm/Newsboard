@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Created by azad- on 17.11.2016.
+ * Die Klasse <i>ViewVM</i> stellt ein Datentransferobjekt dar und ruft die Daten einer Ansicht aus der Datenbank ab.
  */
 public class ViewVM extends ViewBaseModel {
 
@@ -30,22 +30,47 @@ public class ViewVM extends ViewBaseModel {
         crawlers = view.getCrawlers().stream().map(Crawler::getId).collect(Collectors.toList());
     }
 
+    /**
+     * Ruft die der Ansicht zugeordneten Gruppen ab.
+     *
+     * @return Liste der Ids der zugeordneten Gruppen
+     */
     public List<Integer> getGroups() {
         return groups;
     }
 
+    /**
+     * Legt die der Ansicht zugeordneten Gruppe. fest.
+     *
+     * @param groups Liste der Ids der zuzuordnenden Gruppen
+     */
     public void setGroups(List<Integer> groups) {
         this.groups = groups;
     }
 
+    /**
+     * Ruft die der Ansicht zugeordneten Crawler ab.
+     *
+     * @return Liste der Ids der zugerdneten Crawler
+     */
     public List<Integer> getCrawlers() {
         return crawlers;
     }
 
+    /**
+     * Legt die Crawler fest, die der Ansicht zugeordnet sind.
+     *
+     * @param crawlers Liste der Ids der zuzuordnenden Crawler
+     */
     public void setCrawlers(List<Integer> crawlers) {
         this.crawlers = crawlers;
     }
 
+    /**
+     * Kopiert die Daten des Datentransferobjektes und erstellt anhand dessen eine neue Ansicht.
+     *
+     * @return Ansicht mit den kopierten Daten auf Basis des Datentransferobjektes
+     */
     public View getView() {
         View view = new View();
         view.setId(getId());

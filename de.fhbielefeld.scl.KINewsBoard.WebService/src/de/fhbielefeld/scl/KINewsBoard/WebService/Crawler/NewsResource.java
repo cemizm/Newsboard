@@ -15,9 +15,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- * Created by cem on 10.11.16.
+ * Die Klasse <i>NewsResource</i> stellt dem Crawler den Zugriff auf Nachrichteneinträge bereit.
  */
-
 @Path("/news")
 @Produces(MediaType.APPLICATION_JSON)
 public class NewsResource {
@@ -30,7 +29,8 @@ public class NewsResource {
      *
      * @param token Der Token des Crawlers
      * @param model Model des Nachrichteneintrages, das nur aus den Basis-Informationen besteht
-     * @return HTTP-Response, dass die Anfrage bearbeitet und das Ergebnis übertragen wurde
+     * @return Statuscode 200, wenn die Anfrage erfolgreich bearbeitet wurde,<br>
+     * Statuscode 401, wenn die Authorisierung fehlschlägt
      * @throws AuthenticationException Wenn der Authentifizierungstoken des Crawlers ungültig ist
      */
     @POST

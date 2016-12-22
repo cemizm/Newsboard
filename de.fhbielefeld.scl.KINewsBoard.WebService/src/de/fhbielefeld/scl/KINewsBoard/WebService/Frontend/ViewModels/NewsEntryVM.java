@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Created by cem on 21.11.16.
+ * Die Klasse <i>NewsEntryVM</i> stellt ein Datentransferobjekt dar und ruft die Daten eines Nachrichteneintrages aus der Datenbank ab.
  */
 public class NewsEntryVM extends NewsEntryBaseModel {
     private CrawlerBaseModel crawler;

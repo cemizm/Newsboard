@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by cem on 12.11.16.
+ * Die Klasse <i>CrawlerResource</i> stellt dem Backend den Zugriff auf Crawler bereit.
  */
 @Path("/crawler")
 @Produces(MediaType.APPLICATION_JSON)
@@ -29,6 +29,13 @@ public class CrawlerResource {
         return adminService.getAllCrawler().stream().map(CrawlerVM::new).collect(Collectors.toList());
     }
 
+    /**
+     * Erstellt den angegeben Crawler.
+     *
+     * @param model Der zu erstellende Crawler
+     * @return Statuscode 200, wenn Anfrage erfolgreich bearbeitet wurde, <br>
+     * Statuscode 400, wenn die Validierung des Crawlers fehlschlägt
+     */
     @POST
     @RolesAllowed({})
     public Response create(@NotNull @Valid CrawlerVM model) {
@@ -36,6 +43,13 @@ public class CrawlerResource {
         return Response.ok().build();
     }
 
+    /**
+     * Aktualisiert den angegebenen Crawler.
+     *
+     * @param model Der zu aktualisierende Crawler
+     * @return Statuscode 200, wenn Anfrage erfolgreich bearbeitet wurde, <br>
+     * Statuscode 400, wenn die Validierung des Crawlers fehlschlägt
+     */
     @PUT
     @RolesAllowed({})
     public Response update(@NotNull @Valid CrawlerVM model) {
@@ -43,6 +57,12 @@ public class CrawlerResource {
         return Response.ok().build();
     }
 
+    /**
+     * Löscht den Crawler mit der angegebenen Id.
+     *
+     * @param crawlerId Die Id des zu löschenden Crawlers
+     * @return Statuscode 200, wenn Anfrage erfolgreich bearbeitet wurde
+     */
     @DELETE
     @Path("/{crawlerId}")
     @RolesAllowed({})
@@ -50,6 +70,5 @@ public class CrawlerResource {
         adminService.deleteCrawler(crawlerId);
         return Response.ok().build();
     }
-
 
 }

@@ -5,7 +5,7 @@ import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.AnalyzerBaseM
 import de.fhbielefeld.scl.KINewsBoard.WebService.Shared.ViewModels.AnalyzerResultBaseModel;
 
 /**
- * Created by cem on 21.11.16.
+ * Die Klasse <i>AnalyzerResultVM</i> stellt ein Datentransferobjekt dar und ruft die Daten eines Analyseergebnisses aus der Datenbank ab.
  */
 public class AnalyzerResultVM extends AnalyzerResultBaseModel {
     private AnalyzerBaseModel analyzer;

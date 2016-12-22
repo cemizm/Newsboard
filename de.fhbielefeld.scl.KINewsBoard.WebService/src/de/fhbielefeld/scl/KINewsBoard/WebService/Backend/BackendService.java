@@ -12,11 +12,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by cem on 10.11.16.
+ * * Die Klasse <i>BackendService</i> regelt den Zugriff des Backends auf die registrierten Ressourcen.
  */
-
 @ApplicationPath("/backend")
 public class BackendService extends Application {
+
+    /**
+     * Ruft die für den BackendService registrierten Klassen ab.
+     *
+     * @return Liste der registrierten Klassen für den Service
+     */
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> s = new HashSet<>();

@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Created by cem on 14.11.16.
+ * Die Klasse <i>AnalyzerVM</i> stellt ein Datentransferobjekt dar und ruft die Daten eines Analyzers aus der Datenbank ab.
  */
 public class AnalyzerVM extends AnalyzerBaseModel {
 
@@ -32,32 +32,67 @@ public class AnalyzerVM extends AnalyzerBaseModel {
         groups = analyzer.getGroupSets().stream().map(GroupSet::getId).collect(Collectors.toList());
     }
 
+    /**
+     * Ruft den Authentifizierungstoken des Analyzers ab.
+     *
+     * @return Der Authentifizierungstoken des Analyzers
+     */
     @Size(min = 10, max = 256)
     @NotNull
     public String getToken() {
         return token;
     }
 
+    /**
+     * Legt den Authentifizierungstoken des Analyzers fest.
+     *
+     * @param token Der festzulegende Authentifizierungstoken des Analyzers
+     */
     public void setToken(String token) {
         this.token = token;
     }
 
+    /**
+     * Ruft den Aktivitätsstatus des Analyzers ab.
+     *
+     * @return <i>true</i>, wenn der Analyzer deaktiviert ist
+     */
     public boolean isDisabled() {
         return disabled;
     }
 
+    /**
+     * Legt den Aktivitätsstatus des Analyzers fest.
+     *
+     * @param disabled Der festzulegende Aktivitätszustand des Analyzers
+     */
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;
     }
 
+    /**
+     * Ruft die Ids der Gruppen ab, denen der Analyzer zugeordnet ist.
+     *
+     * @return Liste der Gruppenids, denen der Analyzer zugeordnet ist
+     */
     public List<Integer> getGroups() {
         return groups;
     }
 
+    /**
+     * Legt die Gruppen fest, denen der Analyzer zugeordnet ist.
+     *
+     * @param groups Liste der Gruppenids, denen der Analyzer zugeordnet werden soll
+     */
     public void setGroups(List<Integer> groups) {
         this.groups = groups;
     }
 
+    /**
+     * Kopiert die Daten des Datentransferobjektes und erstellt anhand dessen einen neuen Analyzer.
+     *
+     * @return Analyzer mit den kopierten Daten auf Basis des Datentransferobjektes
+     */
     public Analyzer getAnalyzer() {
         Analyzer analyzer = new Analyzer();
 
