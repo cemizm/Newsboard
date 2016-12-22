@@ -68,3 +68,4 @@ fabric.properties
 # .idea/misc.xml 
 # *.ipr
 /Dokumentation/JavaDoc
+/Dokumentation/JSDoc
