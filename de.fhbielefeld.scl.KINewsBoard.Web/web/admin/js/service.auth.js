@@ -4,7 +4,7 @@
  */
 angular.module('nwbadmin')
     .factory('AuthService', ['$http', '$rootScope', '$window', function ($http, $rootScope, $window) {
-        var api = "../../WebService/backend/auth/"
+        var api = "../WebService/backend/auth/"
         var service = {};
 
         /**

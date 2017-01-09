@@ -4,7 +4,7 @@
  */
 angular.module('nwbadmin')
     .factory('ViewService', ['$http', '$q', function ($http, $q) {
-        var api = "../../WebService/backend/view/"
+        var api = "../WebService/backend/view/"
         var service = {};
 
         /**

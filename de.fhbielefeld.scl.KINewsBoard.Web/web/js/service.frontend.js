@@ -4,7 +4,7 @@
  */
 angular.module('nwb')
     .factory('FrontendService', ['$http', '$q', function ($http, $q) {
-        var api = "../WebService/frontend/";
+        var api = "WebService/frontend/";
         var service = {};
 
         /**

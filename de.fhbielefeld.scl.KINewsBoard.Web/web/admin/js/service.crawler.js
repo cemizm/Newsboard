@@ -4,7 +4,7 @@
  */
 angular.module('nwbadmin')
     .factory('CrawlerService', ['$http', '$q', function ($http, $q) {
-        var api = "../../WebService/backend/"
+        var api = "../WebService/backend/"
         var service = {};
 
         /**
