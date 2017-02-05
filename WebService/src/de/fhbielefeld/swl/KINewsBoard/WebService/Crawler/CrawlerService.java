@@ -1,5 +1,7 @@
 package de.fhbielefeld.swl.KINewsBoard.WebService.Crawler;
 
+
+import de.fhbielefeld.swl.KINewsBoard.WebService.Crawler.Filters.TokenFilter;
 import de.fhbielefeld.swl.KINewsBoard.WebService.Shared.ExceptionMappers.AuthenticationExceptionMapper;
 import de.fhbielefeld.swl.KINewsBoard.WebService.Shared.ExceptionMappers.DefaultExceptionMapper;
 import de.fhbielefeld.swl.KINewsBoard.WebService.Shared.ExceptionMappers.IllegalArgumentExceptionMapper;
@@ -25,6 +27,7 @@ public class CrawlerService extends Application {
     public Set<Class<?>> getClasses() {
         Set<Class<?>> s = new HashSet<>();
 
+        s.add(TokenFilter.class);
         s.add(NewsResource.class);
 
         s.add(AuthenticationExceptionMapper.class);
