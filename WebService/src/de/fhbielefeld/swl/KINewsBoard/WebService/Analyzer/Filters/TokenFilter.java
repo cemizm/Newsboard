@@ -1,21 +1,18 @@
 package de.fhbielefeld.swl.KINewsBoard.WebService.Analyzer.Filters;
 
-
 import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.NewsBoardService;
 import de.fhbielefeld.swl.KINewsBoard.DataLayer.DataModels.Analyzer;
 import de.fhbielefeld.swl.KINewsBoard.WebService.Shared.ViewModels.ErrorModel;
+import de.fhbielefeld.swl.KINewsBoard.WebService.Shared.utils.CustomPrincipal;
 
 import javax.ejb.EJB;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
-import java.lang.reflect.Method;
+import java.security.Principal;
 import java.util.List;
 
 @Provider
@@ -32,7 +29,7 @@ public class TokenFilter implements ContainerRequestFilter {
         final List<String> token = headers.get("token");
 
         if (token == null || token.isEmpty()) {
-            requestContext.abortWith(Response.status(Response.Status.BAD_REQUEST)
+            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
                     .entity(new ErrorModel("Kein Token in Request vorhanden.")).build());
             return;
         }
@@ -40,15 +37,37 @@ public class TokenFilter implements ContainerRequestFilter {
         Analyzer foundAnalyzer = newsBoardService.getAnalyzerByToken(token.get(0));
 
         if (foundAnalyzer == null) {
-            requestContext.abortWith(Response.status(Response.Status.BAD_REQUEST)
+            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
                     .entity(new ErrorModel("Übergebener Token existiert nicht.")).build());
             return;
         }
 
         if (foundAnalyzer.isDisabled()) {
-            requestContext.abortWith(Response.status(Response.Status.BAD_REQUEST)
+            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
                     .entity(new ErrorModel("Analyzer nicht aktiv")).build());
             return;
         }
+
+        requestContext.setSecurityContext(new SecurityContext() {
+            @Override
+            public Principal getUserPrincipal() {
+                return new CustomPrincipal<>(foundAnalyzer);
+            }
+
+            @Override
+            public boolean isUserInRole(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean isSecure() {
+                return false;
+            }
+
+            @Override
+            public String getAuthenticationScheme() {
+                return null;
+            }
+        });
     }
 }
