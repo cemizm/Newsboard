@@ -1,7 +1,7 @@
 package de.fhbielefeld.swl.KINewsBoard.WebService.Crawler.Filters;
 
 
-import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.AdminService;
+import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.NewsBoardService;
 import de.fhbielefeld.swl.KINewsBoard.DataLayer.DataModels.Crawler;
 import de.fhbielefeld.swl.KINewsBoard.WebService.Shared.ViewModels.ErrorModel;
 
@@ -19,7 +19,7 @@ import java.util.List;
 @Provider
 public class TokenFilter implements ContainerRequestFilter {
     @EJB
-    private AdminService adminService;
+    private NewsBoardService newsBoardService;
     @Context
     private ResourceInfo resourceInfo;
 
@@ -35,15 +35,8 @@ public class TokenFilter implements ContainerRequestFilter {
             return;
         }
 
-        final List<Crawler> allCrawlers = adminService.getAllCrawler();
+        Crawler foundCrawler = newsBoardService.getCrawlerByToken(token.get(0));
 
-        Crawler foundCrawler = null;
-
-        for (Crawler currCrawler: allCrawlers) {
-            if (currCrawler.getToken().equals(token.get(0))) {
-                foundCrawler = currCrawler;
-            }
-        }
 
         if (foundCrawler == null) {
             requestContext.abortWith(Response.status(Response.Status.BAD_REQUEST)

@@ -1,7 +1,7 @@
 package de.fhbielefeld.swl.KINewsBoard.WebService.Analyzer.Filters;
 
 
-import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.AdminService;
+import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.NewsBoardService;
 import de.fhbielefeld.swl.KINewsBoard.DataLayer.DataModels.Analyzer;
 import de.fhbielefeld.swl.KINewsBoard.WebService.Shared.ViewModels.ErrorModel;
 
@@ -21,7 +21,7 @@ import java.util.List;
 @Provider
 public class TokenFilter implements ContainerRequestFilter {
     @EJB
-    private AdminService adminService;
+    private NewsBoardService newsBoardService;
     @Context
     private ResourceInfo resourceInfo;
 
@@ -37,15 +37,7 @@ public class TokenFilter implements ContainerRequestFilter {
             return;
         }
 
-        final List<Analyzer> allAnalyzer = adminService.getAllAnalyzer();
-
-        Analyzer foundAnalyzer = null;
-
-        for (Analyzer currAnalyzer: allAnalyzer) {
-            if (currAnalyzer.getToken().equals(token.get(0))) {
-                foundAnalyzer = currAnalyzer;
-            }
-        }
+        Analyzer foundAnalyzer = newsBoardService.getAnalyzerByToken(token.get(0));
 
         if (foundAnalyzer == null) {
             requestContext.abortWith(Response.status(Response.Status.BAD_REQUEST)
