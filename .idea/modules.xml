@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/BusinessLayer/BusinessLayer.iml" filepath="$PROJECT_DIR$/BusinessLayer/BusinessLayer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DataLayer/DataLayer.iml" filepath="$PROJECT_DIR$/DataLayer/DataLayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/Dokumentation/Dokumentation.iml" filepath="$PROJECT_DIR$/Dokumentation/Dokumentation.iml" />
       <module fileurl="file://$PROJECT_DIR$/NodeTestService/NodeTestService.iml" filepath="$PROJECT_DIR$/NodeTestService/NodeTestService.iml" />
-      <module fileurl="file://$PROJECT_DIR$/de.fhbielefeld.scl.KINewsBoard.BusinessLayer/de.fhbielefeld.scl.KINewsBoard.BusinessLayer.iml" filepath="$PROJECT_DIR$/de.fhbielefeld.scl.KINewsBoard.BusinessLayer/de.fhbielefeld.scl.KINewsBoard.BusinessLayer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/de.fhbielefeld.scl.KINewsBoard.DataLayer/de.fhbielefeld.scl.KINewsBoard.DataLayer.iml" filepath="$PROJECT_DIR$/de.fhbielefeld.scl.KINewsBoard.DataLayer/de.fhbielefeld.scl.KINewsBoard.DataLayer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/de.fhbielefeld.scl.KINewsBoard.Web/de.fhbielefeld.scl.KINewsBoard.Web.iml" filepath="$PROJECT_DIR$/de.fhbielefeld.scl.KINewsBoard.Web/de.fhbielefeld.scl.KINewsBoard.Web.iml" />
-      <module fileurl="file://$PROJECT_DIR$/de.fhbielefeld.scl.KINewsBoard.WebService/de.fhbielefeld.scl.KINewsBoard.WebService.iml" filepath="$PROJECT_DIR$/de.fhbielefeld.scl.KINewsBoard.WebService/de.fhbielefeld.scl.KINewsBoard.WebService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Web/Web.iml" filepath="$PROJECT_DIR$/Web/Web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WebService/WebService.iml" filepath="$PROJECT_DIR$/WebService/WebService.iml" />
     </modules>
   </component>
 </project>

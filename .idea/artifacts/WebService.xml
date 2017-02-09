@@ -4,10 +4,10 @@
     <root id="archive" name="WebService.war">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="de.fhbielefeld.scl.KINewsBoard.WebService" />
-          <element id="jpa-descriptors" facet="de.fhbielefeld.scl.KINewsBoard.DataLayer/jpa/JPA" />
-          <element id="module-output" name="de.fhbielefeld.scl.KINewsBoard.DataLayer" />
-          <element id="module-output" name="de.fhbielefeld.scl.KINewsBoard.BusinessLayer" />
+          <element id="module-output" name="WebService" />
+          <element id="jpa-descriptors" facet="DataLayer/jpa/JPA" />
+          <element id="module-output" name="DataLayer" />
+          <element id="module-output" name="BusinessLayer" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="org.hibernate:hibernate-search-orm:5.5.5.Final" />
