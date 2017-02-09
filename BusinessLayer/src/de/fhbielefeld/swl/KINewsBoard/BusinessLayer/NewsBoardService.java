@@ -144,8 +144,7 @@ public class NewsBoardService {
      * @return Der veröffentlichte Nachrichteneintrag
      * @throws AuthenticationException Wenn der Authentifizierungstoken des Crawlers nicht gültig ist
      */
-    public NewsEntry publishNewsEntry(String token, NewsEntry newsEntry) throws AuthenticationException {
-        Crawler crawler = getCrawlerByToken(token);
+    public NewsEntry publishNewsEntry(Crawler crawler, NewsEntry newsEntry) throws AuthenticationException {
 
         if (newsEntry == null)
             throw new IllegalArgumentException("Parameter newsEntry darf nicht null sein");
@@ -176,8 +175,7 @@ public class NewsBoardService {
      * @return Liste der Nachrichteneinträge
      * @throws AuthenticationException Wenn der Authentifizierungstoken des Analyzers ungültig ist
      */
-    public List<NewsEntry> getAnalyzerNewsEntries(String token) throws AuthenticationException {
-        Analyzer analyzer = getAnalyzerByToken(token);
+    public List<NewsEntry> getAnalyzerNewsEntries(Analyzer analyzer) throws AuthenticationException {
 
         return entityManager.createNamedQuery("NewsEntry.getNotAnalyzedNewsEntries", NewsEntry.class)
                 .setParameter("analyzer", analyzer.getId())
@@ -194,9 +192,8 @@ public class NewsBoardService {
      * @return Das veröffentlichte Analyseergebnis.
      * @throws AuthenticationException Wenn der Authentifizierungstoken des Analyzers ungültig ist
      */
-    public AnalyzerResult publishAnalyzerResult(String token, String newsId, AnalyzerResult analyzerResult) throws AuthenticationException {
+    public AnalyzerResult publishAnalyzerResult(Analyzer analyzer, String newsId, AnalyzerResult analyzerResult) throws AuthenticationException {
 
-        Analyzer analyzer = getAnalyzerByToken(token);
         NewsEntry newsEntry = getNewsEntryDetails(newsId);
 
         AnalyzerResult exisiting = getAnalyzerResult(analyzer.getId(), newsEntry.getId());
@@ -224,22 +221,22 @@ public class NewsBoardService {
         return o.isPresent() ? o.get() : null;
     }
 
-    private Analyzer getAnalyzerByToken(String token) throws AuthenticationException {
+    public Analyzer getAnalyzerByToken(String token) {
         Optional<Analyzer> o = entityManager.createNamedQuery("Analyzer.findByToken", Analyzer.class)
                 .setParameter("token", token).getResultList().stream().findFirst();
 
         if (!o.isPresent())
-            throw new AuthenticationException("Token nicht gültig.");
+            return null;
 
         return o.get();
     }
 
-    private Crawler getCrawlerByToken(String token) throws AuthenticationException {
+    public Crawler getCrawlerByToken(String token) {
         Optional<Crawler> o = entityManager.createNamedQuery("Crawler.findByToken", Crawler.class)
                 .setParameter("token", token).getResultList().stream().findFirst();
 
         if (!o.isPresent())
-            throw new AuthenticationException("Token nicht gültig.");
+            return null;
 
         return o.get();
     }

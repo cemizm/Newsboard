@@ -1,5 +1,6 @@
 package de.fhbielefeld.swl.KINewsBoard.WebService.Analyzer;
 
+import de.fhbielefeld.swl.KINewsBoard.WebService.Analyzer.Filters.TokenFilter;
 import de.fhbielefeld.swl.KINewsBoard.WebService.Shared.ExceptionMappers.AuthenticationExceptionMapper;
 import de.fhbielefeld.swl.KINewsBoard.WebService.Shared.ExceptionMappers.DefaultExceptionMapper;
 import de.fhbielefeld.swl.KINewsBoard.WebService.Shared.ExceptionMappers.IllegalArgumentExceptionMapper;
@@ -25,6 +26,7 @@ public class AnalyzerService extends Application {
     public Set<Class<?>> getClasses() {
         Set<Class<?>> s = new HashSet<>();
 
+        s.add(TokenFilter.class);
         s.add(NewsResource.class);
 
         s.add(AuthenticationExceptionMapper.class);
