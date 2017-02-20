@@ -10,7 +10,9 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.io.StringReader;
+import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.List;
 
 /**
  * Die Klasse <i>AuthenticationService</i> dient der Authentifizierung im System.
@@ -19,6 +21,9 @@ import java.util.Hashtable;
 public class AuthenticationService {
 
     private Hashtable<String, User> users = new Hashtable<>();
+    private final List<String> acceptedUserLogins = Arrays.asList("cbasoglu", "kschima", "cgips", "ffehring");
+    private final int ADMIN_LEVEL = 3;
+
 
     /**
      * Initialisiert den Authenfizierungsservice.
@@ -80,8 +85,16 @@ public class AuthenticationService {
             user.setPhone(object.getString("phone"));
         }
 
-        if (user != null)
-            users.put(user.getAuthtoken(), user);
+        if (user == null)
+            return null;
+
+        if (Integer.parseInt(user.getUserlevel()) != ADMIN_LEVEL) {
+            if (!acceptedUserLogins.contains(user.getUsername())) {
+                return null; //TODO: Error message
+            }
+        }
+
+        users.put(user.getAuthtoken(), user);
 
         return user;
     }
