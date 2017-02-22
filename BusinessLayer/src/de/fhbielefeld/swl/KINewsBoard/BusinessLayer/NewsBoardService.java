@@ -1,8 +1,9 @@
 package de.fhbielefeld.swl.KINewsBoard.BusinessLayer;
 
+import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Ranking.RankingModule;
+import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Ranking.RankingModuleImpl;
 import de.fhbielefeld.swl.KINewsBoard.DataLayer.DataModels.*;
 import org.apache.lucene.search.Sort;
-import org.apache.lucene.search.SortField;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -13,6 +14,7 @@ import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.sql.JoinType;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.naming.AuthenticationException;
 import javax.persistence.EntityManager;
@@ -32,6 +34,17 @@ public class NewsBoardService {
 
     @PersistenceContext(name = "NewsBoardPU")
     private EntityManager entityManager;
+
+    private RankingModule rankingModule;
+
+
+    /**
+     * Initialisiert die Module nach dem die DI aufgelöst wurde.
+     */
+    @PostConstruct
+    public void initModules() {
+        rankingModule = new RankingModuleImpl();
+    }
 
     /**
      * Ermitellt, beginnend mit der in <i>start</i> angegebenen Seite, die nächsten 20 Nachrichteneinträgen, die in der Web-/Mobile-Ansicht angezeigt
@@ -57,10 +70,9 @@ public class NewsBoardService {
             bj.must(qb.all().createQuery());
 
         FullTextQuery ftq = ftem.createFullTextQuery(bj.createQuery(), NewsEntry.class);
-
-        ftq.setSort(new Sort(new SortField("date", SortField.Type.LONG, true),
-                new SortField("rating", SortField.Type.INT, true),
-                SortField.FIELD_SCORE));
+        Sort sort = rankingModule.getSort();
+        if (sort != null)
+            ftq.setSort(sort);
 
         Criteria c = session.createCriteria(NewsEntry.class);
         if (view != null && view.getCrawlers().size() > 0) {
@@ -78,6 +90,8 @@ public class NewsBoardService {
         //following has really bad performance, but is the last option to go
 
         List<NewsEntry> list = ftq.setCriteriaQuery(c).getResultList();
+
+        rankingModule.sortList(list);
 
         int startIndex = MAX_RESULTS * (start - 1);
         int endIndex = MAX_RESULTS * start;
