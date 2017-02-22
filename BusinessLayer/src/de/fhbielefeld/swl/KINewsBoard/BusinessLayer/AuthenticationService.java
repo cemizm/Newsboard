@@ -1,7 +1,7 @@
 package de.fhbielefeld.swl.KINewsBoard.BusinessLayer;
 
-import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.UserWebService;
-import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.UserWebService_Service;
+import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2.UserWebService;
+import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2.UserWebService_Service;
 import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Models.User;
 
 import javax.annotation.PostConstruct;
