@@ -29,6 +29,7 @@ public class ObjectFactory {
     private final static QName _PerformLogoutResponse_QNAME = new QName("http://webservices.user.scl.fhbielefeld.de/", "performLogoutResponse");
     private final static QName _LoginUser_QNAME = new QName("http://webservices.user.scl.fhbielefeld.de/", "loginUser");
     private final static QName _User_QNAME = new QName("http://webservices.user.scl.fhbielefeld.de/", "user");
+    private final static QName _ConfigureWebService_QNAME = new QName("http://webservices.user.scl.fhbielefeld.de/", "configureWebService");
     private final static QName _SaveUser_QNAME = new QName("http://webservices.user.scl.fhbielefeld.de/", "saveUser");
     private final static QName _CreateUser_QNAME = new QName("http://webservices.user.scl.fhbielefeld.de/", "createUser");
     private final static QName _SaveUserResponse_QNAME = new QName("http://webservices.user.scl.fhbielefeld.de/", "saveUserResponse");
@@ -41,6 +42,7 @@ public class ObjectFactory {
     private final static QName _GrantRight_QNAME = new QName("http://webservices.user.scl.fhbielefeld.de/", "grantRight");
     private final static QName _UserHasRightResponse_QNAME = new QName("http://webservices.user.scl.fhbielefeld.de/", "userHasRightResponse");
     private final static QName _UserHasRight_QNAME = new QName("http://webservices.user.scl.fhbielefeld.de/", "userHasRight");
+    private final static QName _ConfigureWebServiceResponse_QNAME = new QName("http://webservices.user.scl.fhbielefeld.de/", "configureWebServiceResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2
@@ -95,6 +97,14 @@ public class ObjectFactory {
      */
     public GetUser createGetUser() {
         return new GetUser();
+    }
+
+    /**
+     * Create an instance of {@link ConfigureWebServiceResponse }
+     * 
+     */
+    public ConfigureWebServiceResponse createConfigureWebServiceResponse() {
+        return new ConfigureWebServiceResponse();
     }
 
     /**
@@ -178,6 +188,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ConfigureWebService }
+     * 
+     */
+    public ConfigureWebService createConfigureWebService() {
+        return new ConfigureWebService();
+    }
+
+    /**
      * Create an instance of {@link SaveUser }
      * 
      */
@@ -228,6 +246,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://webservices.user.scl.fhbielefeld.de/", name = "user")
     public JAXBElement<User> createUser(User value) {
         return new JAXBElement<User>(_User_QNAME, User.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ConfigureWebService }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://webservices.user.scl.fhbielefeld.de/", name = "configureWebService")
+    public JAXBElement<ConfigureWebService> createConfigureWebService(ConfigureWebService value) {
+        return new JAXBElement<ConfigureWebService>(_ConfigureWebService_QNAME, ConfigureWebService.class, null, value);
     }
 
     /**
@@ -336,6 +363,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://webservices.user.scl.fhbielefeld.de/", name = "userHasRight")
     public JAXBElement<UserHasRight> createUserHasRight(UserHasRight value) {
         return new JAXBElement<UserHasRight>(_UserHasRight_QNAME, UserHasRight.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ConfigureWebServiceResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://webservices.user.scl.fhbielefeld.de/", name = "configureWebServiceResponse")
+    public JAXBElement<ConfigureWebServiceResponse> createConfigureWebServiceResponse(ConfigureWebServiceResponse value) {
+        return new JAXBElement<ConfigureWebServiceResponse>(_ConfigureWebServiceResponse_QNAME, ConfigureWebServiceResponse.class, null, value);
     }
 
 }

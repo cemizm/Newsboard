@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "UserWebService", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", wsdlLocation = "http://dauerschlaf.ad.fh-bielefeld.de:8080/2016_11_SCL_Usermanager/UserWebService?wsdl")
+@WebServiceClient(name = "UserWebService", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", wsdlLocation = "http://scl2-ifm-min.ad.fh-bielefeld.de:8080/SCL_Usermanager/UserWebService?wsdl")
 public class UserWebService_Service
     extends Service
 {
@@ -30,7 +30,7 @@ public class UserWebService_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://dauerschlaf.ad.fh-bielefeld.de:8080/2016_11_SCL_Usermanager/UserWebService?wsdl");
+            url = new URL("http://scl2-ifm-min.ad.fh-bielefeld.de:8080/SCL_Usermanager/UserWebService?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
