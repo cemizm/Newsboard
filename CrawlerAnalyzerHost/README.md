@@ -1,6 +1,11 @@
 # Crawler & Analyzer Host
 Host service for periodically triggering analyzers and crawlers. 
 
+## resolve dependencies
+```
+npm install
+```
+
 ## Configuration
 
 ```javascript
@@ -40,3 +45,31 @@ Host service for periodically triggering analyzers and crawlers.
   ]
 }
 ```
+
+
+## Starting host
+```
+npm start
+```
+
+## Example start script for linux (systemd)
+
+Create following `cahost.service` in the `/etc/systemd/system` directory:
+```
+[Unit]
+Description=Crawler and Analyzer Host
+
+[Service]
+ExecStart=/folder/to/CrawlerAnalyzerHost/index.js
+Restart=always
+User=nobody
+Group=nobody
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/folder/to/CrawlerAnalyzerHost
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Reload service definitions with `systemctl daemon-reload` and start the Crawler/Analyzer Host with `systemctl start cahost`.
