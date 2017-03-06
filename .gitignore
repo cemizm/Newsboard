@@ -70,3 +70,4 @@ fabric.properties
 /Dokumentation/JavaDoc
 /Dokumentation/JSDoc
 CrawlerAnalyzerHost/logs
+npm-debug.log
