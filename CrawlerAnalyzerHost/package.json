@@ -1,0 +1,16 @@
+{
+  "name": "cahost",
+  "version": "1.0.0",
+  "description": "Host/Runner for Crawler and Analyzer",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Cem Basoglu",
+  "license": "MIT",
+  "dependencies": {
+    "mkdirp": "^0.5.1",
+    "winston": "^2.3.1",
+    "winston-daily-rotate-file": "^1.4.5"
+  }
+}
