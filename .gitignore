@@ -69,3 +69,4 @@ fabric.properties
 # *.ipr
 /Dokumentation/JavaDoc
 /Dokumentation/JSDoc
+CrawlerAnalyzerHost/logs

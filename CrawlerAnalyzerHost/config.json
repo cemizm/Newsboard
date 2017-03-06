@@ -1,0 +1,38 @@
+{
+  "loglevel": "info",
+  "logdir": "./logs",
+  "services": [
+    {
+      "name": "RssCrawler",
+      "loglevel": "info",
+      "periodic": true,
+      "interval": 15,
+      "command": "npm",
+      "args": [
+        "run",
+        "rss"
+      ],
+      "options": {
+        "path": "../NodeTestService",
+        "envvars": null,
+        "shell": null
+      }
+    },
+    {
+      "name": "BingCrawler",
+      "loglevel": "info",
+      "periodic": true,
+      "interval": 15,
+      "command": "npm",
+      "args": [
+        "run",
+        "bing"
+      ],
+      "options": {
+        "path": "../NodeTestService",
+        "envvars": null,
+        "shell": null
+      }
+    }
+  ]
+}
