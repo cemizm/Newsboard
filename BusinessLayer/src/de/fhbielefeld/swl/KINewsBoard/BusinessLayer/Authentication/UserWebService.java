@@ -1,5 +1,5 @@
 
-package de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2;
+package de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -28,8 +28,8 @@ public interface UserWebService {
      * 
      */
     @WebMethod
-    @RequestWrapper(localName = "configureWebService", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2.ConfigureWebService")
-    @ResponseWrapper(localName = "configureWebServiceResponse", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2.ConfigureWebServiceResponse")
+    @RequestWrapper(localName = "configureWebService", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.ConfigureWebService")
+    @ResponseWrapper(localName = "configureWebServiceResponse", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.ConfigureWebServiceResponse")
     @Action(input = "http://webservices.user.scl.fhbielefeld.de/UserWebService/configureWebServiceRequest", output = "http://webservices.user.scl.fhbielefeld.de/UserWebService/configureWebServiceResponse")
     public void configureWebService();
 
@@ -43,8 +43,8 @@ public interface UserWebService {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "userHasRight", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2.UserHasRight")
-    @ResponseWrapper(localName = "userHasRightResponse", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2.UserHasRightResponse")
+    @RequestWrapper(localName = "userHasRight", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.UserHasRight")
+    @ResponseWrapper(localName = "userHasRightResponse", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.UserHasRightResponse")
     @Action(input = "http://webservices.user.scl.fhbielefeld.de/UserWebService/userHasRightRequest", output = "http://webservices.user.scl.fhbielefeld.de/UserWebService/userHasRightResponse")
     public String userHasRight(
         @WebParam(name = "arg0", targetNamespace = "")
@@ -66,8 +66,8 @@ public interface UserWebService {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "grantRight", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2.GrantRight")
-    @ResponseWrapper(localName = "grantRightResponse", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2.GrantRightResponse")
+    @RequestWrapper(localName = "grantRight", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.GrantRight")
+    @ResponseWrapper(localName = "grantRightResponse", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.GrantRightResponse")
     @Action(input = "http://webservices.user.scl.fhbielefeld.de/UserWebService/grantRightRequest", output = "http://webservices.user.scl.fhbielefeld.de/UserWebService/grantRightResponse")
     public String grantRight(
         @WebParam(name = "arg0", targetNamespace = "")
@@ -93,8 +93,8 @@ public interface UserWebService {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "revokeRight", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2.RevokeRight")
-    @ResponseWrapper(localName = "revokeRightResponse", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2.RevokeRightResponse")
+    @RequestWrapper(localName = "revokeRight", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.RevokeRight")
+    @ResponseWrapper(localName = "revokeRightResponse", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.RevokeRightResponse")
     @Action(input = "http://webservices.user.scl.fhbielefeld.de/UserWebService/revokeRightRequest", output = "http://webservices.user.scl.fhbielefeld.de/UserWebService/revokeRightResponse")
     public String revokeRight(
         @WebParam(name = "arg0", targetNamespace = "")
@@ -118,8 +118,8 @@ public interface UserWebService {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "createUser", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2.CreateUser")
-    @ResponseWrapper(localName = "createUserResponse", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2.CreateUserResponse")
+    @RequestWrapper(localName = "createUser", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.CreateUser")
+    @ResponseWrapper(localName = "createUserResponse", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.CreateUserResponse")
     @Action(input = "http://webservices.user.scl.fhbielefeld.de/UserWebService/createUserRequest", output = "http://webservices.user.scl.fhbielefeld.de/UserWebService/createUserResponse")
     public String createUser(
         @WebParam(name = "arg0", targetNamespace = "")
@@ -139,8 +139,8 @@ public interface UserWebService {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "saveUser", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2.SaveUser")
-    @ResponseWrapper(localName = "saveUserResponse", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2.SaveUserResponse")
+    @RequestWrapper(localName = "saveUser", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.SaveUser")
+    @ResponseWrapper(localName = "saveUserResponse", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.SaveUserResponse")
     @Action(input = "http://webservices.user.scl.fhbielefeld.de/UserWebService/saveUserRequest", output = "http://webservices.user.scl.fhbielefeld.de/UserWebService/saveUserResponse")
     public String saveUser(
         @WebParam(name = "arg0", targetNamespace = "")
@@ -159,8 +159,8 @@ public interface UserWebService {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "loginUser", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2.LoginUser")
-    @ResponseWrapper(localName = "loginUserResponse", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2.LoginUserResponse")
+    @RequestWrapper(localName = "loginUser", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.LoginUser")
+    @ResponseWrapper(localName = "loginUserResponse", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.LoginUserResponse")
     @Action(input = "http://webservices.user.scl.fhbielefeld.de/UserWebService/loginUserRequest", output = "http://webservices.user.scl.fhbielefeld.de/UserWebService/loginUserResponse")
     public String loginUser(
         @WebParam(name = "username", targetNamespace = "")
@@ -176,8 +176,8 @@ public interface UserWebService {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "performLogout", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2.PerformLogout")
-    @ResponseWrapper(localName = "performLogoutResponse", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2.PerformLogoutResponse")
+    @RequestWrapper(localName = "performLogout", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.PerformLogout")
+    @ResponseWrapper(localName = "performLogoutResponse", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.PerformLogoutResponse")
     @Action(input = "http://webservices.user.scl.fhbielefeld.de/UserWebService/performLogoutRequest", output = "http://webservices.user.scl.fhbielefeld.de/UserWebService/performLogoutResponse")
     public String performLogout(
         @WebParam(name = "arg0", targetNamespace = "")
@@ -193,8 +193,8 @@ public interface UserWebService {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getUser", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2.GetUser")
-    @ResponseWrapper(localName = "getUserResponse", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2.GetUserResponse")
+    @RequestWrapper(localName = "getUser", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.GetUser")
+    @ResponseWrapper(localName = "getUserResponse", targetNamespace = "http://webservices.user.scl.fhbielefeld.de/", className = "de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.GetUserResponse")
     @Action(input = "http://webservices.user.scl.fhbielefeld.de/UserWebService/getUserRequest", output = "http://webservices.user.scl.fhbielefeld.de/UserWebService/getUserResponse")
     public String getUser(
         @WebParam(name = "arg0", targetNamespace = "")
