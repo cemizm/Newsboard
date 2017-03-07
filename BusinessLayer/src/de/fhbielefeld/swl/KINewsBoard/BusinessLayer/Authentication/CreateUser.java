@@ -1,5 +1,5 @@
 
-package de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2;
+package de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -7,12 +7,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java-Klasse für getUser complex type.
+ * <p>Java-Klasse für createUser complex type.
  * 
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
  * 
  * <pre>
- * &lt;complexType name="getUser">
+ * &lt;complexType name="createUser">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
@@ -28,12 +28,12 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "getUser", propOrder = {
+@XmlType(name = "createUser", propOrder = {
     "arg0",
     "arg1",
     "arg2"
 })
-public class GetUser {
+public class CreateUser {
 
     protected String arg0;
     protected String arg1;

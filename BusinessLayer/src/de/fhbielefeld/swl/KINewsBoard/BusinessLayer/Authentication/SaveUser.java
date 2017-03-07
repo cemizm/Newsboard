@@ -1,5 +1,5 @@
 
-package de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2;
+package de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -7,16 +7,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java-Klasse für userHasRight complex type.
+ * <p>Java-Klasse für saveUser complex type.
  * 
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
  * 
  * <pre>
- * &lt;complexType name="userHasRight">
+ * &lt;complexType name="saveUser">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="arg0" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="arg0" type="{http://webservices.user.scl.fhbielefeld.de/}user" minOccurs="0"/>
  *         &lt;element name="arg1" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="arg2" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
@@ -28,14 +28,14 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "userHasRight", propOrder = {
+@XmlType(name = "saveUser", propOrder = {
     "arg0",
     "arg1",
     "arg2"
 })
-public class UserHasRight {
+public class SaveUser {
 
-    protected String arg0;
+    protected User arg0;
     protected String arg1;
     protected String arg2;
 
@@ -44,10 +44,10 @@ public class UserHasRight {
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link User }
      *     
      */
-    public String getArg0() {
+    public User getArg0() {
         return arg0;
     }
 
@@ -56,10 +56,10 @@ public class UserHasRight {
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link User }
      *     
      */
-    public void setArg0(String value) {
+    public void setArg0(User value) {
         this.arg0 = value;
     }
 

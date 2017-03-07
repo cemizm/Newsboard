@@ -1,5 +1,5 @@
 
-package de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication2;
+package de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
