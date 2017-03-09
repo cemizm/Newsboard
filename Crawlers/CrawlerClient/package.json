@@ -1,0 +1,14 @@
+{
+  "name": "crawlerclient",
+  "version": "1.0.0",
+  "description": "Client Library for FH Bielefeld NewsBoard",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Cem Basoglu",
+  "license": "ISC",
+  "dependencies": {
+    "node-rest-client": "^3.0.7"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "webcrawler",
+  "version": "1.0.0",
+  "description": "RSS feed based Web Crawler",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Cem Basoglu",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "feedparser": "^2.1.0",
+    "node-rest-client": "^3.0.3",
+    "request": "^2.81.0"
+  }
+}
