@@ -20,6 +20,8 @@ public class AuthenticationService {
     private Hashtable<String, User> users = new Hashtable<>();
     private final String RES_PATH = "de.fhbielefeld.swl.KINewsBoard";
     private final String LOGIN_ACTION = "login";
+    private UserWebService_Service svc = new UserWebService_Service();
+    private UserWebService s = svc.getUserWebServicePort();
 
 
     /**
@@ -43,7 +45,7 @@ public class AuthenticationService {
     /**
      * Meldet den Benutzer anhand Benutzername und Passwort an.
      *
-     * @param username Der Benutzername des Benuters, der angemeldet werden soll
+     * @param username Der Benutzername des Benutzers, der angemeldet werden soll
      * @param password Das Passwort des Benutzers, der angemeldet werden soll
      * @return Der angemeldete Benutzer
      */
@@ -55,10 +57,6 @@ public class AuthenticationService {
             throw new IllegalArgumentException("Parameter 'password' darf nicht null oder leer sein!");
 
         username = username.replaceAll("@[\\w.\\-]+\\.\\w+", "");
-
-        UserWebService_Service svc = new UserWebService_Service();
-        UserWebService s = svc.getUserWebServicePort();
-
         String loginRes = s.loginUser(username, password);
 
         if (loginRes == null || loginRes.isEmpty())
@@ -66,13 +64,7 @@ public class AuthenticationService {
 
         loginRes = loginRes.replaceAll(",[\\n\\r\\s]+}", "}");
 
-        String rightRes = s.userHasRight(username, RES_PATH, LOGIN_ACTION);
-
-        if (rightRes == null || rightRes.isEmpty())
-            return null;
-
         JsonObject loginObj = Json.createReader(new StringReader(loginRes)).readObject();
-        JsonObject rightObj = Json.createReader(new StringReader(rightRes)).readObject();
 
         User user = null;
         if (loginObj.containsKey("authtoken")) {
@@ -87,13 +79,34 @@ public class AuthenticationService {
         if (user == null)
             return null;
 
-        if (rightObj.getString("hasRight").equals("true")) {
-            user.setUserlevel(LOGIN_ACTION);
-        }
+        if (!hasRight(user, LOGIN_ACTION))
+            return null;
 
         users.put(user.getAuthtoken(), user);
 
         return user;
+    }
+
+    /**
+     * Überprüft ob der User die entsprechenden Rechte besitzt
+     *
+     * @param user  Der zu überprüfende User
+     * @param action Der entsprechende Rechte-String
+     * @return liefert "true" zurück wenn der User die Rechte besitzt, "false" wenn nicht
+     */
+    public boolean hasRight(User user, String action) {
+        String rightRes = s.userHasRight(user.getUsername(), RES_PATH, action);
+
+        if (rightRes == null || rightRes.isEmpty())
+            return false;
+
+        JsonObject rightObj = Json.createReader(new StringReader(rightRes)).readObject();
+
+        if (rightObj.getString("hasRight").equals("true")) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
