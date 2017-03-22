@@ -58,7 +58,7 @@ public class User implements Principal {
     /**
      * Ruft den Rechtelevel des Benutzers ab.
      *
-     * @return Der Rechtelevel des Benutzers, wobei 3 Adminrechten und 1 Rechte eines normalen Benutzers entsprechen
+     * @return Der Rechtelevel des Benutzers, "login" erlaubt das einloggen in das System
      */
     public String getUserlevel() {
         return userlevel;

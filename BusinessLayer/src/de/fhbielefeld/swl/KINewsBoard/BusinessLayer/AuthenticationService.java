@@ -1,18 +1,12 @@
 package de.fhbielefeld.swl.KINewsBoard.BusinessLayer;
 
-import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.UserWebService;
-import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.UserWebService_Service;
+
+import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Authentication.UserWebServiceHelper;
 import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Models.User;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import java.io.StringReader;
-import java.util.Arrays;
 import java.util.Hashtable;
-import java.util.List;
 
 /**
  * Die Klasse <i>AuthenticationService</i> dient der Authentifizierung im System.
@@ -21,8 +15,8 @@ import java.util.List;
 public class AuthenticationService {
 
     private Hashtable<String, User> users = new Hashtable<>();
-    private final List<String> acceptedUserLogins = Arrays.asList("cbasoglu", "kschima", "cgips", "ffehring");
-    private final int ADMIN_LEVEL = 3;
+    private final String RES_PATH = "de.fhbielefeld.swl.KINewsBoard";
+    private final String LOGIN_ACTION = "login";
 
 
     /**
@@ -30,10 +24,11 @@ public class AuthenticationService {
      */
     @PostConstruct
     public void init() {
+
         User user = new User();
         user.setAuthtoken("f1ac2c84a417f043c08af24e25c232b1");
         user.setUsername("hwurst");
-        user.setUserlevel("3");
+        user.setUserlevel(LOGIN_ACTION);
         user.setFirstname("Hans");
         user.setLastname("Wurst");
         user.setAddress("");
@@ -46,7 +41,7 @@ public class AuthenticationService {
     /**
      * Meldet den Benutzer anhand Benutzername und Passwort an.
      *
-     * @param username Der Benutzername des Benuters, der angemeldet werden soll
+     * @param username Der Benutzername des Benutzers, der angemeldet werden soll
      * @param password Das Passwort des Benutzers, der angemeldet werden soll
      * @return Der angemeldete Benutzer
      */
@@ -57,47 +52,22 @@ public class AuthenticationService {
         if (password == null || password.isEmpty())
             throw new IllegalArgumentException("Parameter 'password' darf nicht null oder leer sein!");
 
-        username = username.replaceAll("@[\\w.\\-]+\\.\\w+", "");
-
-        UserWebService_Service svc = new UserWebService_Service();
-        UserWebService s = svc.getUserWebServicePort();
-
-        String res = s.loginUser(username, password);
-
-        if (res == null || res.isEmpty())
-            return null;
-
-        res = res.replaceAll(",[\\n\\r\\s]+}", "}");
-
-        JsonReader reader = Json.createReader(new StringReader(res));
-        JsonObject object = reader.readObject();
+        UserWebServiceHelper userWebServiceHelper = new UserWebServiceHelper();
 
         User user = null;
-        if (object.containsKey("authtoken")) {
-            user = new User();
-            user.setAuthtoken(object.getString("authtoken"));
-            user.setUsername(object.getString("username"));
-            user.setUserlevel(object.getString("userlevel"));
-            user.setFirstname(object.getString("firstname"));
-            user.setLastname(object.getString("lastname"));
-            user.setAddress(object.getString("address"));
-            user.setEmail(object.getString("email"));
-            user.setPhone(object.getString("phone"));
-        }
+        user = userWebServiceHelper.login(username, password);
 
         if (user == null)
             return null;
 
-        if (Integer.parseInt(user.getUserlevel()) != ADMIN_LEVEL) {
-            if (!acceptedUserLogins.contains(user.getUsername())) {
-                return null; //TODO: Error message
-            }
-        }
+        if (!userWebServiceHelper.hasRight(user, LOGIN_ACTION))
+            return null;
 
         users.put(user.getAuthtoken(), user);
 
         return user;
     }
+
 
     /**
      * Meldet einen Benutzer anhand des Authentifizierungstoken ab.
@@ -118,3 +88,5 @@ public class AuthenticationService {
         return users.get(token);
     }
 }
+
+
