@@ -36,6 +36,7 @@ public class NewsEntry {
     private Crawler crawler;
     private String title;
     private String image;
+    private String excerpt;
     private String content;
     private String source;
     private String url;
@@ -121,8 +122,28 @@ public class NewsEntry {
      *
      * @param image Das festzulegende Bild
      */
+
     public void setImage(String image) {
         this.image = image;
+    }
+
+    /**
+     * Ruft die Zusammenfassung des Nachrichteneintrages ab.
+     *
+     * @return Die Zusammenfassung des Nachrichteneintrages.
+     */
+    @Column(length = 1024)
+    public String getExcerpt() {
+        return excerpt;
+    }
+
+    /**
+     * Legt die Zusammenfassung des Nachrichteneintrages fest.
+     *
+     * @param excerpt Die festzulegende Zusammenfassung
+     */
+    public void setExcerpt(String excerpt) {
+        this.excerpt = excerpt;
     }
 
     /**

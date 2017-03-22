@@ -153,7 +153,7 @@ public class NewsBoardService {
     /**
      * Veröffentlicht einen Nachrichteneintrag.
      *
-     * @param token     Der Authentifizierungstoken für einen Crawler
+     * @param crawler   Das Crawler model
      * @param newsEntry Der Nachrichteneintrag, der veröffentlicht werden soll
      * @return Der veröffentlichte Nachrichteneintrag
      * @throws AuthenticationException Wenn der Authentifizierungstoken des Crawlers nicht gültig ist
@@ -167,6 +167,8 @@ public class NewsBoardService {
 
         if (existing != null)
             throw new IllegalArgumentException("News Eintrag mit Id schon vorhanden!");
+
+        crawler = entityManager.find(Crawler.class, crawler.getId());
 
         newsEntry.setCrawler(crawler);
 
@@ -185,7 +187,7 @@ public class NewsBoardService {
     /**
      * Liefert alle noch nicht analysierten Nachrichteneinträge für einen Analyzer.
      *
-     * @param token Der Authentifizierungstoken für einen AnalyzerModel
+     * @param analyzer Das Analyzer model
      * @return Liste der Nachrichteneinträge
      * @throws AuthenticationException Wenn der Authentifizierungstoken des Analyzers ungültig ist
      */
@@ -200,7 +202,7 @@ public class NewsBoardService {
     /**
      * Veröffentlicht ein Analyseergebnis zu einem Nachrichteneintrag.
      *
-     * @param token          Der Authentifizierungstoken für einen AnalyzerModel.
+     * @param analyzer       Das Analyzer model
      * @param newsId         Die Id zu einem Nachrichteneintrag
      * @param analyzerResult Das Analyseergebnis
      * @return Das veröffentlichte Analyseergebnis.

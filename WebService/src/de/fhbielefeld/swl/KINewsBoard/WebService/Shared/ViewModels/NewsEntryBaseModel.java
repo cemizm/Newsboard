@@ -13,6 +13,7 @@ public class NewsEntryBaseModel {
     private String id;
     private String title;
     private String image;
+    private String excerpt;
     private String content;
     private String source;
     private String url;
@@ -26,6 +27,7 @@ public class NewsEntryBaseModel {
         id = entry.getId();
         title = entry.getTitle();
         image = entry.getImage();
+        excerpt = entry.getExcerpt();
         content = entry.getContent();
         source = entry.getSource();
         url = entry.getUrl();
@@ -89,6 +91,24 @@ public class NewsEntryBaseModel {
         this.image = image;
     }
 
+    /**
+     * Ruft die Zusammenfassung des Nachrichteneintrages ab.
+     *
+     * @return Die Zusammenfassung des Nachrichteneintrages.
+     */
+    @Size(max = 1024)
+    public String getExcerpt() {
+        return excerpt;
+    }
+
+    /**
+     * Legt die Zusammenfassung des Nachrichteneintrages fest.
+     *
+     * @param excerpt Die festzulegende Zusammenfassung
+     */
+    public void setExcerpt(String excerpt) {
+        this.excerpt = excerpt;
+    }
     /**
      * Ruft den Inhalt des Nachrichteneintrages ab.
      *
@@ -177,6 +197,7 @@ public class NewsEntryBaseModel {
         entry.setId(getId());
         entry.setTitle(getTitle());
         entry.setImage(getImage());
+        entry.setExcerpt(getExcerpt());
         entry.setContent(getContent());
         entry.setSource(getSource());
         entry.setUrl(getUrl());
