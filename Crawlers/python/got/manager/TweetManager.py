@@ -31,8 +31,8 @@ class TweetManager:
 			for tweetHTML in tweets:
 				tweetPQ = PyQuery(tweetHTML)
 				tweet = models.Tweet()
-				
-				usernameTweet = tweetPQ("span.username.js-action-profile-name b").text();
+
+				usernameTweet = tweetPQ("span.username b").text();
 				txt = re.sub(r"\s+", " ", tweetPQ("p.js-tweet-text").text().replace('# ', '#').replace('@ ', '@'));
 				retweets = int(tweetPQ("span.ProfileTweet-action--retweet span.ProfileTweet-actionCount").attr("data-tweet-stat-count").replace(",", ""));
 				favorites = int(tweetPQ("span.ProfileTweet-action--favorite span.ProfileTweet-actionCount").attr("data-tweet-stat-count").replace(",", ""));
@@ -40,6 +40,7 @@ class TweetManager:
 				id = tweetPQ.attr("data-tweet-id");
 				permalink = tweetPQ.attr("data-permalink-path");
 				user_id = int(tweetPQ("a.js-user-profile-link").attr("data-user-id"))
+				image = tweetPQ("div.AdaptiveMedia-photoContainer").attr("data-image-url")
 				
 				geo = ''
 				geoSpan = tweetPQ('span.Tweet-geo')
@@ -65,6 +66,7 @@ class TweetManager:
 				tweet.geo = geo
 				tweet.urls = ",".join(urls)
 				tweet.author_id = user_id
+				tweet.image = image
 				
 				results.append(tweet)
 				resultsAux.append(tweet)
