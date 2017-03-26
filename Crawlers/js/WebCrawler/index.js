@@ -13,14 +13,31 @@ var client = new CrawlerClient(config.host, config.token);
 
 sources.forEach(function (source) {
     var reader = new RSSReader();
+
     reader.read(source.url, function (item) {
+
         source.parse(item, function(entry){
+            var filter = true;
+
+            config.keywords.forEach(function(keyword){
+                if(entry.title.indexOf(keyword) >= 0 ||
+                   entry.content.indexOf(keyword) >= 0)
+                {
+                    filter = false;
+                }
+            });
+
+            //if(filter)
+            //    return;
+
             client.publish(entry,
-                function (data, response) {
-                    if (response.statusCode != 200) return console.log("Crawler Error (" + response.statusCode + "): " + data.message);
+                function (error, response) {
+                    if (error) return console.error("Crawler Error (" + error.code + "): " + error.message);
 
                     console.log("Crawler published: " + entry.title)
                 });
         });
+
     });
+
 });

@@ -12,6 +12,7 @@ var MTParser = function(url){
 
             entry.source = "Mindener Tageblatt";
             entry.url = item.link;
+            entry.date = item.pubdate
 
             cb(entry);
         });
@@ -29,7 +30,6 @@ var MTParser = function(url){
 
             entry.id = "mt-" + $(".article-detail").data("article-id");
             entry.title = $(".article-detail header h1").text();
-            entry.date = $(".article-detail header time").attr("content");
             entry.image = "http://www.mt.de" + $(".article-detail header img").attr("src");
 
             entry.content = "";

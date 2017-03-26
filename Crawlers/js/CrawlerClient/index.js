@@ -16,20 +16,18 @@ var CrawlerClient = function (baseUrl, token) {
             }
         };
 
-        try {
-            this.client.post(baseUrl + "/crawler/news", args, function (response, data) {
-                if (response.statusCode != 200) {
-                    return cb(item, {
-                        code: response.statusCode,
-                        message: data.message
-                    });
-                }
+        this.client.post(baseUrl + "/crawler/news", args, function (body, response) {
+            var error = null;
 
-                cb(item, null, response);
-            });
-        }catch(err){
-            cb(item, err);
-        }
+            if (response.statusCode != 200) {
+                error = {
+                    code: response.statusCode,
+                    message: body.message
+                };
+            }
+
+            cb(error, body);
+        });
     };
 
     return api;
