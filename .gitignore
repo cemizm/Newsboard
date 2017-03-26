@@ -71,3 +71,4 @@ fabric.properties
 /Dokumentation/JSDoc
 CrawlerAnalyzerHost/logs
 npm-debug.log
+*.pyc
