@@ -26,6 +26,7 @@ for keyword in cfg.settings['keywords']:
 
         try:
             client.publish(entry)
+            print("published:{}".format(entry['content']))
         except Exception as e:
             eprint(e)
 

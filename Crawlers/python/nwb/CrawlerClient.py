@@ -11,7 +11,7 @@ class CrawlerClient:
     def publish(self, entry):
         resp = requests.post(self.host + "/crawler/news", json=entry, headers=self.headers)
         if resp.status_code != 200:
-            raise ValueError('{}: {}'.format(resp.status_code, resp.json()["message"]))
+            raise ValueError('Crawler Error ({}): {}'.format(resp.status_code, resp.json()["message"]))
 
 
 if __name__ == "__main__":

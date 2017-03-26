@@ -34,7 +34,7 @@ sources.forEach(function (source) {
                 function (error, response) {
                     if (error) return console.error("Crawler Error (" + error.code + "): " + error.message);
 
-                    console.log("Crawler published: " + entry.title)
+                    console.log("published: " + entry.title)
                 });
         });
 
