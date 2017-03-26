@@ -3,33 +3,31 @@
   "logdir": "./logs",
   "services": [
     {
-      "name": "RssCrawler",
+      "name": "WebCrawler",
       "loglevel": "info",
       "periodic": true,
-      "interval": 15,
-      "command": "npm",
+      "interval": 900,
+      "command": "node",
       "args": [
-        "run",
-        "rss"
+        "index.js"
       ],
       "options": {
-        "path": "../NodeTestService",
+        "path": "../Crawlers/js/WebCrawler",
         "envvars": null,
         "shell": null
       }
     },
     {
-      "name": "BingCrawler",
+      "name": "TwitterCrawker",
       "loglevel": "info",
       "periodic": true,
-      "interval": 15,
-      "command": "npm",
+      "interval": 900,
+      "command": "python3",
       "args": [
-        "run",
-        "bing"
+        "Main.py"
       ],
       "options": {
-        "path": "../NodeTestService",
+        "path": "../Crawlers/python",
         "envvars": null,
         "shell": null
       }

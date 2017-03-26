@@ -62,7 +62,7 @@ function timerFactory(service) {
         });
 
         func.on('error', function (message) {
-            mainLogger.log("error", service.name + ": " + message, code);
+            mainLogger.log("error", service.name + ": " + message);
         });
 
         func.on('exit', function (code) {
