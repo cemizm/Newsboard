@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BusinessLayer/BusinessLayer.iml" filepath="$PROJECT_DIR$/BusinessLayer/BusinessLayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/CrawlerAnalyzerHost/CrawlerAnalyzerHost.iml" filepath="$PROJECT_DIR$/CrawlerAnalyzerHost/CrawlerAnalyzerHost.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Crawlers/Crawlers.iml" filepath="$PROJECT_DIR$/Crawlers/Crawlers.iml" />
       <module fileurl="file://$PROJECT_DIR$/DataLayer/DataLayer.iml" filepath="$PROJECT_DIR$/DataLayer/DataLayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/Dokumentation/Dokumentation.iml" filepath="$PROJECT_DIR$/Dokumentation/Dokumentation.iml" />
       <module fileurl="file://$PROJECT_DIR$/NodeTestService/NodeTestService.iml" filepath="$PROJECT_DIR$/NodeTestService/NodeTestService.iml" />
