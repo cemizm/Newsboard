@@ -9,11 +9,10 @@
     "angular-ui-router": "^0.3.2",
     "angular-bootstrap": "^2.2.0",
     "font-awesome": "^4.7.0",
-    "slick-carousel": "^1.6.0",
     "angular-slick-carousel": "^3.1.7",
-    "angular-material": "^1.1.1",
-    "angular-slick": "^0.2.1",
     "angular-local-storage": "^0.5.2",
-    "angular-inview": "^2.2.0"
+    "angular-inview": "^2.2.0",
+    "angular-sanitize": "^1.6.3",
+    "angular-qrcode": "^7.2.0"
   }
 }
