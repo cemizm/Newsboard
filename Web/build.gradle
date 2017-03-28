@@ -1,5 +1,22 @@
 apply plugin: "war"
 
+// Install packages from package.json
+task bower_install(type: Exec) {
+    commandLine = ["bower", "install"]
+}
+
+task bower_clean(type: Delete) {
+    delete 'web/bower_components'
+}
+
+classes.doLast {
+    tasks.bower_install.execute()
+}
+
+clean.doFirst {
+    tasks.bower_clean.execute()
+}
+
 war {
     from 'web' // adds a file-set to the root of the archive
 }

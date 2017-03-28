@@ -1,7 +1,6 @@
 apply plugin: "war"
 
 dependencies {
-    compile project(":DataLayer")
     compile project(":BusinessLayer")
     compile 'javax.annotation:jsr250-api:1.0'
     compile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
