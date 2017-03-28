@@ -5,9 +5,7 @@
 var app = angular.module('nwb', [
     'ui.router',
     'ui.bootstrap',
-    'ngAnimate',
     'slickCarousel',
-    'ngPopover',
     'monospaced.qrcode',
     'LocalStorageModule',
     'angular-inview',
