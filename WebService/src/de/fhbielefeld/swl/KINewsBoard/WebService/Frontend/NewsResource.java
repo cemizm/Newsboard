@@ -1,6 +1,5 @@
 package de.fhbielefeld.swl.KINewsBoard.WebService.Frontend;
 
-import com.sun.istack.internal.NotNull;
 import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.NewsBoardService;
 import de.fhbielefeld.swl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 import de.fhbielefeld.swl.KINewsBoard.DataLayer.DataModels.View;
@@ -10,6 +9,7 @@ import de.fhbielefeld.swl.KINewsBoard.WebService.Frontend.ViewModels.ViewVM;
 
 import javax.ejb.EJB;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

@@ -1,6 +1,5 @@
 package de.fhbielefeld.swl.KINewsBoard.WebService.Backend;
 
-import com.sun.istack.internal.NotNull;
 import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.AuthenticationService;
 import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Models.User;
 import de.fhbielefeld.swl.KINewsBoard.WebService.Shared.ViewModels.ErrorModel;
@@ -8,6 +7,7 @@ import de.fhbielefeld.swl.KINewsBoard.WebService.Shared.ViewModels.ErrorModel;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.naming.AuthenticationException;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
