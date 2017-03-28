@@ -21,10 +21,12 @@ public class Crawler {
     private boolean ignoreAnalyzer;
     private Set<NewsEntry> entries;
     private Set<View> views;
+    private Set<Analyzer> analyzers;
 
     public Crawler() {
         entries = new HashSet<>();
         views = new HashSet<>();
+        analyzers = new HashSet<>();
     }
 
     /**
@@ -157,5 +159,24 @@ public class Crawler {
      */
     public void setViews(Set<View> views) {
         this.views = views;
+    }
+
+    /**
+     * Ruft die zugehörigen Analyzer ab
+     *
+     * @return Liste der zugehörigen Analyzer
+     */
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    public Set<Analyzer> getAnalyzers() {
+        return analyzers;
+    }
+
+    /**
+     * Legt die zugehörigen Analyzer fest
+     *
+     * @param analyzers Liste der zugehörigen Analyzer
+     */
+    public void setAnalyzers(Set<Analyzer> analyzers) {
+        this.analyzers = analyzers;
     }
 }

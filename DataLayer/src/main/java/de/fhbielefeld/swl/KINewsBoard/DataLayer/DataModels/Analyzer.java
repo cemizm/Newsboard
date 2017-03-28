@@ -19,10 +19,12 @@ public class Analyzer {
     private String name;
     private boolean disabled;
     private Set<GroupSet> groupSets;
+    private Set<Crawler> crawlers;
     private Set<AnalyzerResult> results;
 
     public Analyzer() {
         groupSets = new HashSet<>();
+        crawlers = new HashSet<>();
         results = new HashSet<>();
     }
 
@@ -119,6 +121,25 @@ public class Analyzer {
      */
     public void setGroupSets(Set<GroupSet> groupSets) {
         this.groupSets = groupSets;
+    }
+
+    /**
+     * Ruft die Crawler ab, die dem Analyzer zugeordnet sind
+     *
+     * @return Liste, der dem Analyzer zugeordneten Crawlern
+     */
+    @ManyToMany(mappedBy = "analyzers", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    public Set<Crawler> getCrawlers() {
+        return crawlers;
+    }
+
+    /**
+     * Legt die Crawler fest, die dem Analyzer zugeordnet sind
+     *
+     * @param crawlers Liste der zugeordneten Crawler
+     */
+    public void setCrawlers(Set<Crawler> crawlers) {
+        this.crawlers = crawlers;
     }
 
     /**
