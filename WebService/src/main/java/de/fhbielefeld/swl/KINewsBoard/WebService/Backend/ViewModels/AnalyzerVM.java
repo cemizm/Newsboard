@@ -1,6 +1,7 @@
 package de.fhbielefeld.swl.KINewsBoard.WebService.Backend.ViewModels;
 
 import de.fhbielefeld.swl.KINewsBoard.DataLayer.DataModels.Analyzer;
+import de.fhbielefeld.swl.KINewsBoard.DataLayer.DataModels.Crawler;
 import de.fhbielefeld.swl.KINewsBoard.DataLayer.DataModels.GroupSet;
 import de.fhbielefeld.swl.KINewsBoard.WebService.Shared.ViewModels.AnalyzerBaseModel;
 
@@ -19,6 +20,7 @@ public class AnalyzerVM extends AnalyzerBaseModel {
     private String token;
     private boolean disabled;
     private List<Integer> groups;
+    private List<Integer> crawler;
 
     public AnalyzerVM() {
         groups = new ArrayList<>();
@@ -30,6 +32,7 @@ public class AnalyzerVM extends AnalyzerBaseModel {
         token = analyzer.getToken();
         disabled = analyzer.isDisabled();
         groups = analyzer.getGroupSets().stream().map(GroupSet::getId).collect(Collectors.toList());
+        crawler = analyzer.getCrawlers().stream().map(Crawler::getId).collect(Collectors.toList());
     }
 
     /**
@@ -89,6 +92,24 @@ public class AnalyzerVM extends AnalyzerBaseModel {
     }
 
     /**
+     * Ruft die Crawler ab, denen der Analyzer zugeordnet ist.
+     *
+     * @return Liste der Crawler, denen der Analyzer zugeordnet ist
+     */
+    public List<Integer> getCrawler() {
+        return crawler;
+    }
+
+    /**
+     * Legt die Crawler fest, denen der Analyzer zugeordnet ist.
+     *
+     * @param crawler Liste der Crawler, denen der Analyzer zugeordnet werden soll
+     */
+    public void setCrawler(List<Integer> crawler) {
+        this.crawler = crawler;
+    }
+
+    /**
      * Kopiert die Daten des Datentransferobjektes und erstellt anhand dessen einen neuen Analyzer.
      *
      * @return Analyzer mit den kopierten Daten auf Basis des Datentransferobjektes
@@ -108,6 +129,14 @@ public class AnalyzerVM extends AnalyzerBaseModel {
             groups.add(gs);
         }
         analyzer.setGroupSets(groups);
+
+        Set<Crawler> crawlers = analyzer.getCrawlers();
+        for (Integer i: this.crawler) {
+            Crawler c = new Crawler();
+            c.setId(i);
+            crawlers.add(c);
+        }
+        analyzer.setCrawlers(crawlers);
 
         return analyzer;
     }
