@@ -1,0 +1,19 @@
+apply plugin: "war"
+
+dependencies {
+    compile project(":DataLayer")
+    compile project(":BusinessLayer")
+    compile 'javax.annotation:jsr250-api:1.0'
+    compile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
+    compile 'org.glassfish.hk2.external:bean-validator:2.4.0'
+    compile 'org.glassfish:javax.json:1.0.4'
+    compile 'javax.ejb:javax.ejb-api:3.2'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+    }
+}

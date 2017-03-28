@@ -1,0 +1,23 @@
+apply plugin : "ear"
+
+subprojects {
+    apply plugin : "java"
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+dependencies {
+    deploy project(path: ':Web', configuration: 'archives')
+    deploy project(path: ':WebService', configuration: 'archives')
+}
+
+ear {
+    deploymentDescriptor {
+        applicationName = "NewsBoard"
+        initializeInOrder = true
+        webModule("Web.war", "/NewsBoard")
+        webModule("WebService.war", "/NewsBoard/WebService")
+    }
+}

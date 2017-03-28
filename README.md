@@ -12,14 +12,12 @@ Anzeige der Suchergebnisse (Neuigkeiten mit Bewertung mit Hilfe der Sentimentana
  vorhanden sind
 
 ## Prerequisites (Development)
-* Download & Install IntelliJ IDEA
+* Download & Install Gradle
 * Download & Install Node.JS
 * npm -g install bower
 
 ## Build
-* cd de.fhbielefeld.scl.KINewsBoard.Web
-* bower install
-* Build Artifacts in IntelliJ
+* gradle build
 
 ## Deployment
-* NewsBoard.war auf Payara Server deployen
+* NewsBoard.ear auf Payara Server deployen

@@ -1,0 +1,5 @@
+apply plugin: "war"
+
+war {
+    from 'web' // adds a file-set to the root of the archive
+}

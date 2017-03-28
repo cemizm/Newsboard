@@ -1,0 +1,16 @@
+apply plugin: "java"
+
+dependencies {
+    compile project(":DataLayer")
+    compile 'org.hibernate:hibernate-search-orm:5.5.5.Final'
+    compile 'org.glassfish:javax.json:1.0.4'
+    compile 'javax.ejb:javax.ejb-api:3.2'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+    }
+}
