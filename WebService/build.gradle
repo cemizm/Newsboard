@@ -8,11 +8,3 @@ dependencies {
     compile 'org.glassfish:javax.json:1.0.4'
     compile 'javax.ejb:javax.ejb-api:3.2'
 }
-
-sourceSets {
-    main {
-        java {
-            srcDirs = ['src']
-        }
-    }
-}

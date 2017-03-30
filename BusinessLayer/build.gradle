@@ -7,10 +7,4 @@ dependencies {
     compile 'javax.ejb:javax.ejb-api:3.2'
 }
 
-sourceSets {
-    main {
-        java {
-            srcDirs = ['src']
-        }
-    }
 }
