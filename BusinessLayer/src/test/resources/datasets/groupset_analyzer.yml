@@ -1,0 +1,5 @@
+groupset_analyzer:
+  - groupsets_id: 1
+    analyzers_id: 1
+  - groupsets_id: 2
+    analyzers_id: 1
