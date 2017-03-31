@@ -1,0 +1,16 @@
+crawler:
+  - id: 1
+    name: "Crawler #1"
+    token: "3052541e03642874a071492753417402"
+    disabled: false
+    ignoreanalyzer: false
+  - id: 2
+    name: "Crawler #2"
+    token: "0303d0f97b596ebcfcbc512e286198d2"
+    disabled: false
+    ignoreanalyzer: false
+  - id: 3
+    name: "Crawler #3"
+    token: "7c221b21584983b202ff973592e84c77"
+    disabled: false
+    ignoreanalyzer: false
