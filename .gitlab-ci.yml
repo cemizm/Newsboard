@@ -11,11 +11,21 @@ build:
   script:
     - ./gradlew -g /cache/.gradle clean assemble
   allow_failure: false
+  artifacts:
+    paths:
+      - build/libs/NewsBoard.ear
+
 
 test:
   stage: test
   script:
     - ./gradlew -g /cache/.gradle check
+  artifacts:
+    expire_in: 1 week
+    when: always
+    paths:
+      - BusinessLayer/build/reports/
+      - BusinessLayer/build/test-results/test/*.xml
 
 deploy_staging:
   stage: deploy
