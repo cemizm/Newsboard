@@ -88,7 +88,7 @@ public class NewsBoardService {
         //c.setFirstResult(MAX_RESULTS * (start - 1));
 
         //following has really bad performance, but is the last option to go
-
+        @SuppressWarnings("unchecked")
         List<NewsEntry> list = ftq.setCriteriaQuery(c).getResultList();
 
         rankingModule.sortList(list);
