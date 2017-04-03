@@ -26,6 +26,8 @@ test:
     paths:
       - BusinessLayer/build/reports/
       - BusinessLayer/build/test-results/test/*.xml
+      - WebService/build/reports/
+      - WebService/build/test-results/test/*.xml
 
 deploy_staging:
   stage: deploy
