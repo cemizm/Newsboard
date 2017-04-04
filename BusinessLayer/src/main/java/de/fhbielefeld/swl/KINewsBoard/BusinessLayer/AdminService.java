@@ -51,7 +51,7 @@ public class AdminService {
         List<Integer> groups = analyzer.getGroupSets().stream().map(GroupSet::getId).collect(Collectors.toList());
 
         analyzer.setGroupSets(new HashSet<>());
-        syncAnalyzer(analyzer, groups);
+        syncAnalyzerGroups(analyzer, groups);
 
         entityManager.persist(analyzer);
     }
@@ -75,9 +75,16 @@ public class AdminService {
 
         dbAnalyzer.getGroupSets().stream().collect(Collectors.toList()).forEach(g -> g.removeAnalyzer(dbAnalyzer));
 
+        List<Integer> crawler = analyzer.getCrawlers().stream().map(Crawler::getId).collect(Collectors.toList());
+        analyzer.setCrawlers(new HashSet<>());
+
+        dbAnalyzer.getCrawlers().stream().collect(Collectors.toList()).forEach(g -> g.removeAnalyzer(dbAnalyzer));
+
+
         analyzer = entityManager.merge(analyzer);
 
-        syncAnalyzer(analyzer, groups);
+        syncAnalyzerGroups(analyzer, groups);
+        syncAnalyzerCrawler(analyzer, crawler);
 
         return entityManager.merge(analyzer);
     }
@@ -112,7 +119,7 @@ public class AdminService {
         entityManager.remove(analyzer);
     }
 
-    private void syncAnalyzer(Analyzer analyzer, List<Integer> groups) {
+    private void syncAnalyzerGroups(Analyzer analyzer, List<Integer> groups) {
         for (Integer gsId : groups) {
             GroupSet dbGS = entityManager.find(GroupSet.class, gsId);
 
@@ -120,6 +127,17 @@ public class AdminService {
                 throw new IllegalArgumentException("Gruppe '" + gsId + "' nicht gefunden.");
 
             dbGS.addAnalyzer(analyzer);
+        }
+    }
+
+    private void syncAnalyzerCrawler(Analyzer analyzer, List<Integer> crawler) {
+        for (Integer crawlerId : crawler) {
+            Crawler dbCrawler = entityManager.find(Crawler.class, crawlerId);
+
+            if (dbCrawler == null)
+                throw new IllegalArgumentException("Crawler '" + crawlerId + "' nicht gefunden.");
+
+            dbCrawler.addAnalyzer(analyzer);
         }
     }
 

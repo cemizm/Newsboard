@@ -179,4 +179,24 @@ public class Crawler {
     public void setAnalyzers(Set<Analyzer> analyzers) {
         this.analyzers = analyzers;
     }
+
+    /**
+     * Fügt einen Analyzer dem Crawler hinzu.
+     *
+     * @param analyzer Der hinzuzufügende Analyzer
+     */
+    public void addAnalyzer(Analyzer analyzer) {
+        analyzers.add(analyzer);
+        analyzer.getCrawlers().add(this);
+    }
+
+    /**
+     * Entfernt einen Analyzer aus dem Crawler.
+     *
+     * @param analyzer Der zu entfernende Analyzer
+     */
+    public void removeAnalyzer(Analyzer analyzer) {
+        analyzers.remove(analyzer);
+        analyzer.getCrawlers().remove(this);
+    }
 }

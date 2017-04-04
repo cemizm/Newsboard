@@ -24,6 +24,7 @@ public class AnalyzerVM extends AnalyzerBaseModel {
 
     public AnalyzerVM() {
         groups = new ArrayList<>();
+        crawler = new ArrayList<>();
     }
 
     public AnalyzerVM(Analyzer analyzer) {

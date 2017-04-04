@@ -19,8 +19,8 @@ angular.module('nwbadmin.analyzer', ['ui.router'])
      * @class nwbadmin.AnalyzerViewController
      * @description Controller für die Administration der Analyzer.
      */
-    .controller('AnalyzerViewController', ['$scope', '$location', 'AnalyzerService', 'GroupSetService', 'TokenService',
-        function ($scope, $location, AnalyzerService, GroupSetService, TokenService) {
+    .controller('AnalyzerViewController', ['$scope', '$location', 'AnalyzerService', 'CrawlerService', 'GroupSetService', 'TokenService',
+        function ($scope, $location, AnalyzerService, CrawlerService, GroupSetService, TokenService) {
 
             $scope.inProgress = false;
 
@@ -34,6 +34,9 @@ angular.module('nwbadmin.analyzer', ['ui.router'])
             $scope.update = function () {
                 GroupSetService.getAll().then(function (data) {
                     $scope.groups = data;
+                });
+                CrawlerService.getAll().then(function (data) {
+                    $scope.crawlers = data;
                 });
                 AnalyzerService.getAll().then(function (data) {
                     $scope.analyzers = data;
@@ -104,6 +107,7 @@ angular.module('nwbadmin.analyzer', ['ui.router'])
                 $scope.active = {
                     disabled: false,
                     groups: [],
+                    crawlers: [],
                     name: "",
                     token: TokenService.generate()
                 };
@@ -126,7 +130,26 @@ angular.module('nwbadmin.analyzer', ['ui.router'])
                 else {
                     $scope.active.groups.push(group);
                 }
-            }
+            };
+
+            /**
+             * @name $scope.create
+             * @function create
+             * @memberOf nwbadmin.AnalyzerViewController
+             * @instance
+             * @description Ordnet den Analyzer einer Gruppe zu oder entfernt die Zuordnung falls bereits zugeordnet.
+             * @param {object} group - Die Gruppe dem der Analyzer zugeordnet bzw. Zuordnung aufgehoben werden soll.
+             */
+            $scope.toggleCrawl = function (crawler) {
+                var idx = $scope.active.crawler.indexOf(crawler);
+
+                if (idx > -1) {
+                    $scope.active.crawler.splice(idx, 1);
+                }
+                else {
+                    $scope.active.crawler.push(crawler);
+                }
+            };
 
             $scope.update();
         }
