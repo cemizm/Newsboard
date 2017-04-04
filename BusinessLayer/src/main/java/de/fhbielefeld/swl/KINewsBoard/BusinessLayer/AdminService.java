@@ -49,9 +49,13 @@ public class AdminService {
         checkAnalyzer(analyzer);
 
         List<Integer> groups = analyzer.getGroupSets().stream().map(GroupSet::getId).collect(Collectors.toList());
+        List<Integer> crawler = analyzer.getCrawlers().stream().map(Crawler::getId).collect(Collectors.toList());
+
 
         analyzer.setGroupSets(new HashSet<>());
+        analyzer.setCrawlers(new HashSet<>());
         syncAnalyzerGroups(analyzer, groups);
+        syncAnalyzerCrawler(analyzer, crawler);
 
         entityManager.persist(analyzer);
     }
@@ -108,9 +112,13 @@ public class AdminService {
         if (analyzer == null)
             throw new IllegalArgumentException("Parameter analyzer darf nicht null sein");
 
-        List<GroupSet> toRemove = analyzer.getGroupSets().stream().collect(Collectors.toList());
-        for (GroupSet gs : toRemove)
+        List<GroupSet> groupsToRemove = analyzer.getGroupSets().stream().collect(Collectors.toList());
+        for (GroupSet gs : groupsToRemove)
             gs.removeAnalyzer(analyzer);
+
+        List<Crawler> crawlerToRemove = analyzer.getCrawlers().stream().collect(Collectors.toList());
+        for (Crawler crawler : crawlerToRemove)
+            crawler.removeAnalyzer(analyzer);
 
         List<AnalyzerResult> toRemoveResults = analyzer.getResults().stream().collect(Collectors.toList());
         for (AnalyzerResult ar : toRemoveResults)
