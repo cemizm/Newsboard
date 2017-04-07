@@ -23,10 +23,6 @@ modules.xml
 /Dokumentation/JavaDoc
 /Dokumentation/JSDoc
 
-### Log Files ###
-CrawlerAnalyzerHost/logs
-
-
 ### Gradle ###
 .gradle
 build/
