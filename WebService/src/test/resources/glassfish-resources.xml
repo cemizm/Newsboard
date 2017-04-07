@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE resources PUBLIC "-//Sun Microsystems, Inc.//DTD Application Server 9.0 Resource Definitions //EN"
+        "http://www.sun.com/software/appserver/dtds/sun-resources_1_4.dtd">
+<resources>
+    <jdbc-resource jndi-name="jdbc/newsboard_readwrite"
+                   pool-name="inmemory-pool"/>
+
+    <jdbc-connection-pool name="inmemory-pool"
+                          res-type="java.sql.Driver"
+                          driver-classname="org.hsqldb.jdbcDriver"
+                          is-isolation-level-guaranteed="false">
+        <property name="URL" value="jdbc:hsqldb:mem:newsboard"/>
+    </jdbc-connection-pool>
+</resources>

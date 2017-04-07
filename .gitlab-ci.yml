@@ -1,0 +1,51 @@
+image: localhost:5000/java-nodejs
+
+variables:
+    GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+before_script:
+    - chmod +x gradlew
+
+build:
+  stage: build
+  script:
+    - ./gradlew -g /cache/.gradle clean assemble
+  allow_failure: false
+  artifacts:
+    paths:
+      - build/libs/NewsBoard.ear
+
+
+test:
+  stage: test
+  script:
+    - ./gradlew -g /cache/.gradle check
+  artifacts:
+    expire_in: 1 week
+    when: always
+    paths:
+      - BusinessLayer/build/reports/
+      - BusinessLayer/build/test-results/test/*.xml
+      - WebService/build/reports/
+      - WebService/build/test-results/test/*.xml
+
+deploy_staging:
+  stage: deploy
+  script:
+    - echo "Deploy to staging server"
+  environment:
+    name: staging
+    url: https://staging.fhbielefeld.de
+  only:
+  - master
+
+deploy_production:
+  stage: deploy
+  script:
+    - echo "Deploy to production server"
+  environment:
+    name: production
+    url: https://production.fhbielefeld.de
+  when: manual
+  only:
+  - master

@@ -1,0 +1,13 @@
+analyzer:
+  - id: 1
+    name: "Analyzer #1"
+    token: "3052541e03642874a071492753417402"
+    disabled: false
+  - id: 2
+    name: "Analyzer #2"
+    token: "0303d0f97b596ebcfcbc512e286198d2"
+    disabled: false
+  - id: 3
+    name: "Analyzer #3"
+    token: "7c221b21584983b202ff973592e84c77"
+    disabled: false

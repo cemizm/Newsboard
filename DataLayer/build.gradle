@@ -4,15 +4,3 @@ dependencies {
     compile 'org.hibernate:hibernate-entitymanager:5.0.11.Final'
     compile 'org.hibernate:hibernate-search-orm:5.5.5.Final'
 }
-
-sourceSets {
-    main {
-        java {
-            srcDirs = ['src']
-        }
-
-        resources {
-            srcDirs = ['src']
-        }
-    }
-}

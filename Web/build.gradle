@@ -2,7 +2,12 @@ apply plugin: "war"
 
 // Install packages from package.json
 task bower_install(type: Exec) {
-    commandLine = ["bower", "install"]
+    commandLine = ["bower",
+                   "--quiet",
+                   "--config.storage.cache=${gradle.getGradleUserHomeDir()}/caches/bower/cache",
+                   "--config.storage.packages=${gradle.getGradleUserHomeDir()}/caches/bower/packages",
+                   "--config.storage.registry=${gradle.getGradleUserHomeDir()}/caches/bower/registry",
+                   "install"]
 }
 
 task bower_clean(type: Delete) {
