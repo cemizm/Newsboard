@@ -20,7 +20,7 @@ import java.util.Set;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "NewsEntry.findAll", query = "select n from NewsEntry n order by n.date desc"),
-        @NamedQuery(name = "NewsEntry.getNotAnalyzedNewsEntries", query = "select n from NewsEntry n left join n.analyzerResults ar on ar.analyzer.id = :analyzer where ar.newsEntry.id is null order by n.date desc"),
+        @NamedQuery(name = "NewsEntry.getNotAnalyzedNewsEntries", query = "select n from NewsEntry n left join n.analyzerResults ar on ar.analyzer.id = :analyzer where ar.newsEntry.id is null and (:crawlerListEmpty = true or n.crawler.id in :crawlerList) order by n.date desc"),
         @NamedQuery(name = "NewsEntry.getNewsEntriesByViewId", query = "select n from NewsEntry n left join n.crawler c left join c.views v where v.id = :viewId order by n.date desc")
 })
 @AnalyzerDef(name = "newsanalyzer",
