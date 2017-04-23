@@ -49,6 +49,14 @@ groupset_analyzer:
   - groupsets_id: 3
     analyzers_id: 3
 
+crawler_analyzer:
+  - crawlers_id: 1
+    analyzers_id: 1
+  - crawlers_id: 2
+    analyzers_id: 1
+  - crawlers_id: 3
+    analyzers_id: 1
+
 view:
   - id: 1
     name: "View #1"
