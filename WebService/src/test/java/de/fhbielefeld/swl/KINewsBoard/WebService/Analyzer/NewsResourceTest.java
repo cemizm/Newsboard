@@ -110,9 +110,24 @@ public class NewsResourceTest {
 
     @Test
     @RunAsClient
-    public void getNews_should_returnAllEntries_when_analyzer2(@ArquillianResteasyResource("analyzer/news") ResteasyWebTarget webTarget) {
+    public void getNews_should_returnOnly2Entries_when_analyzer2(@ArquillianResteasyResource("analyzer/news") ResteasyWebTarget webTarget) {
 
         Response result = webTarget.request().header("token", "0303d0f97b596ebcfcbc512e286198d2").buildGet().invoke();
+
+        Assert.assertNotNull(result);
+        Assert.assertEquals("should return status 200", 200, result.getStatus());
+        @SuppressWarnings(value = "unchecked")
+        List<NewsEntry> newsEntries = result.readEntity(List.class);
+
+        Assert.assertNotNull(newsEntries);
+        Assert.assertEquals("should be 2 entries", 2, newsEntries.size());
+    }
+
+    @Test
+    @RunAsClient
+    public void getNews_should_returnAllEntries_when_analyzer3(@ArquillianResteasyResource("analyzer/news") ResteasyWebTarget webTarget) {
+
+        Response result = webTarget.request().header("token", "7c221b21584983b202ff973592e84c77").buildGet().invoke();
 
         Assert.assertNotNull(result);
         Assert.assertEquals("should return status 200", 200, result.getStatus());
