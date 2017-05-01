@@ -172,3 +172,8 @@ analyzersentenceresult:
     charstart: 16
     charend: 32
     value: 23
+  - analyzerresult_newsentry_id: "mt-21734156"
+    analyzerresult_analyzer_id: 2
+    charstart: 2
+    charend: 10
+    value: 9
