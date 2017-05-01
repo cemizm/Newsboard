@@ -56,6 +56,10 @@ crawler_analyzer:
     analyzers_id: 1
   - crawlers_id: 3
     analyzers_id: 1
+  - crawlers_id: 1
+    analyzers_id: 2
+  - crawlers_id: 2
+    analyzers_id: 2
 
 view:
   - id: 1
@@ -150,6 +154,10 @@ analyzerresult:
     date: 2017-04-03
   - newsentry_id: "mt-21734156"
     analyzer_id: 1
+    value: 14
+    date: 2017-04-03
+  - newsentry_id: "mt-21734156"
+    analyzer_id: 2
     value: 14
     date: 2017-04-03
 
