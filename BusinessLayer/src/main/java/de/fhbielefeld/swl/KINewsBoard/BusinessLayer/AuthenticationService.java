@@ -58,10 +58,10 @@ public class AuthenticationService {
         user = userWebServiceHelper.login(username, password);
 
         if (user == null)
-            return null;
+            throw new IllegalArgumentException("User nicht im System vorhanden oder Passwort falsch.");
 
         if (!userWebServiceHelper.hasRight(user, LOGIN_ACTION))
-            return null;
+            throw new IllegalArgumentException("User im System vorhanden, hat aber nicht die erforderlichen Zugriffsrechte. (Ressource: login)");
 
         users.put(user.getAuthtoken(), user);
 
