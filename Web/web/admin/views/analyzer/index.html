@@ -51,6 +51,20 @@
                 </table>
             </div>
             <div class="form-group">
+                <label>Crawler</label>
+                <table class="table table-bordered">
+                    <thead>
+                    <th>#</th>
+                    <th>Bezeichnung</th>
+                    </thead>
+                    <tr ng-repeat="crawler in crawlers" ng-click="toggleCrawl(crawler.id)"
+                        ng-class="{info: active.crawler.indexOf(crawler.id) > -1}">
+                        <td>{{crawler.id}}</td>
+                        <td>{{crawler.name}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form-group">
                 <button type="button" class="btn btn-danger" ng-click="delete()" ng-disabled="!active.id">Löschen
                 </button>
                 <button type="button" class="btn btn-primary pull-right" style="margin: 0px 5px;" ng-click="save()">

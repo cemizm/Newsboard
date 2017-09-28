@@ -19,10 +19,7 @@ import javax.ejb.Stateless;
 import javax.naming.AuthenticationException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Die Klasse <i>NewsBoardService</i> dient dem Zugriff auf die Daten in der NewsBoard-Datenbank.
@@ -88,7 +85,7 @@ public class NewsBoardService {
         //c.setFirstResult(MAX_RESULTS * (start - 1));
 
         //following has really bad performance, but is the last option to go
-        @SuppressWarnings("unchecked")
+
         List<NewsEntry> list = ftq.setCriteriaQuery(c).getResultList();
 
         rankingModule.sortList(list);
@@ -192,9 +189,21 @@ public class NewsBoardService {
      * @throws AuthenticationException Wenn der Authentifizierungstoken des Analyzers ungültig ist
      */
     public List<NewsEntry> getAnalyzerNewsEntries(Analyzer analyzer) throws AuthenticationException {
+        ArrayList<Integer> crawlers = new ArrayList<Integer>();
+        Boolean crawlerListEmpty = false;
+
+        for (Crawler c : analyzer.getCrawlers()) {
+            crawlers.add(c.getId());
+        }
+        if (crawlers.size() == 0 || crawlers.isEmpty()) {
+            crawlerListEmpty = true;
+            crawlers.add(-1); //dummy value required for hql "in" statement generating valid sql
+        }
 
         return entityManager.createNamedQuery("NewsEntry.getNotAnalyzedNewsEntries", NewsEntry.class)
                 .setParameter("analyzer", analyzer.getId())
+                .setParameter("crawlerList", crawlers)
+                .setParameter("crawlerListEmpty", crawlerListEmpty)
                 .setMaxResults(MAX_RESULTS)
                 .getResultList();
     }

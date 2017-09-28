@@ -49,9 +49,13 @@ public class AdminService {
         checkAnalyzer(analyzer);
 
         List<Integer> groups = analyzer.getGroupSets().stream().map(GroupSet::getId).collect(Collectors.toList());
+        List<Integer> crawler = analyzer.getCrawlers().stream().map(Crawler::getId).collect(Collectors.toList());
+
 
         analyzer.setGroupSets(new HashSet<>());
-        syncAnalyzer(analyzer, groups);
+        analyzer.setCrawlers(new HashSet<>());
+        syncAnalyzerGroups(analyzer, groups);
+        syncAnalyzerCrawler(analyzer, crawler);
 
         entityManager.persist(analyzer);
     }
@@ -75,9 +79,16 @@ public class AdminService {
 
         dbAnalyzer.getGroupSets().stream().collect(Collectors.toList()).forEach(g -> g.removeAnalyzer(dbAnalyzer));
 
+        List<Integer> crawler = analyzer.getCrawlers().stream().map(Crawler::getId).collect(Collectors.toList());
+        analyzer.setCrawlers(new HashSet<>());
+
+        dbAnalyzer.getCrawlers().stream().collect(Collectors.toList()).forEach(g -> g.removeAnalyzer(dbAnalyzer));
+
+
         analyzer = entityManager.merge(analyzer);
 
-        syncAnalyzer(analyzer, groups);
+        syncAnalyzerGroups(analyzer, groups);
+        syncAnalyzerCrawler(analyzer, crawler);
 
         return entityManager.merge(analyzer);
     }
@@ -101,9 +112,13 @@ public class AdminService {
         if (analyzer == null)
             throw new IllegalArgumentException("Parameter analyzer darf nicht null sein");
 
-        List<GroupSet> toRemove = analyzer.getGroupSets().stream().collect(Collectors.toList());
-        for (GroupSet gs : toRemove)
+        List<GroupSet> groupsToRemove = analyzer.getGroupSets().stream().collect(Collectors.toList());
+        for (GroupSet gs : groupsToRemove)
             gs.removeAnalyzer(analyzer);
+
+        List<Crawler> crawlerToRemove = analyzer.getCrawlers().stream().collect(Collectors.toList());
+        for (Crawler crawler : crawlerToRemove)
+            crawler.removeAnalyzer(analyzer);
 
         List<AnalyzerResult> toRemoveResults = analyzer.getResults().stream().collect(Collectors.toList());
         for (AnalyzerResult ar : toRemoveResults)
@@ -112,7 +127,7 @@ public class AdminService {
         entityManager.remove(analyzer);
     }
 
-    private void syncAnalyzer(Analyzer analyzer, List<Integer> groups) {
+    private void syncAnalyzerGroups(Analyzer analyzer, List<Integer> groups) {
         for (Integer gsId : groups) {
             GroupSet dbGS = entityManager.find(GroupSet.class, gsId);
 
@@ -120,6 +135,17 @@ public class AdminService {
                 throw new IllegalArgumentException("Gruppe '" + gsId + "' nicht gefunden.");
 
             dbGS.addAnalyzer(analyzer);
+        }
+    }
+
+    private void syncAnalyzerCrawler(Analyzer analyzer, List<Integer> crawler) {
+        for (Integer crawlerId : crawler) {
+            Crawler dbCrawler = entityManager.find(Crawler.class, crawlerId);
+
+            if (dbCrawler == null)
+                throw new IllegalArgumentException("Crawler '" + crawlerId + "' nicht gefunden.");
+
+            dbCrawler.addAnalyzer(analyzer);
         }
     }
 

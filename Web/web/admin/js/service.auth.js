@@ -25,7 +25,7 @@ angular.module('nwbadmin')
             };
 
             return $http.post(api + "login", {}, config).then(function (response) {
-                if (response.status == 401) return null;
+                if (response.status != 200) return null;
 
                 service.setUser(response.data)
 

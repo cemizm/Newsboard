@@ -1,6 +1,4 @@
-# KI-Newsboard
-In diesem Projekt geht es darum, ein modulares webbasiertes System zur 
-Anzeige der Suchergebnisse (Neuigkeiten mit Bewertung mit Hilfe der Sentimentanalyse) zu realisieren.
+# Quick Installation Guide
 
 ## Prerequisites (Server)
 * Payara Server installiert
@@ -17,7 +15,12 @@ Anzeige der Suchergebnisse (Neuigkeiten mit Bewertung mit Hilfe der Sentimentana
 * npm -g install bower
 
 ## Build
-* gradle build
+* ./gradlew build
 
 ## Deployment
 * NewsBoard.ear auf Payara Server deployen
+
+# Anleitung
+Eine ausführlichere Anleitung und Hinweise sind in folgendem Wiki Eintrag zu finden.
+
+http://git01-ifm-min.ad.fh-bielefeld.de/KI-Newsboard/Newsboard/2016_10_Modulares_WebNewsboard/wikis/how-to-install
