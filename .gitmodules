@@ -1,0 +1,6 @@
+[submodule "CrawlerAnalyzerHost"]
+	path = CrawlerAnalyzerHost
+	url = git@git01-ifm-min.ad.fh-bielefeld.de:KI-Newsboard/Newsboard/CAHost.git
+[submodule "DemoCrawler"]
+	path = DemoCrawler
+	url = git@git01-ifm-min.ad.fh-bielefeld.de:KI-Newsboard/Crawler/DemoCrawler.git
