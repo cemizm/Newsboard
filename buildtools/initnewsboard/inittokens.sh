@@ -9,3 +9,5 @@ curl -H "Content-Type: application/json" \
      -d '{"name":"Test Analyzer 1","token":"'"$TOKEN_ANALYZER"'"}' \
      -s \
      http://newsboard.payara:8080/NewsBoard/WebService/backend/analyzer >> /dev/null
+
+echo "Crawler and Analyzer tokens created"

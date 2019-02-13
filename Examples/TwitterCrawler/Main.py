@@ -20,8 +20,10 @@ for keyword in cfg.settings['keywords']:
         entry.set_image(tweet.image)
         entry.set_url(tweet.permalink)
         entry.set_content(tweet.text)
-
-        client.publish_news(entry)
+        try:
+                client.publish_news(entry)
+        except ValueError as err:
+                print(err)
 
 print('TwitterCrawler entries published')
 

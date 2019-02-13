@@ -25,8 +25,8 @@ client.getNewsEntries(function (items) {
         });
 
         client.publishResult(entry.id, result, function (data, response) {
-            //if (response.statusCode != 200) return console.log("Analyzer Result Error (" + response.statusCode + "): " + data.message);
-            //console.log("Analyzer Result published: " + entry.title);
+            if (response.statusCode != 200) return console.log("Analyzer Result Error (" + response.statusCode + "): " + data.message);
+            console.log("Analyzer Result published: " + entry.title);
         });
     });
 
