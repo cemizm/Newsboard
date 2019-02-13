@@ -3,7 +3,7 @@ package de.fhbielefeld.swl.KINewsBoard.WebService.Backend;
 import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.AdminService;
 import de.fhbielefeld.swl.KINewsBoard.WebService.Backend.ViewModels.AnalyzerVM;
 
-import javax.annotation.security.RolesAllowed;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -23,7 +23,7 @@ public class AnalyzerResource {
     private AdminService adminService;
 
     @GET
-    @RolesAllowed({})
+    @PermitAll
     public List<AnalyzerVM> get() {
         return adminService.getAllAnalyzer().stream().map(AnalyzerVM::new).collect(Collectors.toList());
     }
@@ -36,7 +36,7 @@ public class AnalyzerResource {
      * Statuscode 400, wenn die Validierung des Analyzers fehlschlägt
      */
     @POST
-    @RolesAllowed({})
+    @PermitAll
     public Response create(@NotNull @Valid AnalyzerVM model) {
         adminService.createAnalyzer(model.getAnalyzer());
         return Response.ok().build();
@@ -50,7 +50,7 @@ public class AnalyzerResource {
      * Statuscode 400, wenn die Validierung des Analyzers fehlschlägt
      */
     @PUT
-    @RolesAllowed({})
+    @PermitAll
     public Response update(@NotNull @Valid AnalyzerVM model) {
         adminService.updateAnalyzer(model.getAnalyzer());
         return Response.ok().build();
@@ -64,7 +64,7 @@ public class AnalyzerResource {
      */
     @DELETE
     @Path("/{analyzerId}")
-    @RolesAllowed({})
+    @PermitAll
     public Response delete(@PathParam("analyzerId") int analyzerId) {
         adminService.deleteAnalyzer(analyzerId);
         return Response.ok().build();

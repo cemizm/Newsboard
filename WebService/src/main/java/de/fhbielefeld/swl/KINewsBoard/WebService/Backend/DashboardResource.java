@@ -5,7 +5,7 @@ import de.fhbielefeld.swl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 import de.fhbielefeld.swl.KINewsBoard.WebService.Backend.ViewModels.DashboardVM;
 import de.fhbielefeld.swl.KINewsBoard.WebService.Shared.ViewModels.NewsEntryBaseModel;
 
-import javax.annotation.security.RolesAllowed;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -30,7 +30,7 @@ public class DashboardResource {
      * @return Dashboard mit Nachrichteneinträgen und Anzahl der Analyer, Crawler und Analyseergebnisse
      */
     @GET
-    @RolesAllowed({})
+    @PermitAll
     public DashboardVM get() {
         DashboardVM model = new DashboardVM();
 

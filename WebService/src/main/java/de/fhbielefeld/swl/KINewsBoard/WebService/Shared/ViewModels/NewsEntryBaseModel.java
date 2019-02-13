@@ -4,6 +4,8 @@ import de.fhbielefeld.swl.KINewsBoard.DataLayer.DataModels.NewsEntry;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.json.bind.annotation.JsonbTransient;
+import javax.json.bind.annotation.JsonbDateFormat;
 import java.util.Date;
 
 /**
@@ -174,6 +176,7 @@ public class NewsEntryBaseModel {
      *
      * @return Das Datum des Nachrichteneintrages
      */
+    @JsonbDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
     public Date getDate() {
         return date;
     }
@@ -192,6 +195,7 @@ public class NewsEntryBaseModel {
      *
      * @return Nachrichteneintrag mit den kopierten Daten auf Basis des Datentransferobjektes
      */
+    @JsonbTransient
     public NewsEntry getNewsEntryModel() {
         NewsEntry entry = new NewsEntry();
         entry.setId(getId());
