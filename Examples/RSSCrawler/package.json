@@ -1,0 +1,14 @@
+{
+  "name": "rsscrawler",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "rss": "node RSSCrawler.js"
+  },
+  "dependencies": {
+    "feedparser": "^1.1.5",
+    "md5": "^2.2.1",
+    "newsboardclient": "file:../../libs/js",
+    "request": "^2.79.0"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "bingsearchcrawler",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "bing": "node BingSearch.js"
+  },
+  "dependencies": {
+    "md5": "^2.2.1",
+    "node-bing-api": "^3.0.1",
+    "newsboardclient": "file:../../libs/js"
+  }
+}

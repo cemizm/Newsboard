@@ -1,0 +1,11 @@
+{
+  "name": "randomanalyzer",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "randan": "node RandomAnalyzer.js"
+  },
+  "dependencies": {
+    "newsboardclient": "file:../../libs/js"
+  }
+}
