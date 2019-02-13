@@ -18,7 +18,9 @@ echo 'Starting postgres and payara application server'
 #payara server modifies the initialization config on each start so we need a copy of that file
 cp -f ./buildtools/initpayara/config/template.asadmin ./buildtools/initpayara/config/init.asadmin
 docker-compose -f "docker-compose.yml" up -d newsboard.payara
-while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8080/NewsBoard/WebService/frontend/news)" != "200" ]]; do sleep 5; done
+printf "Deploying ..."
+while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8080/NewsBoard/WebService/frontend/news)" != "200" ]]; do printf "."; sleep 5; done
+echo
 echo '-----------------------------------------------------'
 
 
