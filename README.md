@@ -2,20 +2,22 @@
 
 ![newsboard](docs/basic.png)
 
-Das Newsboard ist ein modulares webbasiertes System zur Anzeige von Newsbeiträgen aus diversen Quellen. Crawler können dazu über eine REST-Schnittstele neue Newsbeiträge anliefern und Analyzer Newsbeiträge abrufen um diese einer Sentiment-Analyse zu unterziehen. Angezeigt werden die Newsbeiträge und die Analyseergebnisse in einer Weboberfläche.
+Das Newsboard ist ein modulares webbasiertes System zur Anzeige von Newsbeiträgen aus diversen Quellen. Crawler können dazu über eine REST-Schnittstele neue Newsbeiträge anliefern und Analyzer Newsbeiträge abrufen um diese einer Sentiment-Analyse zu unterziehen. Angezeigt werden die Newsbeiträge und die Analyseergebnisse in einer Weboberfläche. 
+
+Diese Dokumentation ist in die Abschnitte *Crawler und Analyzer Entwicklung* und *Newsboard Entwicklung* gegliedert. Der erste Abschnitt richtet sich dabei an die Studenten die eigene Crawler bzw. Analyzer an das Newsboard anbinden möchten. Der zweite Abschnitt beschreibt die Architektur und das Build-System des Newsboard und ist für zukünftige Weiterentwicklungen am Newsboard interessant.
 
 ## Crawler und Analyzer Entwicklung
-Für die Entwicklung eines einen eigenen Crawler oder Analyzer ist es zunächst notwendig das Newsboard lokal auszuführen. Anschließend kann die REST-Schnittstelle des Newsboard verwendet werden um Newsbeiträge zu veröffentlichen oder für die Sentiment-Analyse abzurufen.
+Für die Entwicklung eines eigenen Crawlers oder Analyzers, ist es zunächst notwendig das Newsboard lokal auszuführen. Anschließend kann die REST-Schnittstelle des Newsboard verwendet werden, um Newsbeiträge zu veröffentlichen oder für die Sentiment-Analyse abzurufen.
 
 ### Newsboard ausführen
 Das Newsboard besteht aus einer Postgresql Datenbank und einer Webapplikation. Um die Entwicklung eines Crawler bzw. Analyzer zu vereinfachen, wird zu diesem Zweck das Newsboard über einer Docker-Compose Konfiguration eingerichtet. Daher ist es zwingend notwendig das docker und docker-compose auf dem Entwicklungssystem bereits installiert sind.
 
 [Docker Compose Installation](https://docs.docker.com/compose/install/)
 
-Anschließend kann das Nesboard über die folgende Scripte gesteuert werden.
+Anschließend kann das Newsboard über die folgende Scripte gesteuert werden.
 
-* `./newsboard.start.sh` erzeugt (falls noch nicht vorhanden) die nötigen Docker-Images und startet die Container 
-* `./newsboard.stop.sh` stoppt die Docker-Container
+* `./newsboard.start.sh` erzeugt (falls noch nicht vorhanden) die nötigen Docker-Images und startet das Newsboard 
+* `./newsboard.stop.sh` stoppt die Docker-Container und damit das Newsboard
 * `./newsboard.teardown.sh` stoppt die Docker-Container und löscht alle erzeugten Images 
 
 Das Start-Skript erzeugt im letzten Schritt folgende Ausgabe. Diese Informationen können für den Zugriff auf das Newsboard und die Implementierung eigener Crawler und Analyzer verwendet werden.
@@ -149,6 +151,7 @@ Als weitere Quelle für Informationen bei der Implementierung eigener Crawler un
 #### Web
 
 ### Build process
+
 #### Gradle
 #### CI / CD
 #### Docker
