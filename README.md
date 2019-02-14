@@ -130,8 +130,8 @@ curl -H "Content-Type: application/json" \
 #### Client Bibliotheken
 In dem Verzeichnis `libs/` im Newsboard Hauptverzeichnis, existieren bereits für folgende Programmiersprachen Client Bibliotheken, die den Zugriff auf die REST-Schnittstelle kapseln und somit eine transparente Interaktion mit der Newsboard API ermöglichen. Diese Bibliotheken können bei der Implementierung eines Crawler bzw. Analyzers verwendet werden, um Newsbeiträge zu veröffentlichen und für die Sentiment-Analyse abzurufen.
 
-* `libs/js/` Javascript Client Bibliothek als NPM Paket. Weitere Informationen: [Javascript](./libs/js/readme.md) 
-* `libs/python` Python Client Bibliothek. Weitere Informationen: [Python](./libs/python/readme.md)
+* `libs/js/` Javascript Client Bibliothek als NPM Paket. Weitere Informationen: [Javascript](libs/js/) 
+* `libs/python` Python Client Bibliothek. Weitere Informationen: [Python](libs/python/)
 
 ### Beispiele
 Als weitere Quelle für Informationen bei der Implementierung eigener Crawler und Analyzer, können die Beispiele im Verzeichnis `Examples/` herangezogen werden. 
