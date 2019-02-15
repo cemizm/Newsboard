@@ -17,8 +17,8 @@ Das Newsboard besteht aus einer Postgresql Datenbank und einer Webapplikation. U
 Anschließend kann das Newsboard über die folgende Scripte gesteuert werden.
 
 * `./newsboard.start.sh` erzeugt (falls noch nicht vorhanden) die nötigen Docker-Images und startet das Newsboard 
-* `./newsboard.stop.sh` stoppt die Docker-Container und damit das Newsboard
-* `./newsboard.teardown.sh` stoppt die Docker-Container und löscht alle erzeugten Images 
+* `./newsboard.stop.sh` stoppt alle Docker-Container und damit das Newsboard
+* `./newsboard.teardown.sh` stoppt alle Docker-Container und löscht alle erzeugten Images 
 
 Das Start-Skript erzeugt im letzten Schritt folgende Ausgabe. Diese Informationen können für den Zugriff auf das Newsboard und die Implementierung eigener Crawler und Analyzer verwendet werden.
 
@@ -142,18 +142,126 @@ Als weitere Quelle für Informationen bei der Implementierung eigener Crawler un
 * **BingSerarchCrawler** Implementierung eines Crawlers in Javascript der die Bing Search API nutzt und Suchergebnisse im Newsboard veröffentlicht. 
 
 ## Newsboard Entwicklung
+Das Newsboard ist als mehrschichtige Java-EE Applikation implementiert und wird in einem Web- und EJB-Container auf einem Java-EE Server ausgeführt. In dem Docker Container wird Payara als Java-EE Server eingesetzt, der jedoch gegen einen beliebigen Java-EE Server ausgetauscht werden kann.
 
 ### Architektur
+![architektur](docs/architecture.png)
+#### DataLayer
+Für die persistente Speicherung der anfallenden Daten wird die *Java Persistence API* (JPA) der Java EE Platform verwendet. Die Spezifikation der API ist in [JSR 338](http://jcp.org/en/jsr/detail?id=338) zu finden. Alle zu mappenden Objekte werden in dieser Schicht der Applikation definiert und das Schema über entsprechende Annotationen beschrieben. 
 
-#### Datalayer
-#### Businesslayer
+Als JPA Provider kommt [Hibernate ORM](http://hibernate.org/orm/) zum Einsatz und kann über die `resources/META-INF/persistence.xml` ausgetauscht werden. In Kombination mit [Hibernate Search](http://hibernate.org/search/) wird die transparente Indizierung der Daten mit [Apache Lucene](http://lucene.apache.org) vorgenommen. Dieser Index wird in den darüber liegenden Schichten für diverse Suchvorgänge und das Ranking von Ergebnissen verwendet. 
+
+Der Java Database Connection Pool (JDBC) wird auf dem Java EE Server konfiguriert und verwaltet. Über die Eigenschaft `jta-data-source` in der `resources/META-INF/persistence.xml` wird dem Newsboard mitgeteilt, welcher JDBC-Pool verwendet werden soll. Somit sind keine Datenbank Verbindungszeichenfolgen im Projekt Quellcode enthalten und das Newsboard kann ohne Anpassungen auf verschiedenen System deployed werden.
+
+#### BusinessLayer
+In dieser Schicht der Applikation ist die Geschäftslogik des Newsboard implementiert. Die Geschäftslogik ist in folgende Use-Case bezogene Services untergliedert, die mittels *Enterprise Java Bean* (EJB) der Java EE Platform, den darüberliegenden Schichten bereitgestellt werden. Die Spezifikation zu EJB ist in [JSR 345](http://jcp.org/en/jsr/detail?id=345) definiert.
+
+* **NewsBoardService** wird als `Stateless` EJB registriert und enthält die Geschäftslogik für das Frontend.
+* **AdminService** wird als `Stateless` EJB registriert und enthält die Geschäftslogik für die Administrationsoberfläche.
+* **AuthenticationService** wird als `Singleton` EJB registriert und enthält die Geschäftslogik für die Authentifizierung in der Administrationsoberfläche. Hierzu wird der [SCL Usermanager-WebService](http://scl2-ifm-min.ad.fh-bielefeld.de:8080/SCL_Usermanager/UserWebService?wsdl) verwendet um sich mittels LDAP zu authentifizieren.
+* **LuceneStartupService** wird als `Singleton` EJB registriert und mittels der `Startup`-Annotation beim Start der Applikation ausgeführt, um alle Datenbank Einträge im Apache Lucene Index zu indizieren.
+
+Der *EntityManager* für den Zugriff auf die persistenten Daten, wird mittels der *PersistenceContext*-Annotation vom Java EE Server bei der Erzeugung der EJBs injiziert. Die Eigenschaft Unit-Name der Annotation verweist dabei auf die zu verwendende Persistence Unit aus der `resources/META-INF/persistence.xml` der DataLayer-Schicht.
+
+```java
+@Stateless
+public class NewsBoardService {
+    //...
+    @PersistenceContext(name = "NewsBoardPU")
+    private EntityManager entityManager;
+    //...
+}
+```
+
 #### WebService
-#### Web
+Alle Funktionalitäten des Newsboard werden über den WebService nach außen bereitgestellt. Der WebService wird mit der *Java API for RESTful Web Services (JAX-RS)* der Java EE Platform implementiert und wird in [JSR 370](http://jcp.org/en/jsr/detail?id=370) näher spezifiziert. 
 
-### Build process
+Die Newsboard REST-Schnittstelle wird als Ressourcen-orientierte Schnittstelle implementiert und teilt sich wie folgt auf.
+
+* **/WebService/backend** beinhaltet alle für die Administrationsoberfläche relevanten Ressourcen. Nach erfolgreicher Authentifizierung durch die `AuthResource`, muss der zurückgelieferte Token in jedem HTTP-Request für die `/backend` Ressourcen im Header übertragen werden.
+* **/WebService/frontend** beinhaltet die Ressourcen die für das Frontend relevant sind.
+* **/WebService/crawler** und **/WebService/analyzer** beinhalten die für die Crawler bzw. Analyzer relevanten Ressourcen. Der in der Administrationsoberfläche beim Anlegen der Crawler/Analyzer definierte Token, muss im Header der HTTP-Requests angegeben werden.
+
+Der WebService verwendet die im [BusinessLayer](#businesslayer) registrierten EJBs für die Create-, Read-, Update- und Delete- (CRUD) Operationen. Diese werden wie folgt mit der EJB-Annotation durch Java-EE Server in die Ressourcen injiziert.
+
+```java
+@Path("/news")
+@Produces(MediaType.APPLICATION_JSON)
+public class NewsResource {
+    @EJB
+    private NewsBoardService newsBoardService;
+    //...
+}
+```
+
+Die Übertragung der Daten erfolgt mittels der *Java API for JSON Processing 1.1* ([JSR 374](http://jcp.org/en/jsr/detail?id=374)) durch den Java-EE Server. Zusätzlich wird die *Java API for JSON Binding 1.0* ([JSR 367](http://jcp.org/en/jsr/detail?id=367)) verwendet, um die in dieser Schicht definierten Daten-Transfer-Objekte (DTO) zu JSON zu serialisieren bzw. aus JSON zu de-serialisieren.  Die DTO's kapseln die im *DataLayer* definierten POJO's und stellen wie im folgenden Beispiel nur die für den aktuellen HTTP-Request relevanten Eigenschaften bereit. 
+
+```java
+
+@Path("/news")
+@Produces(MediaType.APPLICATION_JSON)
+public class NewsResource {
+    //...
+    @POST
+    public Response publish(@Valid NewsEntryBaseModel model) {
+        //...
+    }
+    //...
+```
+
+Die Validierung der DTO's erfolgt wie folgt, mit der *Bean Validation API* die in [JSR 380](http://jcp.org/en/jsr/detail?id=380) spezifiziert wird. Diese ermöglicht eine transparente Validierung der *HTTP-Requests* durch die `@Valid`-Annotation am Request-Parameter und weiterer Annotation im DTO.
+
+```java
+public class NewsEntryBaseModel {
+    //...
+    @NotNull
+    @Size(min = 3, max = 255)
+    public String getId() {
+        return id;
+    }
+    //...
+}
+```
+
+#### Web
+Das Web-Projekt liegt parallel zum WebService und ist Single Page Applikation (SPA) implementiert. Dabei wird beim ersten Aufruf der Weboberfläche die Applikation zum Client übertragen und der WebService für den Zugriff auf die Daten verwendet. Für die Implementierung der SPA wird das AngularJS 1 Framework verwendet und besteht aus folgenden Teil-Applikationen.
+
+* **/NewsBoard** zeigt eine Übersicht aller Newsbeiträge und eine Detailansicht zu einem einzelnen Newsbeitrag an. Darüber hinaus wird für eine öffentliche Ansicht ohne Interaktionmöglichkeit, ein Karussell der Newsbeiträge angezeigt, die in definierten Zeitabständen über die letzten 20 Newsbeiträge iteriert.
+* **/NewsBoard/admin** implementiert die Administrationsoberfläche zum Verwalten der Crawler/Analyzer und Einschränken der im Frontend angezeigten Newsbeiträge.
+
+Für die Auflösung der Javascript Abhängigkeiten, wird Paketmanagement Tool *Bower* eingesetzt und als statischer Inhalt über den Java EE Server ausgeliefert.
+
+### Build-Prozess
+Um automatisierte Builds zu ermöglichen, erfolgt der Build-Prozess losgelöst von jeglicher IDE. Anschließend an den Build-Prozess werden automatisierte Unit- und Integration-Test durchgeführt. Für die Automatisierung wird Gradle als Build-System eingesetzt.
 
 #### Gradle
-#### CI / CD
-#### Docker
+Das Newsboard ist als Multi-Project Build, bestehend aus dem Root-Projekt (`./build.gradle`) und den in der [Architektur](#architektur) beschriebenen Teilprojekten, konfiguriert. Das auflösen der Abhängigkeiten erfolgt über das *Maven Central repository* und der auf Teilprojekt-Ebene definierten Abhängigkeiten. Je nach Teilprojekt-Typ wird das Build-Ergebnis in einer JAR oder WAR gebündelt, während das Hauptprojekt als EAR zum Deployment auf dem Java-EE Server archiviert wird.
 
-### Docker-Compose
+Mit dem Befehl `./gradlew ensamble` kann das Projekt kompiliert und mit `./gradlew check` die Unit- und Integrationstest ausgeführt werden. Die Build- und Test-Ergebnisse werden im Verzeichnis `build/libs/NewsBoard.ear` und `{SUBPROJECT}/build/test-results/` abgelegt.
+
+Um das Teilprojekt Web zum kompilieren, wird auf dem Entwicklungsrechner Nodejs und *Bower* (`npm install -g bower`) benötigt. Für die restlichen Teilprojekte ist das Java Development Kit (JDK) in Version 8 erforderlich.
+
+#### GitLab CI
+Die Continuous Integration (CI) mit GitLab wird über die `.gitlab-ci.yml`-Datei im Hauptverzeichnis konfiguriert. Hierzu wird der Docker-[Executor](https://docs.gitlab.com/runner/executors/) mit dem Image `localhost:5000/java-nodejs` aus dem privaten Container Registry verwendet. Das Image enthält alle benötigte Laufzeiten um das Newsboard zu bauen und zu testen. Die CI-Pipeline verwendet für den Build- und Test-Vorgang weiterhin [Gradle](#gradle) und besteht aus folgende Stufen.
+
+* **build** wird nach jedem commit auf allen Branches ausgeführt und erzeugt das `NewsBoard.ear` Archiv.
+* **test** wird nach jedem commit auf allen Branches ausgeführt und führt die Unit- und Integrations-Test aus.
+* **deploy_staging** wird nur auf dem `master`-Branch nach einem commit ausgeführt und liefert automatisiert das `NewsBoard.ear`-Archiv auf die Testumgebung aus.
+* **deploy_production** wird nur manuell auf dem `master`-Branch ausgeführt und liefert das `NewsBoard.ear`-Archiv auf die Produktionsumgebung aus.
+
+Die Build- und Test-Ergebnisse werden nach jeder Stufe als Artefakte ins GitLab übernommen und können dort in der CI/CD Pipeline betrachtet werden.
+
+#### Docker
+Um die Einrichtung der Build- und Deployment-Umgebung für das NewsBoard zu vereinfachen, werden über die `docker-compose.yml` folgende Docker Container eingerichtet. 
+
+* **newsboard.cli** basiert auf `/buildtools/cli.dockerfile` und enthält das JDK 8, NodeJS 9.x und Python 3 (inkl. pip) für die Build-Umgebung. Dem Container wird das Hauptverzeichnis vom Newsboard als Volume eingebunden und als Working-Directory gesetzt. Mittels `docker exec newsboard.cli COMMANDS` können nun Befehle ausgeführt werden wie `./gradlew assemble` die im Kontext des Hauptverzeichnis im Container ausgeführt werden.
+* **newsboard.payara** basiert auf [payara/server-full:5.183](https://github.com/payara/docker-payaraserver-full/blob/5.183/Dockerfile) und wird als Java-EE Server für das Deployment-Ziel des NewsBoard verwendet. 
+* **newsboard.db** basiert auf [postgres](https://github.com/docker-library/postgres/blob/7e80419825e4bab4e749bc61334570ffc261ea5e/11/Dockerfile) und wird vom Java-EE Server und NewsBoard als Datenbank genutzt.
+
+Folgende Skripte nutzen die beschriebenen Container um den Build-, Test- und Deployment- Vorgang weiter zu automatisieren.
+
+* `./newsboard.start.sh` erzeugt die nötigen Docker-Images und startet das Newsboard 
+* `./newsboard.check.sh` baut das Newsboard Projekt und führt die Unit- und Integrations-Test aus
+* `./newsboard.cli.sh` startet den CLI container und stellt eine Konsole bereit
+* `./newsboard.stop.sh` stoppt alle Docker-Container und damit das Newsboard
+* `./newsboard.teardown.sh` stoppt alle Docker-Container und löscht alle erzeugten Container und Images
