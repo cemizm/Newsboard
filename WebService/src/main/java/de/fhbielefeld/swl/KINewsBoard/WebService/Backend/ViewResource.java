@@ -3,7 +3,7 @@ package de.fhbielefeld.swl.KINewsBoard.WebService.Backend;
 import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.AdminService;
 import de.fhbielefeld.swl.KINewsBoard.WebService.Backend.ViewModels.ViewVM;
 
-import javax.annotation.security.RolesAllowed;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -28,7 +28,7 @@ public class ViewResource {
      * @return Liste aller Ansichten
      */
     @GET
-    @RolesAllowed({})
+    @PermitAll
     public List<ViewVM> get() {
         return adminService.getAllView().stream().map(ViewVM::new).collect(Collectors.toList());
     }
@@ -41,7 +41,7 @@ public class ViewResource {
      * Statuscode 400, wenn die Validierung der Ansicht fehlschlägt
      */
     @POST
-    @RolesAllowed({})
+    @PermitAll
     public Response create(@NotNull @Valid ViewVM model) {
         adminService.createView(model.getView());
         return Response.ok().build();
@@ -55,7 +55,7 @@ public class ViewResource {
      * Statuscode 400, wenn die Validierung der Ansicht fehlschlägt
      */
     @PUT
-    @RolesAllowed({})
+    @PermitAll
     public Response update(@NotNull @Valid ViewVM model) {
         adminService.updateView(model.getView());
         return Response.ok().build();
@@ -69,7 +69,7 @@ public class ViewResource {
      */
     @DELETE
     @Path("/{viewId}")
-    @RolesAllowed({})
+    @PermitAll
     public Response delete(@PathParam("viewId") int viewId) {
         adminService.deleteView(viewId);
         return Response.ok().build();

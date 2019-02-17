@@ -4,7 +4,7 @@ import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.AuthenticationService;
 import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.Models.User;
 import de.fhbielefeld.swl.KINewsBoard.WebService.Shared.ViewModels.ErrorModel;
 
-import javax.annotation.security.RolesAllowed;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.naming.AuthenticationException;
 import javax.validation.constraints.NotNull;
@@ -50,7 +50,7 @@ public class AuthResource {
      */
     @POST
     @Path("/logout")
-    @RolesAllowed({})
+    @PermitAll
     public Response logout(@Context SecurityContext securityContext) {
         if (securityContext != null) {
             User u = (User) securityContext.getUserPrincipal();
@@ -67,7 +67,7 @@ public class AuthResource {
      */
     @GET
     @Path("/user")
-    @RolesAllowed({})
+    @PermitAll
     public Response get(@Context SecurityContext securityContext) {
         User u = null;
         if (securityContext != null && securityContext.getUserPrincipal() != null) {

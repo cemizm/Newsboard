@@ -3,7 +3,7 @@ from .models import *
 
 class Client:
     def __init__(self, host, token):
-        self.host = host
+        self.host = host + "/NewsBoard/WebService"
         self.headers = {
             "token": token,
             "Content-Type": "application/json"

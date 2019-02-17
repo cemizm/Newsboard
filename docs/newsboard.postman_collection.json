@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "e18cba48-0a6a-470d-b893-bfbb207ba132",
+		"name": "nwb",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crawler",
+			"item": [
+				{
+					"name": "Publish News",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "f6rm4jdanwbb5isbeljs4c",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"test-id\",\n    \"title\": \"Test Title\",\n    \"image\": \"http://placehold.it/500x500\",\n    \"excerpt\": \"Test Zusammenfassung\",\n    \"content\": \"Test Inhalt\",\n    \"source\": \"heise\",\n    \"url\": \"http://heise.de\",\n    \"date\": \"2019-02-12T23:52:00Z\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/NewsBoard/WebService/crawler/news",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"NewsBoard",
+								"WebService",
+								"crawler",
+								"news"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Analyzer",
+			"item": [
+				{
+					"name": "Get News",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "9br4uu4dlm985qced7tzwj",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/NewsBoard/WebService/analyzer/news",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"NewsBoard",
+								"WebService",
+								"analyzer",
+								"news"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Publish Result",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "9br4uu4dlm985qced7tzwj",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"date\": \"2019-02-12T23:52:00Z\",\n    \"value\": 10,\n    \"sentenceResults\": [{\n    \t\"charStart\": 0,\n    \t\"charEnd\": 3,\n    \t\"value\": 5\n    }]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/NewsBoard/WebService/analyzer/news/test-id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"NewsBoard",
+								"WebService",
+								"analyzer",
+								"news",
+								"test-id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

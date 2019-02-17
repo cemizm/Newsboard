@@ -1,0 +1,5 @@
+add-library /opt/payara/libs/postgresql-42.2.5.jar
+
+create-jdbc-connection-pool --datasourceclassname org.postgresql.ds.PGConnectionPoolDataSource --restype javax.sql.ConnectionPoolDataSource --property user=newsboard_user:serverName=newsboard.db:portNumber=5432:password=newsboard_pw:databaseName=newsboard newsboard_pool
+create-jdbc-resource --connectionpoolid newsboard_pool jdbc/newsboard_readwrite
+

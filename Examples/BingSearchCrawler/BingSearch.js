@@ -31,9 +31,9 @@ Bing.news("'fachhochschule bielefeld'", {
             };
             client.publishNewsEntry(entry,
                 function (data, response) {
-                    //if (response.statusCode != 200) return console.log("Crawler Error (" + response.statusCode + "): " + data.message);
+                    if (response.statusCode != 200) return console.log("Crawler Error (" + response.statusCode + "): " + data.message);
 
-                    //console.log("Crawler published: " + entry.title)
+                    console.log("Crawler published: " + entry.title)
                 });
         });
 

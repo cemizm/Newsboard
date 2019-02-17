@@ -11,7 +11,7 @@ client.getNewsEntries(function (items) {
             "sentenceResults": []
         };
         
-        /*
+        
         var start = 0;
         var sentences = entry.content.split(".");
         sentences.forEach(function (sentence) {
@@ -23,11 +23,9 @@ client.getNewsEntries(function (items) {
                 });
             start += sentence.length + 1;
         });
-        */
 
         client.publishResult(entry.id, result, function (data, response) {
             if (response.statusCode != 200) return console.log("Analyzer Result Error (" + response.statusCode + "): " + data.message);
-
             console.log("Analyzer Result published: " + entry.title);
         });
     });

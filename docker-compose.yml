@@ -1,0 +1,41 @@
+version: '3.1'
+
+services:
+  newsboard.cli:
+    container_name: newsboard.cli
+    build:
+      context: .
+      dockerfile: ./buildtools/cli.dockerfile
+    tty: true
+    environment:
+      AUTH_TOKEN: f1ac2c84a417f043c08af24e25c232b1
+      TOKEN_CRAWLER: f6rm4jdanwbb5isbeljs4c
+      TOKEN_ANALYZER: 9br4uu4dlm985qced7tzwj
+    volumes:
+      - .:/home/newsboard/source
+
+  newsboard.db:
+    container_name: newsboard.db
+    image: postgres
+    environment:
+      NEWSBOARD_DB: newsboard
+      NEWSBOARD_USER: newsboard_user
+      NEWSBOARD_PW: newsboard_pw
+    ports: 
+      - "5432:5432"
+    volumes:
+      - ./buildtools/initdb/:/docker-entrypoint-initdb.d/
+
+
+  newsboard.payara:
+    container_name: newsboard.payara
+    image: payara/server-full:5.183
+    volumes:
+      - ./buildtools/initpayara/config/init.asadmin:/opt/payara/post-boot-commands.asadmin
+      - ./buildtools/initpayara/libs:/opt/payara/libs
+      - ./build/libs:/opt/payara/deployments
+    ports:
+      - "8080:8080"
+      - "4848:4848"
+    depends_on: 
+      - newsboard.db

@@ -3,7 +3,7 @@ package de.fhbielefeld.swl.KINewsBoard.WebService.Backend;
 import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.AdminService;
 import de.fhbielefeld.swl.KINewsBoard.WebService.Backend.ViewModels.GroupSetVM;
 
-import javax.annotation.security.RolesAllowed;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -28,7 +28,7 @@ public class GroupResource {
      * @return Liste aller Gruppen
      */
     @GET
-    @RolesAllowed({})
+    @PermitAll
     public List<GroupSetVM> get() {
         return adminService.getAllGroupSets().stream().map(GroupSetVM::new).collect(Collectors.toList());
     }
@@ -41,7 +41,7 @@ public class GroupResource {
      * Statuscode 400, wenn die Validierung der Gruppe fehlschlägt
      */
     @POST
-    @RolesAllowed({})
+    @PermitAll
     public Response create(@NotNull @Valid GroupSetVM model) {
         adminService.createGroupSet(model.getGroupSet());
         return Response.ok().build();
@@ -55,7 +55,7 @@ public class GroupResource {
      * Statuscode 400, wenn die Validierung der Gruppe fehlschlägt
      */
     @PUT
-    @RolesAllowed({})
+    @PermitAll
     public Response update(@NotNull @Valid GroupSetVM model) {
         adminService.updateGroupSet(model.getGroupSet());
         return Response.ok().build();
@@ -69,7 +69,7 @@ public class GroupResource {
      */
     @DELETE
     @Path("/{groupSetId}")
-    @RolesAllowed({})
+    @PermitAll
     public Response delete(@PathParam("groupSetId") int groupSetId) {
         adminService.deleteGroupSet(groupSetId);
         return Response.ok().build();

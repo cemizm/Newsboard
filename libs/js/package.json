@@ -2,9 +2,6 @@
   "name": "newsboardclient",
   "version": "0.0.0",
   "private": true,
-  "scripts": {
-    "bing": "node BingSearch.js"
-  },
   "dependencies": {
     "node-rest-client": "^2.0.1"
   }

@@ -3,7 +3,7 @@ package de.fhbielefeld.swl.KINewsBoard.WebService.Backend;
 import de.fhbielefeld.swl.KINewsBoard.BusinessLayer.AdminService;
 import de.fhbielefeld.swl.KINewsBoard.WebService.Backend.ViewModels.CrawlerVM;
 
-import javax.annotation.security.RolesAllowed;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -24,7 +24,7 @@ public class CrawlerResource {
     private AdminService adminService;
 
     @GET
-    @RolesAllowed({})
+    @PermitAll
     public List<CrawlerVM> get() {
         return adminService.getAllCrawler().stream().map(CrawlerVM::new).collect(Collectors.toList());
     }
@@ -37,7 +37,7 @@ public class CrawlerResource {
      * Statuscode 400, wenn die Validierung des Crawlers fehlschlägt
      */
     @POST
-    @RolesAllowed({})
+    @PermitAll
     public Response create(@NotNull @Valid CrawlerVM model) {
         adminService.createCrawler(model.getCrawler());
         return Response.ok().build();
@@ -51,7 +51,7 @@ public class CrawlerResource {
      * Statuscode 400, wenn die Validierung des Crawlers fehlschlägt
      */
     @PUT
-    @RolesAllowed({})
+    @PermitAll
     public Response update(@NotNull @Valid CrawlerVM model) {
         adminService.updateCrawler(model.getCrawler());
         return Response.ok().build();
@@ -65,7 +65,7 @@ public class CrawlerResource {
      */
     @DELETE
     @Path("/{crawlerId}")
-    @RolesAllowed({})
+    @PermitAll
     public Response delete(@PathParam("crawlerId") int crawlerId) {
         adminService.deleteCrawler(crawlerId);
         return Response.ok().build();
