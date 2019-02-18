@@ -5,17 +5,18 @@ configurations { providedCompile }
 dependencies {
     compile project(":DataLayer")
 
-    providedCompile 'javax:javaee-api:7.0'
+    providedCompile 'javax:javaee-api:8.0'
 
     testCompile 'junit:junit:4.12'
-    testCompile 'org.jboss.logging:jboss-logging:3.3.1.Final'
-    testCompile 'org.jboss.arquillian.junit:arquillian-junit-container:1.1.13.Final'
-    testCompile 'org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-gradle-depchain:2.2.6'
+    testCompile 'org.jboss.logging:jboss-logging:3.3.2.Final'
+    testCompile 'org.jboss.arquillian.junit:arquillian-junit-container:1.4.1.Final'
+    testCompile 'org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-gradle-depchain:3.1.3'
     testCompile 'org.jboss.arquillian.extension:arquillian-persistence-dbunit:1.0.0.Alpha7'
-    testCompile 'org.hsqldb:hsqldb:2.3.4'
 
-    testRuntime 'org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:1.0.0.Final'
-    testRuntime 'org.glassfish.main.extras:glassfish-embedded-all:4.1.2'
+    testCompile 'org.hsqldb:hsqldb:2.4.1'
+
+    testRuntime 'org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:1.0.2'
+    testRuntime 'org.glassfish.main.extras:glassfish-embedded-all:5.0'
 }
 
 sourceSets.main.compileClasspath += configurations.providedCompile

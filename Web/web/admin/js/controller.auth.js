@@ -7,10 +7,11 @@ angular.module('nwbadmin.auth', ['ui.router'])
         $stateProvider.state('auth', {
             url: '/auth/:logout',
             templateUrl: 'views/auth/index.html',
-            controller: 'AuthController'
+            controller: 'AuthController',
+            params: {
+                logout: ""
+            }
         });
-
-
     }])
     /**
      * @class nwbadmin.AuthController

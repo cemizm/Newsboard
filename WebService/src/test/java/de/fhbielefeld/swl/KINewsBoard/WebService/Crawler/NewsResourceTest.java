@@ -302,7 +302,7 @@ public class NewsResourceTest {
         model.setSource("Source of Evil");
         model.setUrl("http://back.to/the/root");
         model.setImage("http://back.to/the/root.png");
-        model.setDate(new Date());
+        //model.setDate(new Date());
         model.setTitle("This is a title");
 
         Response result = webTarget.request()
