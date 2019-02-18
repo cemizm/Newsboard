@@ -13,23 +13,22 @@ var app = angular.module('nwbadmin', [
     'nwbadmin.views'
 ]).config(function ($urlRouterProvider, $httpProvider) {
     $httpProvider.interceptors.push('AuthInterceptor');
-    $httpProvider.interceptors.push('ErrorInterceptor');
 
     $urlRouterProvider.otherwise("/dashboard");
 
-}).run(function ($rootScope, AuthService, $state) {
+}).run(function ($rootScope, $transitions, AuthService, $state) {
 
     $rootScope.alerts = [];
-
 
     $rootScope.closeAlert = function(index) {
         $rootScope.alerts.splice(index, 1);
     };
 
-    $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
+    $transitions.onBefore({}, function(transition) {
+        const stateService = transition.router.stateService;
+        const toState = transition.to();
         if (toState.data && toState.data.authenticate && !AuthService.isAuthenticated()) {
-            event.preventDefault();
-            $state.go("auth");
+            return stateService.target('auth');
         }
     });
 
@@ -38,6 +37,9 @@ var app = angular.module('nwbadmin', [
     });
 
     $rootScope.$on("error", function (event, msg) {
+        if(msg == null || msg.message == null)
+            msg = {message: "Schwerwiegender Fehler!"};
+            
         $rootScope.alerts.push(msg);
     });
 
