@@ -8,6 +8,7 @@ find . -name node_modules -type d -prune -exec rm -rf {} \;
 find . -name package-lock.json -type f -prune -exec rm -rf {} \;
 find . -name __pycache__ -type d -prune -exec rm -rf {} \;
 rm -f ./buildtools/initpayara/config/init.asadmin
+rm -rf ./Web/web/bower_components
 
 # remove newsboard docker images
 docker rmi 2016_10_modulares_webnewsboard_newsboard.cli

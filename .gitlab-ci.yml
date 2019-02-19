@@ -32,7 +32,7 @@ test:
 deploy_staging:
   stage: deploy
   script:
-    - echo "Deploy to staging server"
+    - ./gradlew -g /cache/.gradle deploy -Phost=$DEPLOY_DEV_HOST -Pport=$DEPLOY_DEV_PORT -Puser=$DEPLOY_DEV_USER -Ppass=$DEPLOY_DEV_PASSWORD
   environment:
     name: staging
     url: https://staging.fhbielefeld.de
@@ -42,7 +42,7 @@ deploy_staging:
 deploy_production:
   stage: deploy
   script:
-    - echo "Deploy to production server"
+    - ./gradlew -g /cache/.gradle deploy -Phost=$DEPLOY_PROD_HOST -Pport=$DEPLOY_PROD_PORT -Puser=$DEPLOY_PROD_USER -Ppass=$DEPLOY_PROD_PASSWORD
   environment:
     name: production
     url: https://production.fhbielefeld.de
