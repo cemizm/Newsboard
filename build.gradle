@@ -32,3 +32,34 @@ ear {
         webModule("WebService.war", "/NewsBoard/WebService")
     }
 }
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath "com.bmuschko:gradle-cargo-plugin:2.6"
+    }
+}
+
+repositories {
+    jcenter()
+}
+
+apply plugin: 'com.bmuschko.cargo-base'
+
+dependencies {
+    cargo 'org.glassfish.main.deployment:deployment-client:5.0'
+    cargo 'org.codehaus.cargo:cargo-ant:1.6.8'
+}
+task deploy(dependsOn: ear, type:com.bmuschko.gradle.cargo.tasks.remote.CargoRedeployRemote) {
+    containerId = 'glassfish5x';
+    hostname = project.findProperty('host');
+    username = project.findProperty('user');
+    password = project.findProperty('pass');
+    
+    if(project.findProperty('port') != null && project.findProperty('port') != ""){
+        containerProperties = ['cargo.glassfish.admin.port': project.findProperty('port')];
+    }
+}
